@@ -1,6 +1,8 @@
-allowBuilds:
-  esbuild: true
-  sharp: true
+# pnpm settings live here for pnpm 10+ (the `allowBuilds` map is a pnpm 11 field).
+# This project is pinned to pnpm 9 via package.json -> packageManager.
+packages:
+  - '.'
+
 onlyBuiltDependencies:
   - esbuild
   - sharp
