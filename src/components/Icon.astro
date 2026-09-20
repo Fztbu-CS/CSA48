@@ -1,0 +1,275 @@
+---
+interface Props {
+  name:
+    | 'trophy'
+    | 'timeline'
+    | 'chart'
+    | 'plus'
+    | 'search'
+    | 'calendar'
+    | 'alert'
+    | 'crown'
+    | 'medal'
+    | 'eye'
+    | 'quote'
+    | 'tag'
+    | 'shield'
+    | 'clipboard'
+    | 'check'
+    | 'close'
+    | 'star'
+    | 'code'
+    | 'social'
+    | 'words'
+    | 'work'
+    | 'life'
+    | 'info'
+    | 'person'
+    | 'file-text'
+    | 'flame'
+    | 'sun'
+    | 'moon'
+    | 'pig';
+  class?: string;
+}
+
+const { name, class: className = 'w-4 h-4' } = Astro.props;
+---
+
+{name === 'trophy' && (
+  <svg class={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
+    <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
+    <path d="M4 22h16" />
+    <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22" />
+    <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22" />
+    <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" />
+  </svg>
+)}
+
+{name === 'timeline' && (
+  <svg class={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 8v4l3 3" />
+    <circle cx="12" cy="12" r="9" />
+  </svg>
+)}
+
+{name === 'chart' && (
+  <svg class={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 3v18h18" />
+    <path d="M18 17V9" />
+    <path d="M13 17V5" />
+    <path d="M8 17v-3" />
+  </svg>
+)}
+
+{name === 'plus' && (
+  <svg class={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 12h14" />
+    <path d="M12 5v14" />
+  </svg>
+)}
+
+{name === 'search' && (
+  <svg class={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="11" cy="11" r="8" />
+    <path d="m21 21-4.3-4.3" />
+  </svg>
+)}
+
+{name === 'calendar' && (
+  <svg class={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <rect width="18" height="18" x="3" y="4" rx="2" ry="2" />
+    <line x1="16" x2="16" y1="2" y2="6" />
+    <line x1="8" x2="8" y1="2" y2="6" />
+    <line x1="3" x2="21" y1="10" y2="10" />
+  </svg>
+)}
+
+{name === 'alert' && (
+  <svg class={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
+    <line x1="12" x2="12" y1="9" y2="13" />
+    <line x1="12" x2="12.01" y1="17" y2="17" />
+  </svg>
+)}
+
+{name === 'crown' && (
+  <svg class={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14v2H5z" />
+  </svg>
+)}
+
+{name === 'medal' && (
+  <svg class={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="8" r="6" />
+    <path d="m8.21 13.89-2.21 7.11 6-3 6 3-2.21-7.11" />
+  </svg>
+)}
+
+{name === 'eye' && (
+  <svg class={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+    <circle cx="12" cy="12" r="3" />
+  </svg>
+)}
+
+{name === 'quote' && (
+  <svg class={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z" />
+    <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z" />
+  </svg>
+)}
+
+{name === 'tag' && (
+  <svg class={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l6.58-6.58c.94-.94.94-2.48 0-3.42L12 2Z" />
+    <path d="M7 7h.01" />
+  </svg>
+)}
+
+{name === 'shield' && (
+  <svg class={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
+  </svg>
+)}
+
+{name === 'clipboard' && (
+  <svg class={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+    <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+  </svg>
+)}
+
+{name === 'check' && (
+  <svg class={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M20 6 9 17l-5-5" />
+  </svg>
+)}
+
+{name === 'close' && (
+  <svg class={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M18 6 6 18" />
+    <path d="m6 6 12 12" />
+  </svg>
+)}
+
+{name === 'star' && (
+  <svg class={className} viewBox="0 0 24 24" fill="currentColor" stroke="none">
+    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+  </svg>
+)}
+
+{name === 'flame' && (
+  <svg class={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z" />
+  </svg>
+)}
+
+{name === 'code' && (
+  <svg class={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="16 18 22 12 16 6" />
+    <polyline points="8 6 2 12 8 18" />
+  </svg>
+)}
+
+{name === 'social' && (
+  <svg class={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+    <circle cx="9" cy="7" r="4" />
+    <line x1="17" x2="22" y1="8" y2="13" />
+    <line x1="22" x2="17" y1="8" y2="13" />
+  </svg>
+)}
+
+{name === 'words' && (
+  <svg class={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+    <path d="M12 7v3" />
+    <path d="M12 13h.01" />
+  </svg>
+)}
+
+{name === 'work' && (
+  <svg class={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <rect width="20" height="14" x="2" y="7" rx="2" ry="2" />
+    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+  </svg>
+)}
+
+{name === 'life' && (
+  <svg class={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M17 8h1a4 4 0 1 1 0 8h-1" />
+    <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z" />
+    <line x1="6" x2="6" y1="2" y2="4" />
+    <line x1="10" x2="10" y1="2" y2="4" />
+    <line x1="14" x2="14" y1="2" y2="4" />
+  </svg>
+)}
+
+{name === 'info' && (
+  <svg class={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="10" />
+    <path d="M12 16v-4" />
+    <path d="M12 8h.01" />
+  </svg>
+)}
+
+{name === 'person' && (
+  <svg class={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="8" r="5" />
+    <path d="M20 21a8 8 0 0 0-16 0" />
+  </svg>
+)}
+
+{name === 'file-text' && (
+  <svg class={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
+    <path d="M14 2v4a2 2 0 0 0 2 2h4" />
+    <path d="M10 9H8" />
+    <path d="M16 13H8" />
+    <path d="M16 17H8" />
+  </svg>
+)}
+
+{name === 'sun' && (
+  <svg class={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="4" />
+    <path d="M12 2v2" />
+    <path d="M12 20v2" />
+    <path d="m4.93 4.93 1.41 1.41" />
+    <path d="m17.66 17.66 1.41 1.41" />
+    <path d="M2 12h2" />
+    <path d="M20 12h2" />
+    <path d="m6.34 17.66-1.41 1.41" />
+    <path d="m19.07 4.93-1.41 1.41" />
+  </svg>
+)}
+
+{name === 'moon' && (
+  <svg class={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+  </svg>
+)}
+
+{name === 'pig' && (
+  <svg class={className} viewBox="10 21 322 287" fill="none">
+    <!-- Pig Silhouette & Legs & Tail -->
+    <path d="M 309.0 29.0 L 303.0 31.0 L 296.0 39.0 L 285.0 38.0 L 277.0 42.0 L 270.0 53.0 L 270.0 57.0 L 253.0 49.0 L 231.0 43.0 L 218.0 41.0 L 175.0 41.0 L 150.0 45.0 L 126.0 52.0 L 100.0 63.0 L 86.0 71.0 L 79.0 63.0 L 66.0 60.0 L 60.0 62.0 L 51.0 70.0 L 48.0 77.0 L 37.0 91.0 L 32.0 101.0 L 31.0 108.0 L 32.0 111.0 L 37.0 116.0 L 42.0 117.0 L 42.0 119.0 L 29.0 134.0 L 23.0 145.0 L 18.0 165.0 L 18.0 183.0 L 20.0 194.0 L 29.0 213.0 L 43.0 228.0 L 58.0 237.0 L 61.0 286.0 L 69.0 293.0 L 82.0 294.0 L 90.0 292.0 L 96.0 285.0 L 98.0 251.0 L 125.0 253.0 L 127.0 293.0 L 131.0 297.0 L 139.0 300.0 L 154.0 300.0 L 164.0 294.0 L 166.0 290.0 L 168.0 246.0 L 186.0 241.0 L 187.0 255.0 L 190.0 259.0 L 199.0 263.0 L 213.0 262.0 L 222.0 252.0 L 225.0 226.0 L 237.0 226.0 L 243.0 230.0 L 244.0 253.0 L 247.0 259.0 L 251.0 262.0 L 260.0 266.0 L 270.0 266.0 L 277.0 263.0 L 284.0 256.0 L 286.0 250.0 L 290.0 202.0 L 298.0 176.0 L 307.0 157.0 L 310.0 144.0 L 310.0 121.0 L 308.0 111.0 L 297.0 85.0 L 289.0 73.0 L 284.0 69.0 L 284.0 63.0 L 286.0 56.0 L 290.0 54.0 L 289.0 68.0 L 295.0 78.0 L 302.0 81.0 L 309.0 81.0 L 317.0 76.0 L 319.0 72.0 L 319.0 60.0 L 316.0 54.0 L 308.0 46.0 L 312.0 42.0 L 323.0 41.0 L 324.0 34.0 L 318.0 29.0 L 310.0 29.0 Z M 302.0 56.0 L 304.0 56.0 L 304.0 58.0 L 307.0 61.0 L 307.0 68.0 L 303.0 69.0 L 301.0 66.0 L 302.0 57.0 Z" fill="#F8D5B4" fill-rule="evenodd" stroke="#F8D5B4" stroke-width="1" stroke-linejoin="round" />
+    <!-- Underbelly Flap -->
+    <path d="M 224.0 224.0 L 222.0 226.0 L 217.0 226.0 L 217.0 227.0 L 213.0 227.0 L 213.0 228.0 L 204.0 230.0 L 204.0 231.0 L 202.0 231.0 L 202.0 232.0 L 200.0 232.0 L 200.0 233.0 L 198.0 233.0 L 198.0 234.0 L 196.0 234.0 L 196.0 235.0 L 194.0 235.0 L 190.0 238.0 L 187.0 238.0 L 188.0 239.0 L 188.0 250.0 L 189.0 250.0 L 189.0 254.0 L 191.0 255.0 L 191.0 257.0 L 194.0 258.0 L 195.0 260.0 L 199.0 260.0 L 199.0 261.0 L 209.0 261.0 L 209.0 260.0 L 214.0 259.0 L 220.0 251.0 L 221.0 242.0 L 222.0 242.0 L 222.0 227.0 Z" fill="#F1ADA8" stroke="#F1ADA8" stroke-width="0.5" stroke-linejoin="round" />
+    <!-- Left Ear Magenta Accent -->
+    <path d="M 67.0 62.0 L 63.0 63.0 L 63.0 64.0 L 60.0 64.0 L 58.0 67.0 L 56.0 67.0 L 54.0 69.0 L 54.0 71.0 L 51.0 73.0 L 49.0 79.0 L 46.0 81.0 L 46.0 83.0 L 44.0 84.0 L 44.0 86.0 L 42.0 87.0 L 42.0 89.0 L 40.0 90.0 L 40.0 92.0 L 36.0 96.0 L 36.0 99.0 L 35.0 99.0 L 34.0 104.0 L 33.0 104.0 L 33.0 109.0 L 37.0 114.0 L 42.0 115.0 L 42.0 116.0 L 51.0 116.0 L 51.0 115.0 L 55.0 115.0 L 55.0 114.0 L 59.0 113.0 L 60.0 111.0 L 62.0 111.0 L 67.0 106.0 L 67.0 104.0 L 70.0 101.0 L 70.0 96.0 L 66.0 95.0 L 54.0 106.0 L 52.0 106.0 L 50.0 108.0 L 43.0 108.0 L 42.0 107.0 L 43.0 99.0 L 45.0 98.0 L 46.0 94.0 L 49.0 92.0 L 49.0 90.0 L 53.0 86.0 L 53.0 84.0 L 56.0 81.0 L 57.0 77.0 L 59.0 76.0 L 60.0 72.0 L 67.0 65.0 L 74.0 64.0 L 74.0 63.0 L 68.0 62.0 Z" fill="#D35C8E" stroke="#D35C8E" stroke-width="0.5" stroke-linejoin="round" />
+    <!-- Right Ear Magenta Fold -->
+    <path d="M 161.0 102.0 L 158.0 103.0 L 157.0 105.0 L 155.0 105.0 L 155.0 107.0 L 152.0 110.0 L 153.0 125.0 L 154.0 125.0 L 158.0 135.0 L 160.0 136.0 L 160.0 138.0 L 170.0 148.0 L 172.0 148.0 L 173.0 150.0 L 175.0 150.0 L 177.0 152.0 L 180.0 152.0 L 180.0 153.0 L 192.0 153.0 L 192.0 152.0 L 195.0 152.0 L 200.0 147.0 L 200.0 145.0 L 203.0 141.0 L 203.0 136.0 L 204.0 136.0 L 203.0 115.0 L 202.0 115.0 L 200.0 110.0 L 195.0 110.0 L 195.0 112.0 L 194.0 112.0 L 194.0 118.0 L 195.0 118.0 L 195.0 133.0 L 194.0 133.0 L 194.0 136.0 L 193.0 136.0 L 192.0 140.0 L 189.0 141.0 L 189.0 142.0 L 179.0 142.0 L 178.0 140.0 L 176.0 140.0 L 170.0 134.0 L 170.0 132.0 L 168.0 131.0 L 168.0 129.0 L 166.0 128.0 L 165.0 124.0 L 163.0 123.0 L 163.0 121.0 L 161.0 119.0 L 161.0 110.0 L 166.0 105.0 L 165.0 102.0 L 162.0 102.0 Z" fill="#D35C8E" stroke="#D35C8E" stroke-width="0.5" stroke-linejoin="round" />
+    <!-- Snout -->
+    <path d="M 67.0 168.0 L 58.0 170.0 L 58.0 171.0 L 52.0 173.0 L 48.0 177.0 L 48.0 179.0 L 46.0 181.0 L 46.0 193.0 L 47.0 193.0 L 47.0 196.0 L 48.0 196.0 L 49.0 200.0 L 57.0 208.0 L 59.0 208.0 L 59.0 209.0 L 61.0 209.0 L 65.0 212.0 L 68.0 212.0 L 70.0 214.0 L 79.0 215.0 L 79.0 216.0 L 97.0 216.0 L 97.0 215.0 L 101.0 215.0 L 101.0 214.0 L 105.0 213.0 L 112.0 205.0 L 113.0 192.0 L 112.0 192.0 L 112.0 189.0 L 111.0 189.0 L 110.0 185.0 L 98.0 174.0 L 96.0 174.0 L 94.0 172.0 L 91.0 172.0 L 89.0 170.0 L 85.0 170.0 L 85.0 169.0 L 68.0 168.0 Z" fill="#ED8686" stroke="#ED8686" stroke-width="0.5" stroke-linejoin="round" />
+    <!-- Nostrils -->
+    <path d="M 63.0 181.0 L 62.0 181.0 L 62.0 183.0 L 61.0 183.0 L 61.0 193.0 L 62.0 193.0 L 62.0 194.0 L 63.0 194.0 L 63.0 196.0 L 64.0 196.0 L 64.0 197.0 L 66.0 197.0 L 66.0 198.0 L 71.0 197.0 L 72.0 189.0 L 71.0 189.0 L 71.0 185.0 L 69.0 184.0 L 69.0 182.0 L 68.0 182.0 L 68.0 181.0 L 64.0 181.0 Z" fill="#282826" stroke="#282826" stroke-width="0.5" stroke-linejoin="round" />
+    <path d="M 89.0 184.0 L 88.0 184.0 L 88.0 185.0 L 84.0 188.0 L 84.0 191.0 L 83.0 191.0 L 83.0 197.0 L 84.0 197.0 L 84.0 200.0 L 85.0 200.0 L 86.0 202.0 L 90.0 202.0 L 90.0 201.0 L 92.0 200.0 L 93.0 196.0 L 94.0 196.0 L 94.0 189.0 L 93.0 189.0 L 93.0 187.0 L 92.0 187.0 L 91.0 185.0 L 89.0 185.0 Z" fill="#282826" stroke="#282826" stroke-width="0.5" stroke-linejoin="round" />
+    <!-- Eyes -->
+    <path d="M 64.0 134.0 L 63.0 134.0 L 63.0 135.0 L 58.0 136.0 L 58.0 138.0 L 57.0 138.0 L 57.0 139.0 L 56.0 139.0 L 56.0 141.0 L 55.0 141.0 L 55.0 150.0 L 56.0 150.0 L 56.0 152.0 L 57.0 152.0 L 60.0 156.0 L 67.0 156.0 L 67.0 155.0 L 69.0 155.0 L 69.0 154.0 L 72.0 152.0 L 72.0 150.0 L 73.0 150.0 L 73.0 140.0 L 72.0 140.0 L 72.0 138.0 L 71.0 138.0 L 69.0 135.0 L 65.0 135.0 L 65.0 134.0 Z" fill="#282826" stroke="#282826" stroke-width="0.5" stroke-linejoin="round" />
+    <path d="M 138.0 150.0 L 137.0 150.0 L 137.0 151.0 L 136.0 151.0 L 136.0 152.0 L 132.0 155.0 L 132.0 160.0 L 131.0 160.0 L 131.0 163.0 L 132.0 163.0 L 133.0 168.0 L 134.0 168.0 L 136.0 171.0 L 139.0 171.0 L 139.0 172.0 L 145.0 171.0 L 145.0 170.0 L 147.0 169.0 L 148.0 165.0 L 149.0 165.0 L 149.0 162.0 L 150.0 162.0 L 150.0 158.0 L 149.0 158.0 L 148.0 153.0 L 147.0 153.0 L 146.0 151.0 L 144.0 151.0 L 144.0 150.0 L 139.0 150.0 Z" fill="#282826" stroke="#282826" stroke-width="0.5" stroke-linejoin="round" />
+  </svg>
+)}
+

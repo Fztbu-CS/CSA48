@@ -1,0 +1,172 @@
+---
+interface Props {
+  rank: 1 | 2 | 3;
+  class?: string;
+}
+
+const { rank, class: className = 'w-10 h-10' } = Astro.props;
+
+// Pure Flat Color Schemes for each Rank (Matching the flat vector aesthetic of the pig)
+const flatCrownConfig = {
+  1: {
+    // 1st Place: Flat Vibrant Gold (金冠)
+    bodyFill: '#FBBF24',
+    bandFill: '#D97706',
+    pearlFill: '#FEF08A',
+    gemFill: '#EF4444',
+    stroke: '#B45309',
+  },
+  2: {
+    // 2nd Place: Flat Sleek Silver (银冠)
+    bodyFill: '#E2E8F0',
+    bandFill: '#94A3B8',
+    pearlFill: '#FFFFFF',
+    gemFill: '#38BDF8',
+    stroke: '#64748B',
+  },
+  3: {
+    // 3rd Place: Flat Warm Bronze (铜冠)
+    bodyFill: '#E07A5F',
+    bandFill: '#9C4129',
+    pearlFill: '#FDE68A',
+    gemFill: '#10B981',
+    stroke: '#7A2814',
+  },
+}[rank];
+---
+
+<svg class={className} viewBox="10 0 322 308" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Pig Silhouette & Legs & Tail -->
+  <path
+    d="M 309.0 29.0 L 303.0 31.0 L 296.0 39.0 L 285.0 38.0 L 277.0 42.0 L 270.0 53.0 L 270.0 57.0 L 253.0 49.0 L 231.0 43.0 L 218.0 41.0 L 175.0 41.0 L 150.0 45.0 L 126.0 52.0 L 100.0 63.0 L 86.0 71.0 L 79.0 63.0 L 66.0 60.0 L 60.0 62.0 L 51.0 70.0 L 48.0 77.0 L 37.0 91.0 L 32.0 101.0 L 31.0 108.0 L 32.0 111.0 L 37.0 116.0 L 42.0 117.0 L 42.0 119.0 L 29.0 134.0 L 23.0 145.0 L 18.0 165.0 L 18.0 183.0 L 20.0 194.0 L 29.0 213.0 L 43.0 228.0 L 58.0 237.0 L 61.0 286.0 L 69.0 293.0 L 82.0 294.0 L 90.0 292.0 L 96.0 285.0 L 98.0 251.0 L 125.0 253.0 L 127.0 293.0 L 131.0 297.0 L 139.0 300.0 L 154.0 300.0 L 164.0 294.0 L 166.0 290.0 L 168.0 246.0 L 186.0 241.0 L 187.0 255.0 L 190.0 259.0 L 199.0 263.0 L 213.0 262.0 L 222.0 252.0 L 225.0 226.0 L 237.0 226.0 L 243.0 230.0 L 244.0 253.0 L 247.0 259.0 L 251.0 262.0 L 260.0 266.0 L 270.0 266.0 L 277.0 263.0 L 284.0 256.0 L 286.0 250.0 L 290.0 202.0 L 298.0 176.0 L 307.0 157.0 L 310.0 144.0 L 310.0 121.0 L 308.0 111.0 L 297.0 85.0 L 289.0 73.0 L 284.0 69.0 L 284.0 63.0 L 286.0 56.0 L 290.0 54.0 L 289.0 68.0 L 295.0 78.0 L 302.0 81.0 L 309.0 81.0 L 317.0 76.0 L 319.0 72.0 L 319.0 60.0 L 316.0 54.0 L 308.0 46.0 L 312.0 42.0 L 323.0 41.0 L 324.0 34.0 L 318.0 29.0 L 310.0 29.0 Z M 302.0 56.0 L 304.0 56.0 L 304.0 58.0 L 307.0 61.0 L 307.0 68.0 L 303.0 69.0 L 301.0 66.0 L 302.0 57.0 Z"
+    fill="#F8D5B4"
+    fill-rule="evenodd"
+    stroke="#F8D5B4"
+    stroke-width="1"
+    stroke-linejoin="round"
+  />
+
+  <!-- Underbelly Flap -->
+  <path
+    d="M 224.0 224.0 L 222.0 226.0 L 217.0 226.0 L 217.0 227.0 L 213.0 227.0 L 213.0 228.0 L 204.0 230.0 L 204.0 231.0 L 202.0 231.0 L 202.0 232.0 L 200.0 232.0 L 200.0 233.0 L 198.0 233.0 L 198.0 234.0 L 196.0 234.0 L 196.0 235.0 L 194.0 235.0 L 190.0 238.0 L 187.0 238.0 L 188.0 239.0 L 188.0 250.0 L 189.0 250.0 L 189.0 254.0 L 191.0 255.0 L 191.0 257.0 L 194.0 258.0 L 195.0 260.0 L 199.0 260.0 L 199.0 261.0 L 209.0 261.0 L 209.0 260.0 L 214.0 259.0 L 220.0 251.0 L 221.0 242.0 L 222.0 242.0 L 222.0 227.0 Z"
+    fill="#F1ADA8"
+    stroke="#F1ADA8"
+    stroke-width="0.5"
+    stroke-linejoin="round"
+  />
+
+  <!-- Left Ear Magenta Accent -->
+  <path
+    d="M 67.0 62.0 L 63.0 63.0 L 63.0 64.0 L 60.0 64.0 L 58.0 67.0 L 56.0 67.0 L 54.0 69.0 L 54.0 71.0 L 51.0 73.0 L 49.0 79.0 L 46.0 81.0 L 46.0 83.0 L 44.0 84.0 L 44.0 86.0 L 42.0 87.0 L 42.0 89.0 L 40.0 90.0 L 40.0 92.0 L 36.0 96.0 L 36.0 99.0 L 35.0 99.0 L 34.0 104.0 L 33.0 104.0 L 33.0 109.0 L 37.0 114.0 L 42.0 115.0 L 42.0 116.0 L 51.0 116.0 L 51.0 115.0 L 55.0 115.0 L 55.0 114.0 L 59.0 113.0 L 60.0 111.0 L 62.0 111.0 L 67.0 106.0 L 67.0 104.0 L 70.0 101.0 L 70.0 96.0 L 66.0 95.0 L 54.0 106.0 L 52.0 106.0 L 50.0 108.0 L 43.0 108.0 L 42.0 107.0 L 43.0 99.0 L 45.0 98.0 L 46.0 94.0 L 49.0 92.0 L 49.0 90.0 L 53.0 86.0 L 53.0 84.0 L 56.0 81.0 L 57.0 77.0 L 59.0 76.0 L 60.0 72.0 L 67.0 65.0 L 74.0 64.0 L 74.0 63.0 L 68.0 62.0 Z"
+    fill="#D35C8E"
+    stroke="#D35C8E"
+    stroke-width="0.5"
+    stroke-linejoin="round"
+  />
+
+  <!-- Right Ear Magenta Fold -->
+  <path
+    d="M 161.0 102.0 L 158.0 103.0 L 157.0 105.0 L 155.0 105.0 L 155.0 107.0 L 152.0 110.0 L 153.0 125.0 L 154.0 125.0 L 158.0 135.0 L 160.0 136.0 L 160.0 138.0 L 170.0 148.0 L 172.0 148.0 L 173.0 150.0 L 175.0 150.0 L 177.0 152.0 L 180.0 152.0 L 180.0 153.0 L 192.0 153.0 L 192.0 152.0 L 195.0 152.0 L 200.0 147.0 L 200.0 145.0 L 203.0 141.0 L 203.0 136.0 L 204.0 136.0 L 203.0 115.0 L 202.0 115.0 L 200.0 110.0 L 195.0 110.0 L 195.0 112.0 L 194.0 112.0 L 194.0 118.0 L 195.0 118.0 L 195.0 133.0 L 194.0 133.0 L 194.0 136.0 L 193.0 136.0 L 192.0 140.0 L 189.0 141.0 L 189.0 142.0 L 179.0 142.0 L 178.0 140.0 L 176.0 140.0 L 170.0 134.0 L 170.0 132.0 L 168.0 131.0 L 168.0 129.0 L 166.0 128.0 L 165.0 124.0 L 163.0 123.0 L 163.0 121.0 L 161.0 119.0 L 161.0 110.0 L 166.0 105.0 L 165.0 102.0 L 162.0 102.0 Z"
+    fill="#D35C8E"
+    stroke="#D35C8E"
+    stroke-width="0.5"
+    stroke-linejoin="round"
+  />
+
+  <!-- Snout -->
+  <path
+    d="M 67.0 168.0 L 58.0 170.0 L 58.0 171.0 L 52.0 173.0 L 48.0 177.0 L 48.0 179.0 L 46.0 181.0 L 46.0 193.0 L 47.0 193.0 L 47.0 196.0 L 48.0 196.0 L 49.0 200.0 L 57.0 208.0 L 59.0 208.0 L 59.0 209.0 L 61.0 209.0 L 65.0 212.0 L 68.0 212.0 L 70.0 214.0 L 79.0 215.0 L 79.0 216.0 L 97.0 216.0 L 97.0 215.0 L 101.0 215.0 L 101.0 214.0 L 105.0 213.0 L 112.0 205.0 L 113.0 192.0 L 112.0 192.0 L 112.0 189.0 L 111.0 189.0 L 110.0 185.0 L 98.0 174.0 L 96.0 174.0 L 94.0 172.0 L 91.0 172.0 L 89.0 170.0 L 85.0 170.0 L 85.0 169.0 L 68.0 168.0 Z"
+    fill="#ED8686"
+    stroke="#ED8686"
+    stroke-width="0.5"
+    stroke-linejoin="round"
+  />
+
+  <!-- Nostrils -->
+  <path
+    d="M 63.0 181.0 L 62.0 181.0 L 62.0 183.0 L 61.0 183.0 L 61.0 193.0 L 62.0 193.0 L 62.0 194.0 L 63.0 194.0 L 63.0 196.0 L 64.0 196.0 L 64.0 197.0 L 66.0 197.0 L 66.0 198.0 L 71.0 197.0 L 72.0 189.0 L 71.0 189.0 L 71.0 185.0 L 69.0 184.0 L 69.0 182.0 L 68.0 182.0 L 68.0 181.0 L 64.0 181.0 Z"
+    fill="#282826"
+    stroke="#282826"
+    stroke-width="0.5"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M 89.0 184.0 L 88.0 184.0 L 88.0 185.0 L 84.0 188.0 L 84.0 191.0 L 83.0 191.0 L 83.0 197.0 L 84.0 197.0 L 84.0 200.0 L 85.0 200.0 L 86.0 202.0 L 90.0 202.0 L 90.0 201.0 L 92.0 200.0 L 93.0 196.0 L 94.0 196.0 L 94.0 189.0 L 93.0 189.0 L 93.0 187.0 L 92.0 187.0 L 91.0 185.0 L 89.0 185.0 Z"
+    fill="#282826"
+    stroke="#282826"
+    stroke-width="0.5"
+    stroke-linejoin="round"
+  />
+
+  <!-- Eyes -->
+  <path
+    d="M 64.0 134.0 L 63.0 134.0 L 63.0 135.0 L 58.0 136.0 L 58.0 138.0 L 57.0 138.0 L 57.0 139.0 L 56.0 139.0 L 56.0 141.0 L 55.0 141.0 L 55.0 150.0 L 56.0 150.0 L 56.0 152.0 L 57.0 152.0 L 60.0 156.0 L 67.0 156.0 L 67.0 155.0 L 69.0 155.0 L 69.0 154.0 L 72.0 152.0 L 72.0 150.0 L 73.0 150.0 L 73.0 140.0 L 72.0 140.0 L 72.0 138.0 L 71.0 138.0 L 69.0 135.0 L 65.0 135.0 L 65.0 134.0 Z"
+    fill="#282826"
+    stroke="#282826"
+    stroke-width="0.5"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M 138.0 150.0 L 137.0 150.0 L 137.0 151.0 L 136.0 151.0 L 136.0 152.0 L 132.0 155.0 L 132.0 160.0 L 131.0 160.0 L 131.0 163.0 L 132.0 163.0 L 133.0 168.0 L 134.0 168.0 L 136.0 171.0 L 139.0 171.0 L 139.0 172.0 L 145.0 171.0 L 145.0 170.0 L 147.0 169.0 L 148.0 165.0 L 149.0 165.0 L 149.0 162.0 L 150.0 162.0 L 150.0 158.0 L 149.0 158.0 L 148.0 153.0 L 147.0 153.0 L 146.0 151.0 L 144.0 151.0 L 144.0 150.0 L 139.0 150.0 Z"
+    fill="#282826"
+    stroke="#282826"
+    stroke-width="0.5"
+    stroke-linejoin="round"
+  />
+
+  <!-- ==================== FLAT GEOMETRIC CROWN (Matches Piglet Flat Aesthetic) ==================== -->
+  <g id={`flat-crown-rank-${rank}`}>
+    <!-- Flat Shadow Base Rim -->
+    <polygon
+      points="80,59 130,47 132,53 82,65"
+      fill={flatCrownConfig.bandFill}
+      stroke={flatCrownConfig.bandFill}
+      stroke-width="0.5"
+      stroke-linejoin="round"
+    />
+
+    <!-- Flat Crown Body (Chunky 3-Point Cartoon Tiara) -->
+    <polygon
+      points="80,59 74,25 96,39 108,12 120,34 136,20 130,47"
+      fill={flatCrownConfig.bodyFill}
+      stroke={flatCrownConfig.bodyFill}
+      stroke-width="0.5"
+      stroke-linejoin="round"
+    />
+
+    <!-- Flat Circle Pearls On Peaks -->
+    <circle
+      cx="74"
+      cy="24"
+      r="4"
+      fill={flatCrownConfig.pearlFill}
+      stroke={flatCrownConfig.pearlFill}
+      stroke-width="0.5"
+    />
+    <circle
+      cx="108"
+      cy="11"
+      r="5"
+      fill={flatCrownConfig.pearlFill}
+      stroke={flatCrownConfig.pearlFill}
+      stroke-width="0.5"
+    />
+    <circle
+      cx="136"
+      cy="19"
+      r="4"
+      fill={flatCrownConfig.pearlFill}
+      stroke={flatCrownConfig.pearlFill}
+      stroke-width="0.5"
+    />
+
+    <!-- Flat Center Diamond Gem -->
+    <polygon
+      points="108,30 113,36 108,42 103,36"
+      fill={flatCrownConfig.gemFill}
+      stroke={flatCrownConfig.gemFill}
+      stroke-width="0.5"
+      stroke-linejoin="round"
+    />
+  </g>
+</svg>

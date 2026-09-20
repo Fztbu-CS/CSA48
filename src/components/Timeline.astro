@@ -1,0 +1,113 @@
+---
+import type { ShameIncident, Person } from '../data/types';
+import Icon from './Icon.astro';
+import Avatar from './Avatar.astro';
+
+interface Props {
+  incidents: ShameIncident[];
+  persons: Person[];
+}
+
+const { incidents, persons } = Astro.props;
+
+// Sort incidents by date descending
+const sortedIncidents = [...incidents].sort(
+  (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+);
+
+// Map persons for quick lookup
+const personMap = new Map(persons.map((p) => [p.id, p]));
+---
+
+<div class="space-y-6">
+  <!-- MD3 Search Bar -->
+  <div class="flex items-center justify-between gap-3 bg-md-surface-container-low p-3 rounded-md-2xl border border-md-outline-variant/30 shadow-md-1">
+    <div class="relative w-full sm:w-80">
+      <input
+        type="text"
+        id="timeline-search"
+        placeholder="搜索历史事件、猪猪..."
+        class="w-full h-11 bg-md-surface-container-high border border-transparent rounded-md-full px-4 pl-10 text-xs sm:text-sm text-md-on-surface placeholder-md-on-surface-variant/70 focus:outline-none focus:border-md-primary/60 focus:bg-md-surface-container-highest transition-all"
+      />
+      <div class="absolute left-3.5 top-1/2 -translate-y-1/2 text-md-on-surface-variant">
+        <Icon name="search" class="w-4 h-4" />
+      </div>
+    </div>
+    <div class="text-xs text-md-on-surface-variant pr-2 hidden sm:block">
+      共记录 {sortedIncidents.length} 起翻车历史
+    </div>
+  </div>
+
+  <!-- Timeline Feed (MD3 Cards) -->
+  <div id="timeline-list" class="space-y-4">
+    {sortedIncidents.length === 0 ? (
+      <div class="text-center py-12 px-4 bg-md-surface-container-low rounded-md-2xl border border-md-outline-variant/30 shadow-sm">
+        <div class="w-12 h-12 mx-auto mb-2.5 rounded-full bg-md-surface-container-highest flex items-center justify-center text-md-on-surface-variant/40">
+          <Icon name="timeline" class="w-6 h-6" />
+        </div>
+        <p class="text-sm font-semibold text-md-on-surface">暂无翻车历史记录</p>
+        <p class="text-xs text-md-on-surface-variant mt-1">目前暂无任何案件发生，岁月静好~</p>
+      </div>
+    ) : (
+      sortedIncidents.map((incident) => {
+        const person = personMap.get(incident.personId);
+
+        return (
+          <article
+            class="timeline-card rounded-md-2xl p-5 sm:p-6 transition-all bg-md-surface-container-low border border-md-outline-variant/30 shadow-md-1 hover:shadow-md-2 hover:bg-md-surface-container"
+            data-title={incident.title}
+            data-description={incident.description}
+            data-person={person?.name || ''}
+          >
+            <!-- Top Row: Person info & Date Badge -->
+            <div class="flex items-center justify-between gap-3 mb-3">
+              {person && (
+                <div class="flex items-center gap-2.5">
+                  <Avatar avatar={person.avatar} name={person.name} sizeClass="w-8 h-8 text-xs" />
+                  <span class="font-bold text-sm text-md-on-surface">{person.name}</span>
+                </div>
+              )}
+
+              <span class="inline-flex items-center gap-1.5 text-xs font-mono text-md-on-surface-variant bg-md-surface-container-high px-2.5 py-1 rounded-md-full border border-md-outline-variant/20 shrink-0">
+                <Icon name="calendar" class="w-3.5 h-3.5" />
+                <span>{incident.date}</span>
+              </span>
+            </div>
+
+            <!-- Incident Title -->
+            <h3 class="text-base sm:text-lg font-bold text-md-on-surface mb-2 leading-snug">
+              {incident.title}
+            </h3>
+
+            <!-- Incident Description -->
+            <p class="text-sm text-md-on-surface/90 leading-relaxed bg-md-surface-container-lowest/60 p-3.5 rounded-md-xl border border-md-outline-variant/20">
+              {incident.description}
+            </p>
+          </article>
+        );
+      })
+    )}
+  </div>
+</div>
+
+<script>
+  // Timeline Search Filter
+  const searchInput = document.getElementById('timeline-search') as HTMLInputElement | null;
+  const cards = document.querySelectorAll<HTMLElement>('.timeline-card');
+
+  searchInput?.addEventListener('input', () => {
+    const query = (searchInput.value || '').toLowerCase().trim();
+
+    cards.forEach((card) => {
+      const title = (card.getAttribute('data-title') || '').toLowerCase();
+      const desc = (card.getAttribute('data-description') || '').toLowerCase();
+      const person = (card.getAttribute('data-person') || '').toLowerCase();
+
+      if (!query || title.includes(query) || desc.includes(query) || person.includes(query)) {
+        card.classList.remove('hidden');
+      } else {
+        card.classList.add('hidden');
+      }
+    });
+  });
+</script>

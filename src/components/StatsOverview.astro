@@ -1,0 +1,173 @@
+---
+import type { PersonStats, ShameIncident } from '../data/types';
+import Icon from './Icon.astro';
+import Avatar from './Avatar.astro';
+
+interface Props {
+  rankedPersons: PersonStats[];
+  incidents: ShameIncident[];
+}
+
+const { rankedPersons, incidents } = Astro.props;
+
+const totalIncidents = incidents.length;
+const totalPersons = rankedPersons.length;
+const avgPerPerson = totalPersons > 0 ? (totalIncidents / totalPersons).toFixed(1) : '0';
+const topPerson = rankedPersons[0];
+const maxCount = topPerson ? Math.max(topPerson.totalCount, 1) : 1;
+
+// Recent incidents (top 5)
+const sortedIncidents = [...incidents].sort(
+  (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+);
+const recentIncidents = sortedIncidents.slice(0, 5);
+const personMap = new Map(rankedPersons.map((p) => [p.id, p]));
+---
+
+<div class="space-y-6">
+  <!-- Key Metrics (MD3 Elevated Cards) -->
+  <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+    <!-- Total Blunders -->
+    <div class="p-5 rounded-md-2xl bg-md-surface-container-low border border-md-outline-variant/30 shadow-md-1">
+      <div class="text-xs font-semibold text-md-primary mb-1 flex items-center gap-1.5">
+        <Icon name="chart" class="w-3.5 h-3.5" />
+        <span>累计次数</span>
+      </div>
+      <div class="text-3xl sm:text-4xl font-black text-md-on-surface">
+        {totalIncidents} <span class="text-xs font-normal text-md-on-surface-variant">次</span>
+      </div>
+      <div class="text-[11px] text-md-on-surface-variant mt-2">
+        由团队持续登记收录
+      </div>
+    </div>
+
+    <!-- Top Offender -->
+    <div class="p-5 rounded-md-2xl bg-md-surface-container-low border border-md-outline-variant/30 shadow-md-1">
+      <div class="text-xs font-semibold text-md-secondary mb-1 flex items-center gap-1.5">
+        <Icon name="crown" class="w-3.5 h-3.5" />
+        <span>榜一霸主</span>
+      </div>
+      <div class="text-xl sm:text-2xl font-bold text-md-secondary truncate">
+        {topPerson ? topPerson.name : '暂无'}
+      </div>
+      <div class="text-[11px] text-md-on-surface-variant mt-2 truncate">
+        累计 {topPerson?.totalCount || 0} 次
+      </div>
+    </div>
+
+    <!-- Total Persons -->
+    <div class="p-5 rounded-md-2xl bg-md-surface-container-low border border-md-outline-variant/30 shadow-md-1">
+      <div class="text-xs font-semibold text-md-secondary mb-1 flex items-center gap-1.5">
+        <Icon name="medal" class="w-3.5 h-3.5" />
+        <span>上榜猪猪</span>
+      </div>
+      <div class="text-3xl sm:text-4xl font-black text-md-on-surface">
+        {totalPersons} <span class="text-xs font-normal text-md-on-surface-variant">只</span>
+      </div>
+      <div class="text-[11px] text-md-on-surface-variant mt-2">
+        榜上有名共勉前行
+      </div>
+    </div>
+
+    <!-- Avg Blunders -->
+    <div class="p-5 rounded-md-2xl bg-md-surface-container-low border border-md-outline-variant/30 shadow-md-1">
+      <div class="text-xs font-semibold text-md-primary mb-1 flex items-center gap-1.5">
+        <Icon name="sparkles" class="w-3.5 h-3.5" />
+        <span>人均犯蠢次数</span>
+      </div>
+      <div class="text-3xl sm:text-4xl font-black text-md-on-surface">
+        {avgPerPerson} <span class="text-xs font-normal text-md-on-surface-variant">次/人</span>
+      </div>
+      <div class="text-[11px] text-md-on-surface-variant mt-2">
+        全员共同平摊的喜悦
+      </div>
+    </div>
+  </div>
+
+  <!-- Detailed Panels (MD3 Cards) -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <!-- Blunder Counts Distribution by Person -->
+    <div class="p-6 rounded-md-2xl bg-md-surface-container-low border border-md-outline-variant/30 shadow-md-1">
+      <h3 class="font-bold text-base text-md-on-surface mb-4 flex items-center gap-2">
+        <Icon name="chart" class="w-4 h-4 text-md-on-surface" />
+        <span>成员犯蠢次数分布</span>
+      </h3>
+      <div class="space-y-3.5">
+        {rankedPersons.length === 0 ? (
+          <div class="py-8 text-center text-xs text-md-on-surface-variant">
+            暂无猪猪数据
+          </div>
+        ) : (
+          rankedPersons.map((p) => {
+            const percentage = Math.round((p.totalCount / maxCount) * 100);
+
+            return (
+              <div>
+                <div class="flex items-center justify-between text-xs mb-1.5">
+                  <span class="text-md-on-surface flex items-center gap-2 font-medium">
+                    <Avatar avatar={p.avatar} name={p.name} sizeClass="w-5 h-5 text-[10px]" />
+                    <span>{p.name}</span>
+                  </span>
+                  <span class="text-md-on-surface-variant font-mono font-bold">
+                    {p.totalCount} 次
+                  </span>
+                </div>
+                <div class="w-full h-2 rounded-md-full bg-md-surface-container-highest overflow-hidden">
+                  <div
+                    class="h-full rounded-md-full bg-md-secondary transition-all duration-500"
+                    style={`width: ${percentage}%`}
+                  ></div>
+                </div>
+              </div>
+            );
+          })
+        )}
+      </div>
+    </div>
+
+    <!-- Recent Incident Stream -->
+    <div class="p-6 rounded-md-2xl bg-md-surface-container-low border border-md-outline-variant/30 shadow-md-1 flex flex-col justify-between">
+      <div>
+        <h3 class="font-bold text-base text-md-on-surface mb-4 flex items-center gap-2">
+          <Icon name="timeline" class="w-4 h-4 text-md-on-surface" />
+          <span>最新录入事件简报</span>
+        </h3>
+        <div class="space-y-3">
+          {recentIncidents.length === 0 ? (
+            <div class="py-8 text-center text-xs text-md-on-surface-variant">
+              暂无翻车事件记录
+            </div>
+          ) : (
+            recentIncidents.map((inc) => {
+              const p = personMap.get(inc.personId);
+              return (
+                <div class="p-3 rounded-md-xl bg-md-surface-container border border-md-outline-variant/20 flex items-start justify-between gap-3">
+                  <div class="min-w-0">
+                    <div class="flex items-center gap-2 mb-1">
+                      {p && (
+                        <span class="text-xs font-bold text-md-on-surface">
+                          {p.name}
+                        </span>
+                      )}
+                      <span class="text-[11px] font-mono text-md-on-surface-variant">
+                        {inc.date}
+                      </span>
+                    </div>
+                    <div class="text-xs font-medium text-md-on-surface truncate">
+                      {inc.title}
+                    </div>
+                  </div>
+                </div>
+              );
+            })
+          )}
+        </div>
+      </div>
+
+      <div class="mt-6 pt-4 border-t border-md-outline-variant/20 text-xs text-md-on-surface-variant text-center flex items-center justify-center gap-1.5">
+        <Icon name="info" class="w-3.5 h-3.5" />
+        <span>纯按实际犯蠢次数统计，公平公正</span>
+      </div>
+    </div>
+  </div>
+</div>

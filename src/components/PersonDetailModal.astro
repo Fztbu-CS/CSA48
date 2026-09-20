@@ -1,0 +1,156 @@
+---
+import type { PersonStats } from '../data/types';
+import Icon from './Icon.astro';
+
+interface Props {
+  persons: PersonStats[];
+}
+
+const { persons } = Astro.props;
+---
+
+<dialog
+  id="person-detail-dialog"
+  class="bg-transparent p-4 w-full max-w-2xl rounded-md-2xl text-md-on-surface outline-none m-auto"
+>
+  <div class="bg-md-surface-container-high border border-md-outline-variant/30 rounded-md-2xl p-6 sm:p-8 shadow-md-3 relative max-h-[85vh] flex flex-col">
+    <!-- MD3 Header with Person Info -->
+    <div class="flex items-start justify-between pb-4 border-b border-md-outline-variant/20 shrink-0">
+      <div class="flex items-center gap-4">
+        <div id="modal-person-avatar" class="w-16 h-16 rounded-md-xl bg-md-surface-container-highest border border-md-outline-variant/30 flex items-center justify-center text-2xl font-black text-md-on-surface shadow-inner overflow-hidden">
+          张
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h2 id="modal-person-name" class="text-xl sm:text-2xl font-bold text-md-on-surface">
+              猪猪姓名
+            </h2>
+            <span id="modal-person-rank" class="text-xs px-2.5 py-0.5 rounded-md-full bg-md-secondary-container text-md-on-secondary-container font-bold">
+              #1
+            </span>
+          </div>
+        </div>
+      </div>
+      <button
+        id="close-person-modal"
+        class="w-9 h-9 rounded-md-full bg-md-surface-container hover:bg-md-surface-container-highest text-md-on-surface-variant hover:text-md-on-surface flex items-center justify-center transition-colors text-base shrink-0"
+      >
+        <Icon name="close" class="w-4 h-4" />
+      </button>
+    </div>
+
+    <!-- Stats Summary Tonal Bar -->
+    <div class="flex items-center justify-between my-4 p-3.5 px-6 rounded-md-xl bg-md-surface-container border border-md-outline-variant/20 shrink-0">
+      <div>
+        <div class="text-xs text-md-on-surface font-medium">累计</div>
+        <div class="text-[11px] text-md-on-surface-variant mt-0.5">档案卷宗经大伙核实登记</div>
+      </div>
+      <div id="modal-person-count" class="text-2xl font-black text-md-primary">0 次</div>
+    </div>
+
+    <!-- Scrollable Incidents List -->
+    <div class="overflow-y-auto space-y-3 pr-1 flex-1">
+      <div class="text-xs font-bold text-md-on-surface-variant uppercase tracking-wider flex items-center gap-1.5 mb-2">
+        <Icon name="file-text" class="w-3.5 h-3.5" />
+        <span>完整作案卷宗列表</span>
+      </div>
+
+      <div id="modal-incidents-container" class="space-y-3">
+        <!-- Injected via client JS -->
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<script define:vars={{ personsData: persons }}>
+  const personModal = document.getElementById('person-detail-dialog');
+  const closeBtn = document.getElementById('close-person-modal');
+  const avatarEl = document.getElementById('modal-person-avatar');
+  const nameEl = document.getElementById('modal-person-name');
+  const rankEl = document.getElementById('modal-person-rank');
+  const countEl = document.getElementById('modal-person-count');
+  const incidentsContainer = document.getElementById('modal-incidents-container');
+
+  closeBtn?.addEventListener('click', () => {
+    personModal?.close();
+  });
+
+  personModal?.addEventListener('click', (e) => {
+    if (e.target === personModal) {
+      personModal.close();
+    }
+  });
+
+  // Global listener for "view-person-btn"
+  document.addEventListener('click', (e) => {
+    const target = e.target.closest('.view-person-btn');
+    if (!target) return;
+
+    const personId = target.getAttribute('data-person-id');
+    const person = personsData.find((p) => p.id === personId);
+    if (!person || !personModal) return;
+
+    // Fill Header
+    if (avatarEl) {
+      const isImg = person.avatar && (
+        person.avatar.startsWith('http://') ||
+        person.avatar.startsWith('https://') ||
+        person.avatar.startsWith('data:image/') ||
+        person.avatar.startsWith('/') ||
+        person.avatar.endsWith('.png') ||
+        person.avatar.endsWith('.jpg') ||
+        person.avatar.endsWith('.jpeg') ||
+        person.avatar.endsWith('.webp')
+      );
+      if (isImg) {
+        let src = person.avatar;
+        const baseUrl = window.location.pathname.startsWith('/CSA48') ? '/CSA48/' : '/';
+        if (src.startsWith('/')) {
+          src = baseUrl.replace(/\/$/, '') + src;
+        }
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = person.name || '头像';
+        img.className = 'w-full h-full object-cover';
+        img.onerror = function () {
+          avatarEl.textContent = person.name ? person.name[0] : '?';
+        };
+        avatarEl.innerHTML = '';
+        avatarEl.appendChild(img);
+      } else {
+        avatarEl.textContent = person.avatar || (person.name ? person.name[0] : '?');
+      }
+    }
+    if (nameEl) nameEl.textContent = person.name;
+    if (rankEl) rankEl.textContent = `#${person.rank || 'N/A'}`;
+    if (countEl) countEl.textContent = `${person.totalCount} 次`;
+
+    // Fill Incidents
+    if (incidentsContainer) {
+      incidentsContainer.innerHTML = '';
+      if (!person.incidents || person.incidents.length === 0) {
+        incidentsContainer.innerHTML = '<div class="text-md-on-surface-variant text-xs py-8 text-center">暂无翻车案底</div>';
+      } else {
+        person.incidents.forEach((inc) => {
+          const itemEl = document.createElement('div');
+          itemEl.className = 'p-4 rounded-md-xl bg-md-surface-container-low border border-md-outline-variant/30 space-y-2';
+          itemEl.innerHTML = `
+            <div class="flex items-center justify-between text-xs gap-2">
+              <span class="font-mono text-md-on-surface-variant inline-flex items-center gap-1.5 bg-md-surface-container-high px-2.5 py-1 rounded-md-full border border-md-outline-variant/20">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2" /><line x1="16" x2="16" y1="2" y2="6" /><line x1="8" x2="8" y1="2" y2="6" /><line x1="3" x2="21" y1="10" y2="10" /></svg>
+                ${inc.date}
+              </span>
+            </div>
+            <h4 class="font-bold text-sm text-md-on-surface">${inc.title}</h4>
+            <p class="text-xs text-md-on-surface/90 leading-relaxed bg-md-surface-container-lowest/60 p-2.5 rounded-md-lg border border-md-outline-variant/20">
+              ${inc.description}
+            </p>
+          `;
+          incidentsContainer.appendChild(itemEl);
+        });
+      }
+    }
+
+    personModal.showModal();
+  });
+</script>
