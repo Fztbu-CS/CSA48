@@ -19,7 +19,7 @@ pnpm dev
 pnpm admin
 ```
 
-### 猪部署
+## 猪部署
 
 1. **创建 GitHub 仓库并推送代码**：
    ```bash
