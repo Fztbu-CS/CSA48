@@ -1,7 +1,7 @@
 ---
 import type { ShameIncident, Person } from '../data/types';
 import Icon from './Icon.astro';
-import Avatar from './Avatar.astro';
+import { resolveAvatar } from '../utils/avatar';
 
 interface Props {
   incidents: ShameIncident[];
@@ -10,88 +10,100 @@ interface Props {
 
 const { incidents, persons } = Astro.props;
 
-// Sort incidents by date descending
+// 按日期倒序
 const sortedIncidents = [...incidents].sort(
   (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
 );
 
-// Map persons for quick lookup
 const personMap = new Map(persons.map((p) => [p.id, p]));
 ---
 
 <div class="space-y-6">
-  <!-- MD3 Search Bar -->
-  <div class="flex items-center justify-between gap-3 bg-md-surface-container-low p-3 rounded-md-2xl border border-md-outline-variant/30 shadow-md-1">
-    <div class="relative w-full sm:w-80">
-      <input
-        type="text"
-        id="timeline-search"
-        placeholder="搜索历史事件、猪猪..."
-        class="w-full h-11 bg-md-surface-container-high border border-transparent rounded-md-full px-4 pl-10 text-xs sm:text-sm text-md-on-surface placeholder-md-on-surface-variant/70 focus:outline-none focus:border-md-primary/60 focus:bg-md-surface-container-highest transition-all"
-      />
-      <div class="absolute left-3.5 top-1/2 -translate-y-1/2 text-md-on-surface-variant">
-        <Icon name="search" class="w-4 h-4" />
+  <!-- 搜索 -->
+  <div class="card card-bordered bg-base-200 shadow-sm">
+    <div class="card-body p-3 gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <label class="input input-bordered flex w-full items-center gap-2 bg-base-100 sm:w-80">
+        <Icon name="search" class="w-4 h-4 opacity-60" />
+        <input id="timeline-search" type="text" class="grow" placeholder="搜索历史事件、猪猪..." />
+      </label>
+      <div class="hidden text-xs text-base-content/60 pr-2 sm:block">
+        共记录 {sortedIncidents.length} 起翻车历史
       </div>
-    </div>
-    <div class="text-xs text-md-on-surface-variant pr-2 hidden sm:block">
-      共记录 {sortedIncidents.length} 起翻车历史
     </div>
   </div>
 
-  <!-- Timeline Feed (MD3 Cards) -->
-  <div id="timeline-list" class="space-y-4">
-    {sortedIncidents.length === 0 ? (
-      <div class="text-center py-12 px-4 bg-md-surface-container-low rounded-md-2xl border border-md-outline-variant/30 shadow-sm">
-        <div class="w-12 h-12 mx-auto mb-2.5 rounded-full bg-md-surface-container-highest flex items-center justify-center text-md-on-surface-variant/40">
-          <Icon name="timeline" class="w-6 h-6" />
-        </div>
-        <p class="text-sm font-semibold text-md-on-surface">暂无翻车历史记录</p>
-        <p class="text-xs text-md-on-surface-variant mt-1">目前暂无任何案件发生，岁月静好~</p>
+  <!-- 时间线 -->
+  {sortedIncidents.length === 0 ? (
+    <div class="card card-bordered bg-base-200 shadow-sm">
+      <div class="card-body items-center py-12 text-center">
+        <Icon name="timeline" class="w-8 h-8 text-base-content/30" />
+        <p class="text-sm font-semibold">暂无翻车历史记录</p>
+        <p class="text-xs text-base-content/60">目前暂无任何案件发生，岁月静好~</p>
       </div>
-    ) : (
-      sortedIncidents.map((incident) => {
+    </div>
+  ) : (
+    <ul id="timeline-list" class="timeline timeline-vertical">
+      {sortedIncidents.map((incident, index) => {
         const person = personMap.get(incident.personId);
+        const avatar = person ? resolveAvatar(person.avatar, person.name) : null;
+        const isLast = index === sortedIncidents.length - 1;
 
         return (
-          <article
-            class="timeline-card rounded-md-2xl p-5 sm:p-6 transition-all bg-md-surface-container-low border border-md-outline-variant/30 shadow-md-1 hover:shadow-md-2 hover:bg-md-surface-container"
-            data-title={incident.title}
-            data-description={incident.description}
-            data-person={person?.name || ''}
-          >
-            <!-- Top Row: Person info & Date Badge -->
-            <div class="flex items-center justify-between gap-3 mb-3">
-              {person && (
-                <div class="flex items-center gap-2.5">
-                  <Avatar avatar={person.avatar} name={person.name} sizeClass="w-8 h-8 text-xs" />
-                  <span class="font-bold text-sm text-md-on-surface">{person.name}</span>
-                </div>
-              )}
-
-              <span class="inline-flex items-center gap-1.5 text-xs font-mono text-md-on-surface-variant bg-md-surface-container-high px-2.5 py-1 rounded-md-full border border-md-outline-variant/20 shrink-0">
+          <li>
+            <div class="timeline-start">
+              <span class="badge badge-ghost gap-1.5 font-mono">
                 <Icon name="calendar" class="w-3.5 h-3.5" />
                 <span>{incident.date}</span>
               </span>
             </div>
 
-            <!-- Incident Title -->
-            <h3 class="text-base sm:text-lg font-bold text-md-on-surface mb-2 leading-snug">
-              {incident.title}
-            </h3>
+            <div class="timeline-middle">
+              <Icon name="timeline" class="w-4 h-4 text-primary" />
+            </div>
 
-            <!-- Incident Description -->
-            <p class="text-sm text-md-on-surface/90 leading-relaxed bg-md-surface-container-lowest/60 p-3.5 rounded-md-xl border border-md-outline-variant/20">
-              {incident.description}
-            </p>
-          </article>
+            <div
+              class="timeline-end timeline-box timeline-card w-full p-4 sm:p-5"
+              data-title={incident.title}
+              data-description={incident.description}
+              data-person={person?.name || ''}
+            >
+              <!-- 猪猪信息 -->
+              {person && (
+                <div class="mb-3 flex items-center gap-2.5">
+                  <div class="avatar placeholder shrink-0">
+                    <div class="w-8 rounded-lg bg-neutral text-neutral-content text-xs font-bold">
+                      {avatar?.src ? (
+                        <img
+                          src={avatar.src}
+                          alt={person.name}
+                          onerror={`this.parentElement.textContent='${avatar.fallback}'`}
+                        />
+                      ) : (
+                        <span>{avatar?.fallback}</span>
+                      )}
+                    </div>
+                  </div>
+                  <span class="text-sm font-bold">{person.name}</span>
+                </div>
+              )}
+
+              <h3 class="mb-2 text-base font-bold leading-snug sm:text-lg">{incident.title}</h3>
+
+              <p class="rounded-box border border-base-300 bg-base-200/60 p-3.5 text-sm leading-relaxed">
+                {incident.description}
+              </p>
+            </div>
+
+            {!isLast && <hr class="bg-primary/40" />}
+          </li>
         );
-      })
-    )}
-  </div>
+      })}
+    </ul>
+  )}
 </div>
 
 <script>
-  // Timeline Search Filter
+  // 时间线搜索过滤
   const searchInput = document.getElementById('timeline-search') as HTMLInputElement | null;
   const cards = document.querySelectorAll<HTMLElement>('.timeline-card');
 
@@ -103,11 +115,9 @@ const personMap = new Map(persons.map((p) => [p.id, p]));
       const desc = (card.getAttribute('data-description') || '').toLowerCase();
       const person = (card.getAttribute('data-person') || '').toLowerCase();
 
-      if (!query || title.includes(query) || desc.includes(query) || person.includes(query)) {
-        card.classList.remove('hidden');
-      } else {
-        card.classList.add('hidden');
-      }
+      const matched = !query || title.includes(query) || desc.includes(query) || person.includes(query);
+      card.classList.toggle('hidden', !matched);
+      (card.parentElement as HTMLElement | null)?.classList.toggle('hidden', !matched);
     });
   });
 </script>

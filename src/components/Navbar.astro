@@ -2,108 +2,84 @@
 import Icon from './Icon.astro';
 ---
 
-<header class="sticky top-0 z-40 w-full bg-md-surface/90 backdrop-blur-md border-b border-md-outline-variant/40 transition-colors">
-  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3">
-    <!-- Brand (Leading) -->
-    <div class="flex items-center gap-2.5 sm:gap-3 shrink-0 z-10">
-      <div class="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center shrink-0">
-        <Icon name="pig" class="w-8 h-8 sm:w-9 sm:h-9" />
-      </div>
-      <div class="hidden min-[380px]:block">
-        <div class="flex items-center gap-1.5">
-          <span class="text-sm sm:text-base font-bold text-md-on-surface tracking-normal">
-            !?猪猪?!
-          </span>
-        </div>
-        <p class="text-[11px] text-md-on-surface-variant hidden sm:block">!?者者?!</p>
-      </div>
-    </div>
+<div class="navbar sticky top-0 z-40 min-h-16 gap-2 border-b border-base-300 bg-base-100/90 px-2 backdrop-blur-md sm:px-4">
+  <!-- Brand -->
+  <div class="navbar-start">
+    <a href="." class="btn btn-ghost gap-2 px-1.5 sm:px-3">
+      <Icon name="pig" class="w-8 h-8 shrink-0 sm:w-9 sm:h-9" />
+      <span class="flex flex-col items-start leading-tight">
+        <span class="text-sm font-bold sm:text-base">!?猪猪?!</span>
+        <span class="hidden text-[11px] font-normal text-base-content/60 sm:block">!?者者?!</span>
+      </span>
+    </a>
+  </div>
 
-    <!-- MD3 Segmented Button Navigation (Center) -->
-    <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-      <nav class="pointer-events-auto flex items-center p-1 rounded-md-full bg-md-surface-container border border-md-outline-variant/50 text-xs sm:text-sm font-medium shadow-sm">
-        <button
-          id="tab-btn-podium"
-          class="tab-btn md-state-layer px-3 sm:px-3.5 py-1.5 rounded-md-full transition-all text-md-on-secondary-container bg-md-secondary-container font-semibold flex items-center gap-1.5 sm:gap-2 shadow-sm"
-          data-target="view-leaderboard"
-        >
-          <Icon name="trophy" class="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-          <span>猪排行</span>
-        </button>
-        <button
-          id="tab-btn-timeline"
-          class="tab-btn md-state-layer px-3 sm:px-3.5 py-1.5 rounded-md-full transition-all text-md-on-surface-variant hover:text-md-on-surface flex items-center gap-1.5 sm:gap-2"
-          data-target="view-timeline"
-        >
-          <Icon name="timeline" class="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-          <span>猪记录</span>
-        </button>
-      </nav>
-    </div>
-
-    <!-- MD3 Actions (Trailing: Theme Toggle only, pure display) -->
-    <div class="flex items-center shrink-0 z-10">
-      <!-- Light / Dark Mode Toggle Button -->
+  <!-- 视图切换 Tabs -->
+  <div class="navbar-center">
+    <div id="view-tabs" class="tabs tabs-boxed bg-base-200">
       <button
-        id="theme-toggle-btn"
         type="button"
-        title="切换明暗主题"
-        aria-label="切换明暗主题"
-        class="md-state-layer w-9 h-9 sm:w-10 sm:h-10 rounded-md-full bg-md-surface-container hover:bg-md-surface-container-high border border-md-outline-variant/40 flex items-center justify-center text-md-on-surface transition-colors shadow-sm"
+        class="tab tab-active gap-1.5 text-xs sm:text-sm"
+        data-target="view-leaderboard"
       >
-        <span class="hidden dark:block">
-          <Icon name="sun" class="w-4 h-4 text-md-secondary" />
-        </span>
-        <span class="block dark:hidden">
-          <Icon name="moon" class="w-4 h-4 text-md-primary" />
-        </span>
+        <Icon name="trophy" class="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+        <span>猪排行</span>
+      </button>
+      <button type="button" class="tab gap-1.5 text-xs sm:text-sm" data-target="view-timeline">
+        <Icon name="timeline" class="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+        <span>猪记录</span>
       </button>
     </div>
   </div>
-</header>
+
+  <!-- 明暗主题切换 -->
+  <div class="navbar-end">
+    <button
+      id="theme-toggle-btn"
+      type="button"
+      class="btn btn-ghost btn-circle"
+      title="切换明暗主题"
+      aria-label="切换明暗主题"
+    >
+      <span id="theme-icon-dark" class="hidden"><Icon name="sun" class="w-5 h-5" /></span>
+      <span id="theme-icon-light"><Icon name="moon" class="w-5 h-5" /></span>
+    </button>
+  </div>
+</div>
 
 <script>
-  // Tab controller for MD3 Segmented Buttons
-  const tabButtons = document.querySelectorAll<HTMLButtonElement>('.tab-btn');
+  // 视图切换
+  const tabs = document.querySelectorAll<HTMLButtonElement>('#view-tabs .tab');
   const views = ['view-leaderboard', 'view-timeline'];
 
-  tabButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const targetView = btn.getAttribute('data-target');
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      const targetView = tab.getAttribute('data-target');
       if (!targetView) return;
 
-      // Update button styles to MD3 active/inactive states
-      tabButtons.forEach(b => {
-        b.classList.remove('text-md-on-secondary-container', 'bg-md-secondary-container', 'font-semibold', 'shadow-sm');
-        b.classList.add('text-md-on-surface-variant');
-      });
-      btn.classList.add('text-md-on-secondary-container', 'bg-md-secondary-container', 'font-semibold', 'shadow-sm');
-      btn.classList.remove('text-md-on-surface-variant');
-
-      // Update views
-      views.forEach(viewId => {
-        const el = document.getElementById(viewId);
-        if (el) {
-          if (viewId === targetView) {
-            el.classList.remove('hidden');
-          } else {
-            el.classList.add('hidden');
-          }
-        }
+      tabs.forEach((item) => item.classList.toggle('tab-active', item === tab));
+      views.forEach((viewId) => {
+        document.getElementById(viewId)?.classList.toggle('hidden', viewId !== targetView);
       });
     });
   });
 
-  // Light / Dark Theme Switcher
-  const themeToggleBtn = document.getElementById('theme-toggle-btn');
-  themeToggleBtn?.addEventListener('click', () => {
-    const isDark = document.documentElement.classList.contains('dark');
-    if (isDark) {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-    } else {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    }
+  // 明暗主题切换（daisyUI data-theme）
+  const themeToggle = document.getElementById('theme-toggle-btn');
+  const darkIcon = document.getElementById('theme-icon-dark');
+  const lightIcon = document.getElementById('theme-icon-light');
+
+  function syncThemeIcons(theme: string) {
+    darkIcon?.classList.toggle('hidden', theme !== 'dark');
+    lightIcon?.classList.toggle('hidden', theme === 'dark');
+  }
+
+  syncThemeIcons(document.documentElement.getAttribute('data-theme') || 'light');
+
+  themeToggle?.addEventListener('click', () => {
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+    syncThemeIcons(theme);
   });
 </script>
