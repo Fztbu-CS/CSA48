@@ -94,8 +94,8 @@ const server = http.createServer(async (req, res) => {
     }
   }
 
-  // Static: Public files (GET /avatars/*, /pig.svg, /favicon.svg)
-  if (pathname.startsWith('/avatars/') || pathname === '/pig.svg' || pathname === '/favicon.svg') {
+  // Static: Public files (GET /avatars/*, /pig.svg)
+  if (pathname.startsWith('/avatars/') || pathname === '/pig.svg') {
     const targetFile = pathname.startsWith('/avatars/')
       ? path.join(AVATARS_DIR, path.basename(pathname))
       : path.join(rootDir, 'public', path.basename(pathname));
