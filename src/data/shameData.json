@@ -115,6 +115,39 @@
   ],
   "incidents": [
     {
+      "id": "inc-mufn2kyc",
+      "personId": "p_mua5km4r",
+      "title": "50 多个 Controller，仅 3 个 DTO，服务层未做分层,真神了",
+      "description": "项目写了五十多个 Controller，只定义了 3 个 DTO 对象，并且 Server 层没有做分层，代码全部堆在一起 真神",
+      "date": "2026-09-24",
+      "severity": 3,
+      "category": "code",
+      "witnesses": [],
+      "tags": []
+    },
+    {
+      "id": "inc-mufn1ky8",
+      "personId": "p_mua5km4r",
+      "title": "没有按项目使用开发框架,喜欢造轮子",
+      "description": "写代码没有遵守项目框架规范，自己手写一套逻辑，和团队统一写法不一致，后续不好维护",
+      "date": "2026-09-24",
+      "severity": 3,
+      "category": "code",
+      "witnesses": [],
+      "tags": []
+    },
+    {
+      "id": "inc-mufn0pql",
+      "personId": "p_mua5km4r",
+      "title": "用派大星名字邮箱提交 Git 代码",
+      "description": "提交 git 的时候，用户名和邮箱没切到工作账号，用了派大星的昵称和私人邮箱提交代码，被代码审查一眼抓到。",
+      "date": "2026-09-24",
+      "severity": 3,
+      "category": "code",
+      "witnesses": [],
+      "tags": []
+    },
+    {
       "id": "inc-mua5wfxt",
       "personId": "p_mua5l5q6",
       "title": "拉错仓库第三次",
