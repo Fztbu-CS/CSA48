@@ -17,19 +17,21 @@ const top3 = rankedPersons.slice(0, 3);
 <Layout>
   <Navbar />
 
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 w-full space-y-8">
-    <!-- Podium Section (Top 3) -->
+  <main class="mx-auto max-w-7xl w-full flex-1 px-4 py-6 sm:px-6 lg:px-8 space-y-8">
+    <!-- Podium -->
     <Podium top3={top3} />
 
-    <!-- Views Container -->
+    <!-- View Container -->
     <div class="relative pt-2">
-      <!-- View 1: Leaderboard (Default) -->
+      <!-- View 1: Leaderboard (猪排行) -->
       <section id="view-leaderboard" class="transition-opacity duration-200">
-        <div class="flex items-center justify-between mb-4">
+        <div class="mb-4 flex items-center justify-between">
           <div class="flex items-center gap-2">
-            <Icon name="trophy" class="w-5 h-5 text-md-secondary" />
-            <h2 class="text-lg sm:text-xl font-bold text-md-on-surface tracking-tight">猪排行</h2>
-            <span class="text-xs px-2.5 py-0.5 rounded-md-full bg-md-surface-container-high text-md-on-surface-variant border border-md-outline-variant/30 font-medium">
+            <div class="flex h-8 w-8 items-center justify-center rounded-full bg-md-secondary-container text-md-on-secondary-container">
+              <Icon name="trophy" class="h-4 w-4" />
+            </div>
+            <h2 class="text-lg font-bold tracking-tight text-md-on-surface sm:text-xl">猪排行</h2>
+            <span class="rounded-md-full border border-md-outline-variant/30 bg-md-surface-container-high px-2.5 py-0.5 text-xs font-medium text-md-on-surface-variant">
               共 {rankedPersons.length} 只猪猪
             </span>
           </div>
@@ -37,13 +39,15 @@ const top3 = rankedPersons.slice(0, 3);
         <Leaderboard rankedPersons={rankedPersons} />
       </section>
 
-      <!-- View 2: Timeline (Chronicles) -->
+      <!-- View 2: Timeline (猪记录) -->
       <section id="view-timeline" class="hidden transition-opacity duration-200">
-        <div class="flex items-center justify-between mb-4">
+        <div class="mb-4 flex items-center justify-between">
           <div class="flex items-center gap-2">
-            <Icon name="timeline" class="w-5 h-5 text-md-secondary" />
-            <h2 class="text-lg sm:text-xl font-bold text-md-on-surface tracking-tight">猪记录</h2>
-            <span class="text-xs px-2.5 py-0.5 rounded-md-full bg-md-surface-container-high text-md-on-surface-variant border border-md-outline-variant/30 font-medium">
+            <div class="flex h-8 w-8 items-center justify-center rounded-full bg-md-secondary-container text-md-on-secondary-container">
+              <Icon name="timeline" class="h-4 w-4" />
+            </div>
+            <h2 class="text-lg font-bold tracking-tight text-md-on-surface sm:text-xl">猪记录</h2>
+            <span class="rounded-md-full border border-md-outline-variant/30 bg-md-surface-container-high px-2.5 py-0.5 text-xs font-medium text-md-on-surface-variant">
               共 {totalIncidents} 起案件
             </span>
           </div>
@@ -53,6 +57,6 @@ const top3 = rankedPersons.slice(0, 3);
     </div>
   </main>
 
-  <!-- Person Details Modal -->
+  <!-- Person Detail Modal -->
   <PersonDetailModal persons={rankedPersons} />
 </Layout>

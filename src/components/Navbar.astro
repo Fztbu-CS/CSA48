@@ -2,108 +2,219 @@
 import Icon from './Icon.astro';
 ---
 
-<header class="sticky top-0 z-40 w-full bg-md-surface/90 backdrop-blur-md border-b border-md-outline-variant/40 transition-colors">
-  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3">
-    <!-- Brand (Leading) -->
-    <div class="flex items-center gap-2.5 sm:gap-3 shrink-0 z-10">
-      <div class="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center shrink-0">
-        <Icon name="pig" class="w-8 h-8 sm:w-9 sm:h-9" />
-      </div>
-      <div class="hidden min-[380px]:block">
-        <div class="flex items-center gap-1.5">
-          <span class="text-sm sm:text-base font-bold text-md-on-surface tracking-normal">
-            !?猪猪?!
-          </span>
+<header class="sticky top-0 z-40 border-b border-md-outline-variant/30 bg-md-surface/90 backdrop-blur-md transition-colors duration-200">
+  <div class="mx-auto flex h-16 max-w-7xl items-center justify-between gap-3 px-3 sm:h-20 sm:px-6">
+    <!-- Brand (Start) -->
+    <div class="flex items-center gap-3">
+      <a href="." class="group flex items-center gap-2.5 rounded-md-full p-1.5 transition-colors hover:bg-md-on-surface/8">
+        <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-md-xl bg-md-primary-container text-md-on-primary-container shadow-md-1 transition-transform group-hover:scale-105">
+          <Icon name="pig" class="h-6 w-6" />
         </div>
-        <p class="text-[11px] text-md-on-surface-variant hidden sm:block">!?者者?!</p>
-      </div>
+        <div class="flex flex-col leading-tight">
+          <span class="text-base font-bold tracking-tight text-md-on-surface sm:text-lg">!?猪猪?!</span>
+          <span class="hidden text-[11px] font-medium text-md-on-surface-variant sm:block">!?者者?! · 排行榜</span>
+        </div>
+      </a>
     </div>
 
-    <!-- MD3 Segmented Button Navigation (Center) -->
-    <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-      <nav class="pointer-events-auto flex items-center p-1 rounded-md-full bg-md-surface-container border border-md-outline-variant/50 text-xs sm:text-sm font-medium shadow-sm">
+    <!-- M3 Segmented Buttons (Center) -->
+    <nav class="flex items-center">
+      <div id="view-tabs" class="flex items-center rounded-md-full border border-md-outline-variant/30 bg-md-surface-container-high p-1 shadow-sm">
         <button
-          id="tab-btn-podium"
-          class="tab-btn md-state-layer px-3 sm:px-3.5 py-1.5 rounded-md-full transition-all text-md-on-secondary-container bg-md-secondary-container font-semibold flex items-center gap-1.5 sm:gap-2 shadow-sm"
+          type="button"
+          class="nav-tab tab-active flex items-center gap-1.5 rounded-md-full px-3.5 py-1.5 text-xs font-semibold text-md-on-secondary-container transition-all sm:px-4 sm:text-sm"
           data-target="view-leaderboard"
         >
-          <Icon name="trophy" class="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+          <Icon name="trophy" class="h-3.5 w-3.5 sm:h-4 sm:w-4" />
           <span>猪排行</span>
         </button>
         <button
-          id="tab-btn-timeline"
-          class="tab-btn md-state-layer px-3 sm:px-3.5 py-1.5 rounded-md-full transition-all text-md-on-surface-variant hover:text-md-on-surface flex items-center gap-1.5 sm:gap-2"
+          type="button"
+          class="nav-tab flex items-center gap-1.5 rounded-md-full px-3.5 py-1.5 text-xs font-medium text-md-on-surface-variant transition-all hover:bg-md-on-surface/5 hover:text-md-on-surface sm:px-4 sm:text-sm"
           data-target="view-timeline"
         >
-          <Icon name="timeline" class="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+          <Icon name="timeline" class="h-3.5 w-3.5 sm:h-4 sm:w-4" />
           <span>猪记录</span>
         </button>
-      </nav>
-    </div>
+      </div>
+    </nav>
 
-    <!-- MD3 Actions (Trailing: Theme Toggle only, pure display) -->
-    <div class="flex items-center shrink-0 z-10">
-      <!-- Light / Dark Mode Toggle Button -->
+    <!-- Controls (End) -->
+    <div class="flex items-center gap-1.5 sm:gap-2">
+      <!-- Material You Dynamic Palette Menu -->
+      <div class="relative">
+        <button
+          id="palette-toggle-btn"
+          type="button"
+          class="md-state-layer flex h-10 w-10 items-center justify-center rounded-md-full text-md-on-surface-variant transition-colors hover:bg-md-on-surface/8 hover:text-md-on-surface"
+          title="Material You 色彩主题"
+          aria-label="切换色彩主题"
+        >
+          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/>
+            <circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/>
+            <circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/>
+            <circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/>
+            <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>
+          </svg>
+        </button>
+
+        <!-- Palette Dropdown Popover -->
+        <div
+          id="palette-menu"
+          class="absolute right-0 top-12 hidden w-48 rounded-md-2xl border border-md-outline-variant/30 bg-md-surface-container-high p-2 shadow-md-3 z-50 animate-in fade-in zoom-in-95 duration-150"
+        >
+          <div class="px-2.5 py-1.5 text-[11px] font-bold uppercase tracking-wider text-md-on-surface-variant/80">
+            Material You 色盘
+          </div>
+          <div class="flex flex-col gap-1">
+            <button
+              type="button"
+              class="palette-option flex items-center gap-2.5 rounded-md-xl px-2.5 py-1.5 text-xs font-medium text-md-on-surface hover:bg-md-on-surface/8 transition-colors"
+              data-palette-value="rose"
+            >
+              <span class="h-4 w-4 rounded-full bg-[#984061] border border-white/20"></span>
+              <span>小猪粉 (默认)</span>
+            </button>
+            <button
+              type="button"
+              class="palette-option flex items-center gap-2.5 rounded-md-xl px-2.5 py-1.5 text-xs font-medium text-md-on-surface hover:bg-md-on-surface/8 transition-colors"
+              data-palette-value="sakura"
+            >
+              <span class="h-4 w-4 rounded-full bg-[#8f4a5d] border border-white/20"></span>
+              <span>樱花粉</span>
+            </button>
+            <button
+              type="button"
+              class="palette-option flex items-center gap-2.5 rounded-md-xl px-2.5 py-1.5 text-xs font-medium text-md-on-surface hover:bg-md-on-surface/8 transition-colors"
+              data-palette-value="green"
+            >
+              <span class="h-4 w-4 rounded-full bg-[#3b6939] border border-white/20"></span>
+              <span>鼠尾草绿</span>
+            </button>
+            <button
+              type="button"
+              class="palette-option flex items-center gap-2.5 rounded-md-xl px-2.5 py-1.5 text-xs font-medium text-md-on-surface hover:bg-md-on-surface/8 transition-colors"
+              data-palette-value="blue"
+            >
+              <span class="h-4 w-4 rounded-full bg-[#1e5fa0] border border-white/20"></span>
+              <span>海洋蓝</span>
+            </button>
+            <button
+              type="button"
+              class="palette-option flex items-center gap-2.5 rounded-md-xl px-2.5 py-1.5 text-xs font-medium text-md-on-surface hover:bg-md-on-surface/8 transition-colors"
+              data-palette-value="amber"
+            >
+              <span class="h-4 w-4 rounded-full bg-[#815500] border border-white/20"></span>
+              <span>夕阳琥珀</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Theme Switch (Dark/Light) -->
       <button
         id="theme-toggle-btn"
         type="button"
-        title="切换明暗主题"
-        aria-label="切换明暗主题"
-        class="md-state-layer w-9 h-9 sm:w-10 sm:h-10 rounded-md-full bg-md-surface-container hover:bg-md-surface-container-high border border-md-outline-variant/40 flex items-center justify-center text-md-on-surface transition-colors shadow-sm"
+        class="md-state-layer flex h-10 w-10 items-center justify-center rounded-md-full text-md-on-surface-variant transition-colors hover:bg-md-on-surface/8 hover:text-md-on-surface"
+        title="切换明暗色彩模式"
+        aria-label="切换明暗色彩模式"
       >
-        <span class="hidden dark:block">
-          <Icon name="sun" class="w-4 h-4 text-md-secondary" />
-        </span>
-        <span class="block dark:hidden">
-          <Icon name="moon" class="w-4 h-4 text-md-primary" />
-        </span>
+        <span id="theme-icon-dark" class="hidden"><Icon name="sun" class="h-5 w-5" /></span>
+        <span id="theme-icon-light"><Icon name="moon" class="h-5 w-5" /></span>
       </button>
     </div>
   </div>
 </header>
 
 <script>
-  // Tab controller for MD3 Segmented Buttons
-  const tabButtons = document.querySelectorAll<HTMLButtonElement>('.tab-btn');
+  // 视图切换
+  const tabs = document.querySelectorAll<HTMLButtonElement>('#view-tabs .nav-tab');
   const views = ['view-leaderboard', 'view-timeline'];
 
-  tabButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const targetView = btn.getAttribute('data-target');
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      const targetView = tab.getAttribute('data-target');
       if (!targetView) return;
 
-      // Update button styles to MD3 active/inactive states
-      tabButtons.forEach(b => {
-        b.classList.remove('text-md-on-secondary-container', 'bg-md-secondary-container', 'font-semibold', 'shadow-sm');
-        b.classList.add('text-md-on-surface-variant');
+      tabs.forEach((item) => {
+        const isActive = item === tab;
+        item.classList.toggle('tab-active', isActive);
+        if (isActive) {
+          item.classList.add('bg-md-secondary-container', 'text-md-on-secondary-container', 'font-semibold', 'shadow-sm');
+          item.classList.remove('text-md-on-surface-variant', 'font-medium');
+        } else {
+          item.classList.remove('bg-md-secondary-container', 'text-md-on-secondary-container', 'font-semibold', 'shadow-sm');
+          item.classList.add('text-md-on-surface-variant', 'font-medium');
+        }
       });
-      btn.classList.add('text-md-on-secondary-container', 'bg-md-secondary-container', 'font-semibold', 'shadow-sm');
-      btn.classList.remove('text-md-on-surface-variant');
 
-      // Update views
-      views.forEach(viewId => {
+      views.forEach((viewId) => {
         const el = document.getElementById(viewId);
         if (el) {
-          if (viewId === targetView) {
-            el.classList.remove('hidden');
-          } else {
-            el.classList.add('hidden');
-          }
+          el.classList.toggle('hidden', viewId !== targetView);
         }
       });
     });
   });
 
-  // Light / Dark Theme Switcher
-  const themeToggleBtn = document.getElementById('theme-toggle-btn');
-  themeToggleBtn?.addEventListener('click', () => {
-    const isDark = document.documentElement.classList.contains('dark');
-    if (isDark) {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-    } else {
+  // 初始化 Tab 状态样式
+  const initialActive = document.querySelector<HTMLButtonElement>('#view-tabs .tab-active');
+  if (initialActive) {
+    initialActive.classList.add('bg-md-secondary-container', 'text-md-on-secondary-container', 'font-semibold', 'shadow-sm');
+    initialActive.classList.remove('text-md-on-surface-variant', 'font-medium');
+  }
+
+  // 明暗主题切换
+  const themeToggle = document.getElementById('theme-toggle-btn');
+  const darkIcon = document.getElementById('theme-icon-dark');
+  const lightIcon = document.getElementById('theme-icon-light');
+
+  function syncThemeIcons(theme: string) {
+    darkIcon?.classList.toggle('hidden', theme !== 'dark');
+    lightIcon?.classList.toggle('hidden', theme === 'dark');
+  }
+
+  const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+  syncThemeIcons(currentTheme);
+
+  themeToggle?.addEventListener('click', () => {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const nextTheme = isDark ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', nextTheme);
+    if (nextTheme === 'dark') {
       document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
     }
+    localStorage.setItem('theme', nextTheme);
+    syncThemeIcons(nextTheme);
+  });
+
+  // Material You Dynamic Palette Switcher
+  const paletteBtn = document.getElementById('palette-toggle-btn');
+  const paletteMenu = document.getElementById('palette-menu');
+  const paletteOptions = document.querySelectorAll<HTMLButtonElement>('.palette-option');
+
+  paletteBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    paletteMenu?.classList.toggle('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!paletteMenu?.contains(e.target as Node) && e.target !== paletteBtn) {
+      paletteMenu?.classList.add('hidden');
+    }
+  });
+
+  paletteOptions.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const palette = btn.getAttribute('data-palette-value');
+      if (palette) {
+        document.documentElement.setAttribute('data-palette', palette);
+        localStorage.setItem('palette', palette);
+        paletteMenu?.classList.add('hidden');
+      }
+    });
   });
 </script>

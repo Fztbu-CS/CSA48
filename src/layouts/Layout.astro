@@ -19,47 +19,74 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href={`${baseUrl}/favicon.svg`} />
+    <link rel="icon" type="image/svg+xml" href={`${baseUrl}/pig.svg`} />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
+
+    <!-- Google Sans & Roboto Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
 
     <!-- Open Graph / Meta -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
 
-    <!-- Theme Initializer Script (Prevents FOUC) -->
+    <!-- Material You Theme & Palette Initializer (Prevents FOUC) -->
     <script is:inline>
-      const theme = (() => {
-        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
-          return localStorage.getItem('theme');
-        }
-        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-          return 'dark';
-        }
-        return 'light';
-      })();
+      (() => {
+        const theme = (() => {
+          if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+            return localStorage.getItem('theme');
+          }
+          if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            return 'dark';
+          }
+          return 'light';
+        })();
 
-      if (theme === 'dark') {
-        document.documentElement.classList.add('dark');
-      } else {
-        document.documentElement.classList.remove('dark');
-      }
-      window.localStorage.setItem('theme', theme);
+        const palette = (() => {
+          if (typeof localStorage !== 'undefined' && localStorage.getItem('palette')) {
+            return localStorage.getItem('palette');
+          }
+          return 'rose';
+        })();
+
+        document.documentElement.setAttribute('data-theme', theme);
+        document.documentElement.setAttribute('data-palette', palette);
+        if (theme === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      })();
     </script>
   </head>
-  <body class="bg-md-surface text-md-on-surface flex flex-col min-h-screen selection:bg-md-primary-container selection:text-md-on-primary-container antialiased">
+  <body class="flex min-h-screen flex-col bg-md-surface text-md-on-surface antialiased selection:bg-md-primary-container selection:text-md-on-primary-container">
     <slot />
 
-    <!-- MD3 Footer -->
-    <footer class="mt-auto border-t border-md-outline-variant/20 py-8 text-center text-xs text-md-on-surface-variant space-y-2">
-      <div class="flex items-center justify-center gap-2 flex-wrap px-4">
-      </div>
-      <div class="flex items-center justify-center gap-4 text-xs font-medium">
-        <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="hover:text-md-primary transition-colors">
-          GitHub Repository
-        </a>
+    <!-- Material 3 Footer -->
+    <footer class="mt-auto border-t border-md-outline-variant/30 bg-md-surface-container-low px-4 py-8 text-center text-md-on-surface-variant">
+      <div class="mx-auto flex max-w-7xl flex-col items-center justify-center gap-3 sm:flex-row sm:justify-between">
+        <div class="flex items-center gap-2 text-xs">
+          <img src={`${baseUrl}/pig.svg`} alt="Piglet" class="h-4 w-4 opacity-75" />
+          <span class="font-medium text-md-on-surface">!?猪猪?! · Material You 纯享版</span>
+        </div>
+        <nav class="flex items-center gap-4 text-xs font-medium">
+          <a
+            href="https://github.com/KashiwagiEri233/Pig-Ranking"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="rounded-md-full px-3 py-1.5 transition-colors hover:bg-md-on-surface/8 text-md-primary hover:text-md-primary font-semibold"
+          >
+            GitHub 仓库
+          </a>
+        </nav>
       </div>
     </footer>
   </body>
