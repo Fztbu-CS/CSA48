@@ -1,4 +1,5 @@
 ---
+import type { ShameIncident, Person } from '../data/types';
 import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import Podium from '../components/Podium.astro';
@@ -18,34 +19,30 @@ const top3 = rankedPersons.slice(0, 3);
   <Navbar />
 
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 w-full space-y-8">
-    <!-- Podium Section (Top 3) -->
+    <!-- 领奖台 -->
     <Podium top3={top3} />
 
-    <!-- Views Container -->
+    <!-- 视图容器 -->
     <div class="relative pt-2">
-      <!-- View 1: Leaderboard (Default) -->
+      <!-- 视图一：猪排行 -->
       <section id="view-leaderboard" class="transition-opacity duration-200">
         <div class="flex items-center justify-between mb-4">
           <div class="flex items-center gap-2">
-            <Icon name="trophy" class="w-5 h-5 text-md-secondary" />
-            <h2 class="text-lg sm:text-xl font-bold text-md-on-surface tracking-tight">猪排行</h2>
-            <span class="text-xs px-2.5 py-0.5 rounded-md-full bg-md-surface-container-high text-md-on-surface-variant border border-md-outline-variant/30 font-medium">
-              共 {rankedPersons.length} 只猪猪
-            </span>
+            <Icon name="trophy" class="w-5 h-5 text-secondary" />
+            <h2 class="text-lg sm:text-xl font-bold tracking-tight">猪排行</h2>
+            <span class="badge badge-ghost">共 {rankedPersons.length} 只猪猪</span>
           </div>
         </div>
         <Leaderboard rankedPersons={rankedPersons} />
       </section>
 
-      <!-- View 2: Timeline (Chronicles) -->
+      <!-- 视图二：猪记录 -->
       <section id="view-timeline" class="hidden transition-opacity duration-200">
         <div class="flex items-center justify-between mb-4">
           <div class="flex items-center gap-2">
-            <Icon name="timeline" class="w-5 h-5 text-md-secondary" />
-            <h2 class="text-lg sm:text-xl font-bold text-md-on-surface tracking-tight">猪记录</h2>
-            <span class="text-xs px-2.5 py-0.5 rounded-md-full bg-md-surface-container-high text-md-on-surface-variant border border-md-outline-variant/30 font-medium">
-              共 {totalIncidents} 起案件
-            </span>
+            <Icon name="timeline" class="w-5 h-5 text-secondary" />
+            <h2 class="text-lg sm:text-xl font-bold tracking-tight">猪记录</h2>
+            <span class="badge badge-ghost">共 {totalIncidents} 起案件</span>
           </div>
         </div>
         <Timeline incidents={incidents} persons={persons} />
@@ -53,6 +50,6 @@ const top3 = rankedPersons.slice(0, 3);
     </div>
   </main>
 
-  <!-- Person Details Modal -->
+  <!-- 猪猪详情弹窗 -->
   <PersonDetailModal persons={rankedPersons} />
 </Layout>
