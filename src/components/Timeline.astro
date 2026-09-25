@@ -1,7 +1,7 @@
 ---
 import type { ShameIncident, Person } from '../data/types';
 import Icon from './Icon.astro';
-import Avatar from './Avatar.astro';
+import { resolveAvatar } from '../utils/avatar';
 
 interface Props {
   incidents: ShameIncident[];
@@ -10,88 +10,109 @@ interface Props {
 
 const { incidents, persons } = Astro.props;
 
-// Sort incidents by date descending
+// Sort by date descending
 const sortedIncidents = [...incidents].sort(
   (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
 );
 
-// Map persons for quick lookup
 const personMap = new Map(persons.map((p) => [p.id, p]));
 ---
 
 <div class="space-y-6">
-  <!-- MD3 Search Bar -->
-  <div class="flex items-center justify-between gap-3 bg-md-surface-container-low p-3 rounded-md-2xl border border-md-outline-variant/30 shadow-md-1">
-    <div class="relative w-full sm:w-80">
-      <input
-        type="text"
-        id="timeline-search"
-        placeholder="搜索历史事件、猪猪..."
-        class="w-full h-11 bg-md-surface-container-high border border-transparent rounded-md-full px-4 pl-10 text-xs sm:text-sm text-md-on-surface placeholder-md-on-surface-variant/70 focus:outline-none focus:border-md-primary/60 focus:bg-md-surface-container-highest transition-all"
-      />
-      <div class="absolute left-3.5 top-1/2 -translate-y-1/2 text-md-on-surface-variant">
-        <Icon name="search" class="w-4 h-4" />
+  <!-- M3 Search Bar -->
+  <div class="rounded-md-2xl sm:rounded-md-full border border-md-outline-variant/30 bg-md-surface-container-low p-2.5 sm:p-2 shadow-sm">
+    <div class="flex flex-col gap-2.5 sm:flex-row sm:items-center sm:justify-between">
+      <label class="flex h-11 flex-1 items-center gap-2.5 rounded-md-full bg-md-surface-container-high px-4 text-sm text-md-on-surface transition-all focus-within:ring-2 focus-within:ring-md-primary">
+        <Icon name="search" class="h-4 w-4 shrink-0 text-md-on-surface-variant/70" />
+        <input
+          id="timeline-search"
+          type="text"
+          class="w-full bg-transparent text-sm text-md-on-surface outline-none placeholder:text-md-on-surface-variant/60"
+          placeholder="搜索历史事件、猪猪姓名、案发细节..."
+        />
+      </label>
+
+      <div class="hidden px-4 text-xs font-medium text-md-on-surface-variant sm:block">
+        共记录 {sortedIncidents.length} 起翻车历史
       </div>
-    </div>
-    <div class="text-xs text-md-on-surface-variant pr-2 hidden sm:block">
-      共记录 {sortedIncidents.length} 起翻车历史
     </div>
   </div>
 
-  <!-- Timeline Feed (MD3 Cards) -->
-  <div id="timeline-list" class="space-y-4">
-    {sortedIncidents.length === 0 ? (
-      <div class="text-center py-12 px-4 bg-md-surface-container-low rounded-md-2xl border border-md-outline-variant/30 shadow-sm">
-        <div class="w-12 h-12 mx-auto mb-2.5 rounded-full bg-md-surface-container-highest flex items-center justify-center text-md-on-surface-variant/40">
-          <Icon name="timeline" class="w-6 h-6" />
-        </div>
-        <p class="text-sm font-semibold text-md-on-surface">暂无翻车历史记录</p>
-        <p class="text-xs text-md-on-surface-variant mt-1">目前暂无任何案件发生，岁月静好~</p>
+  <!-- M3 Vertical Timeline -->
+  {sortedIncidents.length === 0 ? (
+    <div class="rounded-md-3xl border border-md-outline-variant/30 bg-md-surface-container-low p-10 text-center shadow-sm">
+      <div class="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-md-surface-container-highest text-md-on-surface-variant/50">
+        <Icon name="timeline" class="h-7 w-7" />
       </div>
-    ) : (
-      sortedIncidents.map((incident) => {
+      <p class="text-sm font-bold text-md-on-surface">暂无翻车历史记录</p>
+      <p class="mt-1 text-xs text-md-on-surface-variant">目前暂无任何案件发生，岁月静好~</p>
+    </div>
+  ) : (
+    <div id="timeline-list" class="relative pl-6 sm:pl-8 space-y-6 before:absolute before:bottom-3 before:top-3 before:left-3 sm:before:left-4 before:w-0.5 before:bg-md-outline-variant/40">
+      {sortedIncidents.map((incident) => {
         const person = personMap.get(incident.personId);
+        const avatar = person ? resolveAvatar(person.avatar, person.name) : null;
 
         return (
-          <article
-            class="timeline-card rounded-md-2xl p-5 sm:p-6 transition-all bg-md-surface-container-low border border-md-outline-variant/30 shadow-md-1 hover:shadow-md-2 hover:bg-md-surface-container"
+          <div
+            class="timeline-card group relative"
             data-title={incident.title}
             data-description={incident.description}
             data-person={person?.name || ''}
           >
-            <!-- Top Row: Person info & Date Badge -->
-            <div class="flex items-center justify-between gap-3 mb-3">
-              {person && (
-                <div class="flex items-center gap-2.5">
-                  <Avatar avatar={person.avatar} name={person.name} sizeClass="w-8 h-8 text-xs" />
-                  <span class="font-bold text-sm text-md-on-surface">{person.name}</span>
-                </div>
-              )}
-
-              <span class="inline-flex items-center gap-1.5 text-xs font-mono text-md-on-surface-variant bg-md-surface-container-high px-2.5 py-1 rounded-md-full border border-md-outline-variant/20 shrink-0">
-                <Icon name="calendar" class="w-3.5 h-3.5" />
-                <span>{incident.date}</span>
-              </span>
+            <!-- Timeline Node Indicator -->
+            <div class="absolute -left-6 sm:-left-8 top-3 flex h-6 w-6 sm:h-8 sm:w-8 -translate-x-1/2 items-center justify-center rounded-full border-2 border-md-surface bg-md-primary-container text-md-on-primary-container shadow-sm">
+              <Icon name="timeline" class="h-3.5 w-3.5" />
             </div>
 
-            <!-- Incident Title -->
-            <h3 class="text-base sm:text-lg font-bold text-md-on-surface mb-2 leading-snug">
-              {incident.title}
-            </h3>
+            <!-- Timeline Content Card -->
+            <div class="md-state-layer rounded-md-2xl border border-md-outline-variant/30 bg-md-surface-container-low p-4 sm:p-5 shadow-sm hover:shadow-md-1 hover:bg-md-surface-container transition-all">
+              <div class="mb-3 flex flex-wrap items-center justify-between gap-2.5">
+                <!-- Person Tag -->
+                {person && (
+                  <div class="flex items-center gap-2">
+                    <div class="flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden rounded-full bg-md-primary-container text-md-on-primary-container text-xs font-bold shadow-xs">
+                      {avatar?.src ? (
+                        <img
+                          src={avatar.src}
+                          alt={person.name}
+                          class="h-full w-full object-cover"
+                          onerror={`this.parentElement.textContent='${avatar.fallback}'`}
+                        />
+                      ) : (
+                        <span>{avatar?.fallback}</span>
+                      )}
+                    </div>
+                    <span class="text-sm font-bold text-md-on-surface">{person.name}</span>
+                  </div>
+                )}
 
-            <!-- Incident Description -->
-            <p class="text-sm text-md-on-surface/90 leading-relaxed bg-md-surface-container-lowest/60 p-3.5 rounded-md-xl border border-md-outline-variant/20">
-              {incident.description}
-            </p>
-          </article>
+                <!-- Date Badge -->
+                <span class="inline-flex items-center gap-1.5 rounded-md-full border border-md-outline-variant/20 bg-md-surface-container-high px-3 py-1 font-mono text-xs text-md-on-surface-variant">
+                  <Icon name="calendar" class="h-3 w-3" />
+                  <span>{incident.date}</span>
+                </span>
+              </div>
+
+              <!-- Title -->
+              <h3 class="mb-2 text-base font-bold text-md-on-surface sm:text-lg leading-snug">
+                {incident.title}
+              </h3>
+
+              <!-- Description -->
+              <p class="rounded-md-xl border border-md-outline-variant/20 bg-md-surface-container/60 p-3.5 text-sm leading-relaxed text-md-on-surface-variant">
+                {incident.description}
+              </p>
+            </div>
+          </div>
         );
-      })
-    )}
-  </div>
+      })}
+    </div>
+  )}
 </div>
 
 <script>
-  // Timeline Search Filter
+  // Timeline search filter
   const searchInput = document.getElementById('timeline-search') as HTMLInputElement | null;
   const cards = document.querySelectorAll<HTMLElement>('.timeline-card');
 
@@ -103,11 +124,8 @@ const personMap = new Map(persons.map((p) => [p.id, p]));
       const desc = (card.getAttribute('data-description') || '').toLowerCase();
       const person = (card.getAttribute('data-person') || '').toLowerCase();
 
-      if (!query || title.includes(query) || desc.includes(query) || person.includes(query)) {
-        card.classList.remove('hidden');
-      } else {
-        card.classList.add('hidden');
-      }
+      const matched = !query || title.includes(query) || desc.includes(query) || person.includes(query);
+      card.classList.toggle('hidden', !matched);
     });
   });
 </script>
