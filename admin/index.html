@@ -1,257 +1,412 @@
 <!DOCTYPE html>
-<html lang="zh-CN" data-theme="dark">
+<html lang="zh-CN" class="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>!?猪猪?! · 本地管理后台</title>
-  <link rel="icon" type="image/svg+xml" href="/pig.svg" />
-  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.24/dist/full.min.css" rel="stylesheet" type="text/css" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
-    // 主题初始化（避免闪烁）
-    document.documentElement.setAttribute('data-theme', localStorage.getItem('admin-theme') || 'dark');
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            md: {
+              surface: 'var(--md-surface)',
+              'on-surface': 'var(--md-on-surface)',
+              'surface-container-low': 'var(--md-surface-container-low)',
+              'surface-container': 'var(--md-surface-container)',
+              'surface-container-high': 'var(--md-surface-container-high)',
+              'surface-container-highest': 'var(--md-surface-container-highest)',
+              'on-surface-variant': 'var(--md-on-surface-variant)',
+              outline: 'var(--md-outline)',
+              'outline-variant': 'var(--md-outline-variant)',
+              primary: 'var(--md-primary)',
+              'on-primary': 'var(--md-on-primary)',
+              'primary-container': 'var(--md-primary-container)',
+              'on-primary-container': 'var(--md-on-primary-container)',
+              secondary: 'var(--md-secondary)',
+              'on-secondary': 'var(--md-on-secondary)',
+              'secondary-container': 'var(--md-secondary-container)',
+              'on-secondary-container': 'var(--md-on-secondary-container)',
+              error: 'var(--md-error)',
+            }
+          },
+          borderRadius: {
+            'md-xs': '4px',
+            'md-sm': '8px',
+            'md-md': '12px',
+            'md-lg': '16px',
+            'md-xl': '20px',
+            'md-2xl': '28px',
+            'md-full': '9999px',
+          }
+        }
+      }
+    }
   </script>
+  <style>
+    :root {
+      --md-surface: #fdfcff;
+      --md-on-surface: #1a1c1e;
+      --md-surface-container-low: #f7f3f8;
+      --md-surface-container: #f1edf2;
+      --md-surface-container-high: #ebe7ec;
+      --md-surface-container-highest: #e5e1e6;
+      --md-on-surface-variant: #45474c;
+      --md-outline: #75777c;
+      --md-outline-variant: #c5c6cc;
+      --md-primary: #00639b;
+      --md-on-primary: #ffffff;
+      --md-primary-container: #cee5ff;
+      --md-on-primary-container: #001d33;
+      --md-secondary: #a63914;
+      --md-on-secondary: #ffffff;
+      --md-secondary-container: #ffdbd1;
+      --md-on-secondary-container: #3b0900;
+      --md-error: #ba1a1a;
+    }
+    .dark {
+      --md-surface: #121316;
+      --md-on-surface: #e2e2e6;
+      --md-surface-container-low: #1a1c1e;
+      --md-surface-container: #1e2023;
+      --md-surface-container-high: #292a2d;
+      --md-surface-container-highest: #333538;
+      --md-on-surface-variant: #c4c6cf;
+      --md-outline: #8e9099;
+      --md-outline-variant: #44474e;
+      --md-primary: #96ccff;
+      --md-on-primary: #003353;
+      --md-primary-container: #004b76;
+      --md-on-primary-container: #cee5ff;
+      --md-secondary: #ffb5a0;
+      --md-on-secondary: #5f1600;
+      --md-secondary-container: #822709;
+      --md-on-secondary-container: #ffdbd1;
+      --md-error: #ffb4ab;
+    }
+    body {
+      background-color: var(--md-surface);
+      color: var(--md-on-surface);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+  </style>
 </head>
-<body class="flex min-h-screen flex-col bg-base-100 text-base-content antialiased">
-  <!-- 顶栏 -->
-  <header class="sticky top-0 z-40 border-b border-base-300 bg-base-100/90 backdrop-blur-md">
-    <div class="navbar mx-auto min-h-16 max-w-7xl gap-4 px-4 sm:px-6 lg:px-8">
-      <div class="navbar-start gap-3">
-        <img src="/pig.svg" class="w-9 h-9 shrink-0" alt="Logo" />
-        <div class="min-w-0">
+<body class="min-h-screen flex flex-col antialiased">
+  <!-- Top App Bar -->
+  <header class="sticky top-0 z-40 w-full bg-md-surface/90 backdrop-blur-md border-b border-md-outline-variant/40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      <!-- Title & Sync Pill -->
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 flex items-center justify-center shrink-0">
+          <img src="/pig.svg" class="w-9 h-9" alt="Logo" />
+        </div>
+        <div>
           <div class="flex items-center gap-2">
-            <h1 class="text-base font-bold sm:text-lg">!?猪猪?! · 本地管理后台</h1>
-            <span class="badge badge-success badge-outline gap-1.5 shrink-0">
-              <span class="h-1.5 w-1.5 rounded-full bg-success animate-pulse"></span>
+            <h1 class="text-base sm:text-lg font-bold text-md-on-surface">!?猪猪?! · 本地管理后台</h1>
+            <span class="text-[11px] px-2 py-0.5 rounded-md-full bg-emerald-500/10 text-emerald-500 font-medium border border-emerald-500/20 flex items-center gap-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
               <span>数据直连</span>
             </span>
           </div>
-          <p class="hidden text-[11px] text-base-content/60 sm:block">直接读写本地 src/data/shameData.json 与 public/avatars/</p>
+          <p class="text-[11px] text-md-on-surface-variant hidden sm:block">直接读写本地 src/data/shameData.json 与 public/avatars/</p>
         </div>
       </div>
 
-      <div class="navbar-end gap-3">
-        <a href="http://localhost:4321" target="_blank" class="btn btn-sm btn-outline hidden gap-1.5 sm:inline-flex">
+      <!-- Navigation & Actions -->
+      <div class="flex items-center gap-3">
+        <!-- View Frontend Link -->
+        <a
+          href="http://localhost:4321"
+          target="_blank"
+          class="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-md-full bg-md-surface-container hover:bg-md-surface-container-high border border-md-outline-variant/30 text-xs font-medium text-md-on-surface transition-all"
+        >
           <span>查看前台排行榜</span>
           <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
           </svg>
         </a>
 
-        <button id="theme-toggle" type="button" class="btn btn-ghost btn-circle" title="切换明暗色彩模式" aria-label="切换明暗色彩模式">
-          <span id="admin-theme-icon-dark" class="hidden">
-            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-          </span>
-          <span id="admin-theme-icon-light">
-            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-          </span>
+        <!-- Theme Toggle -->
+        <button
+          id="theme-toggle"
+          class="w-10 h-10 rounded-md-full bg-md-surface-container hover:bg-md-surface-container-high border border-md-outline-variant/30 flex items-center justify-center text-md-on-surface transition-colors"
+          title="切换明暗色彩模式"
+        >
+          <svg class="w-4 h-4 hidden dark:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="w-4 h-4 block dark:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
         </button>
       </div>
     </div>
   </header>
 
-  <!-- 主容器 -->
-  <main class="mx-auto max-w-7xl w-full flex-1 space-y-6 px-4 py-6 sm:px-6 lg:px-8">
-    <!-- 视图切换 -->
-    <div class="flex flex-wrap items-center justify-between gap-4 border-b border-base-300 pb-4">
-      <div class="tabs tabs-boxed bg-base-200">
-        <button type="button" id="tab-btn-persons" class="tab tab-active gap-2" onclick="switchTab('persons')">
+  <!-- Main Container -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 w-full space-y-6">
+    <!-- MD3 Segmented Buttons Tabs -->
+    <div class="flex items-center justify-between flex-wrap gap-4 border-b border-md-outline-variant/30 pb-4">
+      <div class="flex items-center p-1 rounded-md-full bg-md-surface-container border border-md-outline-variant/40 text-xs sm:text-sm font-medium">
+        <button
+          id="tab-btn-persons"
+          class="tab-btn px-4 py-1.5 rounded-md-full transition-all text-md-on-secondary-container bg-md-secondary-container font-semibold flex items-center gap-2 shadow-sm"
+          onclick="switchTab('persons')"
+        >
           <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           <span>人员档案管理</span>
-          <span id="badge-persons-count" class="badge badge-sm">0</span>
+          <span id="badge-persons-count" class="text-[11px] px-1.5 py-0.2 bg-black/10 rounded-full">0</span>
         </button>
-        <button type="button" id="tab-btn-incidents" class="tab gap-2" onclick="switchTab('incidents')">
+        <button
+          id="tab-btn-incidents"
+          class="tab-btn px-4 py-1.5 rounded-md-full transition-all text-md-on-surface-variant hover:text-md-on-surface flex items-center gap-2"
+          onclick="switchTab('incidents')"
+        >
           <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
           <span>翻车事迹管理</span>
-          <span id="badge-incidents-count" class="badge badge-sm">0</span>
+          <span id="badge-incidents-count" class="text-[11px] px-1.5 py-0.2 bg-black/10 rounded-full">0</span>
         </button>
       </div>
 
-      <button id="add-btn" onclick="openAddModal()" class="btn btn-primary gap-2">
-        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        <span id="add-btn-label">添加新猪猪</span>
-      </button>
+      <div id="tab-actions">
+        <button
+          id="add-btn"
+          onclick="openAddModal()"
+          class="inline-flex items-center gap-2 px-5 py-2 rounded-md-full bg-md-primary text-md-on-primary text-xs sm:text-sm font-semibold shadow-md-1 hover:shadow-md-2 transition-all active:scale-95"
+        >
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <span id="add-btn-label">添加新猪猪</span>
+        </button>
+      </div>
     </div>
 
-    <!-- 视图一：人员档案管理 -->
+    <!-- Section 1: Persons Management View -->
     <section id="view-persons" class="space-y-4">
-      <label class="input input-bordered flex w-full max-w-md items-center gap-2 bg-base-100">
-        <svg class="w-4 h-4 opacity-60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input type="text" id="search-persons" class="grow" placeholder="搜索猪猪姓名、简介..." oninput="renderPersons()" />
-      </label>
+      <!-- Search Filter -->
+      <div class="flex items-center gap-3">
+        <div class="relative flex-1 max-w-md">
+          <input
+            type="text"
+            id="search-persons"
+            placeholder="搜索猪猪姓名、简介..."
+            oninput="renderPersons()"
+            class="w-full h-11 bg-md-surface-container-high border border-transparent rounded-md-full px-4 pl-10 text-xs sm:text-sm text-md-on-surface placeholder-md-on-surface-variant/70 focus:outline-none focus:border-md-primary/60"
+          />
+          <div class="absolute left-3.5 top-1/2 -translate-y-1/2 text-md-on-surface-variant">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
+        </div>
+      </div>
 
-      <div id="persons-grid" class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-        <!-- JS 渲染 -->
+      <!-- Persons Grid -->
+      <div id="persons-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <!-- Rendered via JS -->
       </div>
     </section>
 
-    <!-- 视图二：翻车事迹管理 -->
-    <section id="view-incidents" class="hidden space-y-4">
-      <div class="flex flex-col items-center gap-3 sm:flex-row">
-        <label class="input input-bordered flex w-full items-center gap-2 bg-base-100 sm:max-w-md sm:flex-1">
-          <svg class="w-4 h-4 opacity-60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <input type="text" id="search-incidents" class="grow" placeholder="搜索事迹标题、案发内容..." oninput="renderIncidents()" />
-        </label>
+    <!-- Section 2: Incidents Management View -->
+    <section id="view-incidents" class="space-y-4 hidden">
+      <!-- Search & Person Filter -->
+      <div class="flex flex-col sm:flex-row items-center gap-3">
+        <div class="relative w-full sm:flex-1 sm:max-w-md">
+          <input
+            type="text"
+            id="search-incidents"
+            placeholder="搜索事迹标题、案发内容..."
+            oninput="renderIncidents()"
+            class="w-full h-11 bg-md-surface-container-high border border-transparent rounded-md-full px-4 pl-10 text-xs sm:text-sm text-md-on-surface placeholder-md-on-surface-variant/70 focus:outline-none focus:border-md-primary/60"
+          />
+          <div class="absolute left-3.5 top-1/2 -translate-y-1/2 text-md-on-surface-variant">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
+        </div>
 
-        <select id="filter-incident-person" onchange="renderIncidents()" class="select select-bordered w-full bg-base-100 sm:w-56">
+        <select
+          id="filter-incident-person"
+          onchange="renderIncidents()"
+          class="w-full sm:w-56 h-11 bg-md-surface-container-high border border-transparent rounded-md-full px-4 text-xs font-medium text-md-on-surface focus:outline-none focus:border-md-primary/60"
+        >
           <option value="all">全部猪猪</option>
         </select>
       </div>
 
+      <!-- Incidents List -->
       <div id="incidents-list" class="space-y-3">
-        <!-- JS 渲染 -->
+        <!-- Rendered via JS -->
       </div>
     </section>
   </main>
 
-  <!-- 人员新增 / 编辑弹窗 -->
-  <dialog id="modal-person" class="modal">
-    <div class="modal-box max-w-lg">
-      <div class="mb-4 flex items-center justify-between border-b border-base-300 pb-4">
-        <h3 id="modal-person-title" class="text-lg font-bold">添加新猪猪</h3>
-        <form method="dialog">
-          <button class="btn btn-sm btn-circle btn-ghost" aria-label="关闭">✕</button>
-        </form>
+  <!-- ================= Person Edit / Add Modal ================= -->
+  <dialog id="modal-person" class="bg-transparent p-4 w-full max-w-lg rounded-md-2xl text-md-on-surface outline-none m-auto">
+    <div class="bg-md-surface-container-high border border-md-outline-variant/30 rounded-md-2xl p-6 shadow-md-3">
+      <div class="flex items-center justify-between pb-4 border-b border-md-outline-variant/20 mb-4">
+        <h3 id="modal-person-title" class="text-lg font-bold text-md-on-surface">添加新猪猪</h3>
+        <button onclick="closePersonModal()" class="w-8 h-8 rounded-full flex items-center justify-center text-md-on-surface-variant hover:bg-md-surface-container">✕</button>
       </div>
 
       <form id="form-person" onsubmit="handleSavePerson(event)" class="space-y-4">
         <input type="hidden" id="person-form-id" value="" />
 
-        <label class="form-control w-full">
-          <div class="label">
-            <span class="label-text font-semibold">猪猪真实姓名 / 称呼 *</span>
-          </div>
+        <!-- Name -->
+        <div>
+          <label class="block text-xs font-semibold text-md-on-surface mb-1">猪猪真实姓名 / 称呼 *</label>
           <input
             type="text"
             id="person-form-name"
             required
             placeholder="例如：张三"
             oninput="updateAvatarPreview()"
-            class="input input-bordered"
+            class="w-full h-10 px-3.5 rounded-md-md bg-md-surface-container border border-md-outline-variant/40 text-xs sm:text-sm text-md-on-surface focus:outline-none focus:border-md-primary"
           />
-        </label>
+        </div>
 
-        <!-- 头像设置 -->
-        <div class="space-y-3 rounded-box border border-base-300 bg-base-200 p-4">
+        <!-- Avatar Configuration Section -->
+        <div class="p-4 rounded-md-xl bg-md-surface-container border border-md-outline-variant/30 space-y-3">
           <div class="flex items-center justify-between">
-            <span class="text-xs font-semibold">人员头像设置</span>
-            <span class="text-[11px] text-base-content/60">支持本地图片上传 / URL / 汉字</span>
+            <span class="text-xs font-semibold text-md-on-surface">人员头像设置</span>
+            <span class="text-[11px] text-md-on-surface-variant">支持本地图片上传 / URL / 汉字</span>
           </div>
 
+          <!-- Preview & Controls -->
           <div class="flex items-center gap-4">
-            <div class="avatar placeholder shrink-0">
-              <div id="person-avatar-preview" class="w-16 rounded-xl bg-neutral text-neutral-content text-2xl font-black">
-                <span>张</span>
-              </div>
+            <!-- Preview Box -->
+            <div id="person-avatar-preview" class="w-16 h-16 rounded-md-xl overflow-hidden bg-md-surface-container-highest border-2 border-md-outline-variant/40 flex items-center justify-center text-2xl font-black text-md-on-surface shrink-0 shadow-inner">
+              张
             </div>
 
+            <!-- Avatar Source Inputs -->
             <div class="flex-1 space-y-2">
               <input type="hidden" id="person-form-avatar" value="" />
 
-              <div class="flex flex-wrap items-center gap-2">
-                <label class="btn btn-sm btn-secondary gap-1.5">
+              <!-- Upload Button -->
+              <div class="flex items-center gap-2">
+                <label class="cursor-pointer inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md-md bg-md-secondary-container text-md-on-secondary-container text-xs font-semibold hover:opacity-90 transition-all">
                   <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
                   <span>选择本地头像图片</span>
                   <input type="file" id="person-file-input" accept="image/*" class="hidden" onchange="handleFileUpload(event)" />
                 </label>
-                <button type="button" onclick="clearAvatarToInitial()" class="btn btn-sm btn-ghost">
+                <button
+                  type="button"
+                  onclick="clearAvatarToInitial()"
+                  class="px-2.5 py-1.5 rounded-md-md bg-md-surface-container-highest text-md-on-surface-variant text-xs hover:text-md-on-surface"
+                >
                   重置为单字
                 </button>
               </div>
 
+              <!-- Or External URL -->
               <input
                 type="text"
                 id="person-form-avatar-url"
                 placeholder="或输入外部图片 URL (https://...)"
                 oninput="handleAvatarUrlInput(this.value)"
-                class="input input-bordered input-sm w-full"
+                class="w-full h-8 px-2.5 rounded-md-sm bg-md-surface-container-high border border-md-outline-variant/30 text-xs text-md-on-surface focus:outline-none focus:border-md-primary"
               />
             </div>
           </div>
         </div>
 
-        <div class="modal-action">
-          <button type="button" onclick="closePersonModal()" class="btn btn-ghost">取消</button>
-          <button type="submit" class="btn btn-primary">保存人员档案</button>
+        <!-- Submit & Cancel -->
+        <div class="flex items-center justify-end gap-2 pt-3 border-t border-md-outline-variant/20">
+          <button
+            type="button"
+            onclick="closePersonModal()"
+            class="px-4 py-2 rounded-md-full text-xs font-medium text-md-on-surface-variant hover:bg-md-surface-container"
+          >
+            取消
+          </button>
+          <button
+            type="submit"
+            class="px-5 py-2 rounded-md-full bg-md-primary text-md-on-primary text-xs font-semibold shadow-md-1 hover:shadow-md-2"
+          >
+            保存人员档案
+          </button>
         </div>
       </form>
     </div>
-
-    <form method="dialog" class="modal-backdrop">
-      <button>关闭</button>
-    </form>
   </dialog>
 
-  <!-- 事迹新增 / 编辑弹窗 -->
-  <dialog id="modal-incident" class="modal">
-    <div class="modal-box max-w-lg">
-      <div class="mb-4 flex items-center justify-between border-b border-base-300 pb-4">
-        <h3 id="modal-incident-title" class="text-lg font-bold">登记新翻车事迹</h3>
-        <form method="dialog">
-          <button class="btn btn-sm btn-circle btn-ghost" aria-label="关闭">✕</button>
-        </form>
+  <!-- ================= Incident Edit / Add Modal ================= -->
+  <dialog id="modal-incident" class="bg-transparent p-4 w-full max-w-lg rounded-md-2xl text-md-on-surface outline-none m-auto">
+    <div class="bg-md-surface-container-high border border-md-outline-variant/30 rounded-md-2xl p-6 shadow-md-3">
+      <div class="flex items-center justify-between pb-4 border-b border-md-outline-variant/20 mb-4">
+        <h3 id="modal-incident-title" class="text-lg font-bold text-md-on-surface">登记新翻车事迹</h3>
+        <button onclick="closeIncidentModal()" class="w-8 h-8 rounded-full flex items-center justify-center text-md-on-surface-variant hover:bg-md-surface-container">✕</button>
       </div>
 
       <form id="form-incident" onsubmit="handleSaveIncident(event)" class="space-y-4">
         <input type="hidden" id="incident-form-id" value="" />
 
-        <label class="form-control w-full">
-          <div class="label">
-            <span class="label-text font-semibold">猪猪 *</span>
-          </div>
-          <select id="incident-form-person" required class="select select-bordered">
-            <!-- JS 渲染选项 -->
+        <!-- Person Dropdown -->
+        <div>
+          <label class="block text-xs font-semibold text-md-on-surface mb-1">猪猪 *</label>
+          <select
+            id="incident-form-person"
+            required
+            class="w-full h-10 px-3.5 rounded-md-md bg-md-surface-container border border-md-outline-variant/40 text-xs sm:text-sm text-md-on-surface focus:outline-none focus:border-md-primary"
+          >
+            <!-- Options via JS -->
           </select>
-        </label>
+        </div>
 
-        <label class="form-control w-full">
-          <div class="label">
-            <span class="label-text font-semibold">案发日期 *</span>
-          </div>
-          <input type="date" id="incident-form-date" required class="input input-bordered" />
-        </label>
+        <!-- Date -->
+        <div>
+          <label class="block text-xs font-semibold text-md-on-surface mb-1">案发日期 *</label>
+          <input
+            type="date"
+            id="incident-form-date"
+            required
+            class="w-full h-10 px-3.5 rounded-md-md bg-md-surface-container border border-md-outline-variant/40 text-xs sm:text-sm text-md-on-surface focus:outline-none focus:border-md-primary"
+          />
+        </div>
 
-        <label class="form-control w-full">
-          <div class="label">
-            <span class="label-text font-semibold">翻车事迹标题 *</span>
-          </div>
+        <!-- Title -->
+        <div>
+          <label class="block text-xs font-semibold text-md-on-surface mb-1">翻车事迹标题 *</label>
           <input
             type="text"
             id="incident-form-title"
             required
             placeholder="简明扼要，如：生产数据库 Update 忘记带 WHERE 条件"
-            class="input input-bordered"
+            class="w-full h-10 px-3.5 rounded-md-md bg-md-surface-container border border-md-outline-variant/40 text-xs sm:text-sm text-md-on-surface focus:outline-none focus:border-md-primary"
           />
-        </label>
+        </div>
 
-        <label class="form-control w-full">
-          <div class="label">
-            <span class="label-text font-semibold">案发详细经过描述 *</span>
-          </div>
+        <!-- Description -->
+        <div>
+          <label class="block text-xs font-semibold text-md-on-surface mb-1">案发详细经过描述 *</label>
           <textarea
             id="incident-form-desc"
             required
             rows="4"
             placeholder="详细经过、造成的乌龙影响或戏剧性场面..."
-            class="textarea textarea-bordered leading-relaxed"
+            class="w-full p-3 rounded-md-md bg-md-surface-container border border-md-outline-variant/40 text-xs sm:text-sm text-md-on-surface focus:outline-none focus:border-md-primary leading-relaxed"
           ></textarea>
-        </label>
+        </div>
 
-        <div class="modal-action">
-          <button type="button" onclick="closeIncidentModal()" class="btn btn-ghost">取消</button>
-          <button type="submit" class="btn btn-primary">保存事迹</button>
+        <!-- Submit & Cancel -->
+        <div class="flex items-center justify-end gap-2 pt-3 border-t border-md-outline-variant/20">
+          <button
+            type="button"
+            onclick="closeIncidentModal()"
+            class="px-4 py-2 rounded-md-full text-xs font-medium text-md-on-surface-variant hover:bg-md-surface-container"
+          >
+            取消
+          </button>
+          <button
+            type="submit"
+            class="px-5 py-2 rounded-md-full bg-md-primary text-md-on-primary text-xs font-semibold shadow-md-1 hover:shadow-md-2"
+          >
+            保存事迹
+          </button>
         </div>
       </form>
     </div>
-
-    <form method="dialog" class="modal-backdrop">
-      <button>关闭</button>
-    </form>
   </dialog>
 
-  <!-- 操作提示 -->
-  <div id="toast" class="toast toast-end hidden">
-    <div id="toast-alert" class="alert alert-success">
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 transform transition-all duration-300 translate-y-20 opacity-0 pointer-events-none">
+    <div class="px-4 py-2.5 rounded-md-full bg-md-surface-container-highest border border-md-outline-variant/40 text-xs font-semibold text-md-on-surface shadow-md-2 flex items-center gap-2">
       <span id="toast-icon">✓</span>
       <span id="toast-msg">操作成功</span>
     </div>
@@ -264,7 +419,7 @@
       activeTab: 'persons',
     };
 
-    // 是否为图片地址
+    // Helper: Is image
     function isImageSrc(src) {
       if (!src) return false;
       const s = src.trim().toLowerCase();
@@ -282,39 +437,40 @@
       );
     }
 
-    // 头像（daisyUI avatar）
-    function getAvatarHtml(avatar, name, innerClass = 'w-12 text-base') {
+    // Helper: Render avatar HTML
+    function getAvatarHtml(avatar, name, sizeClass = 'w-12 h-12 text-base') {
       const isImg = isImageSrc(avatar);
       const fallback = (!isImg && avatar && avatar.length <= 4) ? avatar : (name ? name[0] : '?');
-      return `
-        <div class="avatar placeholder shrink-0">
-          <div class="${innerClass} rounded-xl bg-neutral text-neutral-content font-bold">
-            ${isImg
-              ? `<img src="${avatar}" alt="${name || ''}" onerror="this.parentElement.textContent='${fallback}'" />`
-              : `<span>${fallback}</span>`}
+      if (isImg) {
+        return `
+          <div class="relative rounded-md-xl overflow-hidden shrink-0 flex items-center justify-center font-bold bg-md-surface-container-highest border border-md-outline-variant/30 text-md-on-surface ${sizeClass}">
+            <img src="${avatar}" alt="${name || ''}" class="w-full h-full object-cover" onerror="this.outerHTML='<span>${fallback}</span>'" />
           </div>
+        `;
+      }
+      return `
+        <div class="relative rounded-md-xl overflow-hidden shrink-0 flex items-center justify-center font-bold bg-md-surface-container-highest border border-md-outline-variant/30 text-md-on-surface ${sizeClass}">
+          <span>${fallback}</span>
         </div>
       `;
     }
 
-    // 操作提示（daisyUI toast / alert）
+    // Show Toast
     function showToast(msg, isError = false) {
       const el = document.getElementById('toast');
       const msgEl = document.getElementById('toast-msg');
       const iconEl = document.getElementById('toast-icon');
-      const alertEl = document.getElementById('toast-alert');
       if (!el || !msgEl) return;
 
       msgEl.textContent = msg;
       iconEl.textContent = isError ? '✕' : '✓';
-      alertEl.className = isError ? 'alert alert-error' : 'alert alert-success';
-      el.classList.remove('hidden');
+      el.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
       setTimeout(() => {
-        el.classList.add('hidden');
+        el.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
       }, 2500);
     }
 
-    // 读取本地数据
+    // Fetch initial data
     async function loadData() {
       try {
         const res = await fetch('/api/data');
@@ -337,7 +493,7 @@
       document.getElementById('badge-incidents-count').textContent = state.incidents.length;
     }
 
-    // 视图切换
+    // Tab switcher
     function switchTab(tab) {
       state.activeTab = tab;
       const btnPersons = document.getElementById('tab-btn-persons');
@@ -346,18 +502,15 @@
       const viewIncidents = document.getElementById('view-incidents');
       const addBtnLabel = document.getElementById('add-btn-label');
 
-      const activeClass = 'tab tab-active gap-2';
-      const idleClass = 'tab gap-2';
-
       if (tab === 'persons') {
-        btnPersons.className = activeClass;
-        btnIncidents.className = idleClass;
+        btnPersons.className = 'tab-btn px-4 py-1.5 rounded-md-full transition-all text-md-on-secondary-container bg-md-secondary-container font-semibold flex items-center gap-2 shadow-sm';
+        btnIncidents.className = 'tab-btn px-4 py-1.5 rounded-md-full transition-all text-md-on-surface-variant hover:text-md-on-surface flex items-center gap-2';
         viewPersons.classList.remove('hidden');
         viewIncidents.classList.add('hidden');
         addBtnLabel.textContent = '添加新猪猪';
       } else {
-        btnIncidents.className = activeClass;
-        btnPersons.className = idleClass;
+        btnIncidents.className = 'tab-btn px-4 py-1.5 rounded-md-full transition-all text-md-on-secondary-container bg-md-secondary-container font-semibold flex items-center gap-2 shadow-sm';
+        btnPersons.className = 'tab-btn px-4 py-1.5 rounded-md-full transition-all text-md-on-surface-variant hover:text-md-on-surface flex items-center gap-2';
         viewPersons.classList.add('hidden');
         viewIncidents.classList.remove('hidden');
         addBtnLabel.textContent = '登记翻车事迹';
@@ -372,7 +525,7 @@
       }
     }
 
-    // ================= 人员档案 =================
+    // ================= Persons Section =================
     function renderPersons() {
       const container = document.getElementById('persons-grid');
       const q = (document.getElementById('search-persons')?.value || '').toLowerCase().trim();
@@ -385,33 +538,41 @@
         const emptyMsg = state.persons.length === 0
           ? '暂无猪猪档案，点击右上角“+ 添加新猪猪”开始录入吧~'
           : '未找到符合条件的猪猪';
-        container.innerHTML = `<div class="col-span-full py-12 text-center text-xs text-base-content/60">${emptyMsg}</div>`;
+        container.innerHTML = `<div class="col-span-full py-12 text-center text-xs text-md-on-surface-variant">${emptyMsg}</div>`;
         return;
       }
 
       container.innerHTML = filtered.map(p => {
         const count = state.incidents.filter(i => i.personId === p.id).length;
         return `
-          <div class="card card-bordered bg-base-200 shadow-sm transition-shadow hover:shadow-md">
-            <div class="card-body gap-4 p-5">
-              <div class="flex items-start justify-between gap-3">
-                <div class="flex min-w-0 items-center gap-3">
-                  ${getAvatarHtml(p.avatar, p.name, 'w-14 text-xl')}
-                  <h4 class="truncate text-base font-bold">${p.name}</h4>
+          <div class="p-5 rounded-md-2xl bg-md-surface-container-low border border-md-outline-variant/30 flex flex-col justify-between gap-4 shadow-sm hover:shadow-md transition-all">
+            <div class="flex items-start justify-between gap-3">
+              <div class="flex items-center gap-3 min-w-0">
+                ${getAvatarHtml(p.avatar, p.name, 'w-14 h-14 text-xl')}
+                <div class="min-w-0">
+                  <h4 class="font-bold text-base text-md-on-surface truncate">${p.name}</h4>
                 </div>
-                <span class="badge badge-secondary shrink-0 font-bold">${count} 次</span>
               </div>
+              <span class="px-2.5 py-1 rounded-md-full bg-md-secondary-container text-md-on-secondary-container text-xs font-bold shrink-0">
+                ${count} 次
+              </span>
+            </div>
 
-              <div class="card-actions justify-end border-t border-base-300 pt-3">
-                <button onclick="editPerson('${p.id}')" class="btn btn-sm btn-ghost gap-1">
-                  <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-                  <span>编辑</span>
-                </button>
-                <button onclick="deletePerson('${p.id}', '${p.name}', ${count})" class="btn btn-sm btn-error btn-outline gap-1">
-                  <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-                  <span>删除</span>
-                </button>
-              </div>
+            <div class="flex items-center justify-end gap-2 pt-3 border-t border-md-outline-variant/20">
+              <button
+                onclick="editPerson('${p.id}')"
+                class="px-3 py-1.5 rounded-md-full text-xs font-semibold bg-md-surface-container-high hover:bg-md-surface-container-highest text-md-on-surface transition-colors flex items-center gap-1"
+              >
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                <span>编辑</span>
+              </button>
+              <button
+                onclick="deletePerson('${p.id}', '${p.name}', ${count})"
+                class="px-3 py-1.5 rounded-md-full text-xs font-semibold text-md-error hover:bg-red-500/10 transition-colors flex items-center gap-1"
+              >
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                <span>删除</span>
+              </button>
             </div>
           </div>
         `;
@@ -485,7 +646,7 @@
       if (!previewBox) return;
 
       if (isImageSrc(avatarVal)) {
-        previewBox.innerHTML = `<img src="${avatarVal}" onerror="this.parentElement.textContent='${name ? name[0] : '?'}'" />`;
+        previewBox.innerHTML = `<img src="${avatarVal}" class="w-full h-full object-cover" onerror="this.outerHTML='<span>${name ? name[0] : '?'}</span>'" />`;
       } else {
         previewBox.innerHTML = `<span>${avatarVal || (name ? name[0] : '?')}</span>`;
       }
@@ -562,7 +723,7 @@
       }
     }
 
-    // ================= 翻车事迹 =================
+    // ================= Incidents Section =================
     function populatePersonFilterDropdown() {
       const select = document.getElementById('filter-incident-person');
       if (!select) return;
@@ -577,7 +738,7 @@
       const q = (document.getElementById('search-incidents')?.value || '').toLowerCase().trim();
       const personFilter = document.getElementById('filter-incident-person')?.value || 'all';
 
-      // 按日期倒序
+      // Sort descending by date
       const sorted = [...state.incidents].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
       const filtered = sorted.filter(inc => {
@@ -590,7 +751,7 @@
         const emptyMsg = state.incidents.length === 0
           ? '暂无翻车事迹记录，点击右上角“+ 登记翻车事迹”开始录入吧~'
           : '未找到符合条件的翻车事迹';
-        container.innerHTML = `<div class="py-12 text-center text-xs text-base-content/60">${emptyMsg}</div>`;
+        container.innerHTML = `<div class="py-12 text-center text-xs text-md-on-surface-variant">${emptyMsg}</div>`;
         return;
       }
 
@@ -599,31 +760,37 @@
       container.innerHTML = filtered.map(inc => {
         const person = personMap.get(inc.personId);
         return `
-          <div class="card card-bordered bg-base-200 shadow-sm transition-shadow hover:shadow-md">
-            <div class="card-body gap-3 p-5">
-              <div class="flex flex-wrap items-center justify-between gap-3">
-                <div class="flex items-center gap-2.5">
-                  ${person ? getAvatarHtml(person.avatar, person.name, 'w-8 text-xs') : ''}
-                  <span class="text-sm font-bold">${person ? person.name : '未知猪猪'}</span>
-                </div>
-                <span class="badge badge-ghost font-mono">${inc.date}</span>
+          <div class="p-5 rounded-md-2xl bg-md-surface-container-low border border-md-outline-variant/30 space-y-3 shadow-sm hover:shadow-md transition-all">
+            <div class="flex items-center justify-between gap-3 flex-wrap">
+              <div class="flex items-center gap-2.5">
+                ${person ? getAvatarHtml(person.avatar, person.name, 'w-8 h-8 text-xs') : ''}
+                <span class="font-bold text-sm text-md-on-surface">${person ? person.name : '未知猪猪'}</span>
               </div>
+              <span class="text-xs font-mono text-md-on-surface-variant bg-md-surface-container px-2.5 py-1 rounded-md-full border border-md-outline-variant/20">
+                ${inc.date}
+              </span>
+            </div>
 
-              <h4 class="text-base font-bold">${inc.title}</h4>
-              <p class="rounded-box border border-base-300 bg-base-100 p-3 text-xs leading-relaxed">
-                ${inc.description}
-              </p>
+            <h4 class="font-bold text-base text-md-on-surface">${inc.title}</h4>
+            <p class="text-xs text-md-on-surface/90 leading-relaxed bg-md-surface-container/60 p-3 rounded-md-xl border border-md-outline-variant/20">
+              ${inc.description}
+            </p>
 
-              <div class="card-actions justify-end border-t border-base-300 pt-2">
-                <button onclick="editIncident('${inc.id}')" class="btn btn-sm btn-ghost gap-1">
-                  <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-                  <span>编辑</span>
-                </button>
-                <button onclick="deleteIncident('${inc.id}', '${inc.title}')" class="btn btn-sm btn-error btn-outline gap-1">
-                  <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-                  <span>删除</span>
-                </button>
-              </div>
+            <div class="flex items-center justify-end gap-2 pt-2 border-t border-md-outline-variant/20">
+              <button
+                onclick="editIncident('${inc.id}')"
+                class="px-3 py-1.5 rounded-md-full text-xs font-semibold bg-md-surface-container-high hover:bg-md-surface-container-highest text-md-on-surface transition-colors flex items-center gap-1"
+              >
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                <span>编辑</span>
+              </button>
+              <button
+                onclick="deleteIncident('${inc.id}', '${inc.title}')"
+                class="px-3 py-1.5 rounded-md-full text-xs font-semibold text-md-error hover:bg-red-500/10 transition-colors flex items-center gap-1"
+              >
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                <span>删除</span>
+              </button>
             </div>
           </div>
         `;
@@ -639,6 +806,7 @@
       const titleInput = document.getElementById('incident-form-title');
       const descInput = document.getElementById('incident-form-desc');
 
+      // Populate person selector
       personSelect.innerHTML = state.persons.map(p => `<option value="${p.id}">${p.name}</option>`).join('');
 
       if (incident) {
@@ -717,26 +885,23 @@
       }
     }
 
-    // 明暗主题切换
-    const themeToggle = document.getElementById('theme-toggle');
-    const darkIcon = document.getElementById('admin-theme-icon-dark');
-    const lightIcon = document.getElementById('admin-theme-icon-light');
-
-    function syncThemeIcons(theme) {
-      darkIcon.classList.toggle('hidden', theme !== 'dark');
-      lightIcon.classList.toggle('hidden', theme === 'dark');
-    }
-
-    syncThemeIcons(document.documentElement.getAttribute('data-theme') || 'dark');
-
-    themeToggle.addEventListener('click', () => {
-      const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', theme);
-      localStorage.setItem('admin-theme', theme);
-      syncThemeIcons(theme);
+    // Theme toggle
+    document.getElementById('theme-toggle')?.addEventListener('click', () => {
+      const isDark = document.documentElement.classList.contains('dark');
+      if (isDark) {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('admin-theme', 'light');
+      } else {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('admin-theme', 'dark');
+      }
     });
 
-    // 初始化
+    if (localStorage.getItem('admin-theme') === 'light') {
+      document.documentElement.classList.remove('dark');
+    }
+
+    // Init
     loadData();
   </script>
 </body>

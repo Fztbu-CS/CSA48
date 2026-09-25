@@ -15,11 +15,11 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <!doctype html>
-<html lang="zh-CN" class="scroll-smooth" data-theme="light">
+<html lang="zh-CN" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href={`${baseUrl}/pig.svg`} />
+    <link rel="icon" type="image/svg+xml" href={`${baseUrl}/favicon.svg`} />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -41,20 +41,26 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
         return 'light';
       })();
 
-      document.documentElement.setAttribute('data-theme', theme);
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
       window.localStorage.setItem('theme', theme);
     </script>
   </head>
-  <body class="flex min-h-screen flex-col bg-base-100 text-base-content antialiased">
+  <body class="bg-md-surface text-md-on-surface flex flex-col min-h-screen selection:bg-md-primary-container selection:text-md-on-primary-container antialiased">
     <slot />
 
-    <!-- Footer -->
-    <footer class="footer footer-center mt-auto border-t border-base-300 px-4 py-8 text-base-content/70">
-      <nav class="flex items-center justify-center gap-4 text-xs font-medium">
-        <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="link link-hover">
+    <!-- MD3 Footer -->
+    <footer class="mt-auto border-t border-md-outline-variant/20 py-8 text-center text-xs text-md-on-surface-variant space-y-2">
+      <div class="flex items-center justify-center gap-2 flex-wrap px-4">
+      </div>
+      <div class="flex items-center justify-center gap-4 text-xs font-medium">
+        <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="hover:text-md-primary transition-colors">
           GitHub Repository
         </a>
-      </nav>
+      </div>
     </footer>
   </body>
 </html>

@@ -1,93 +1,87 @@
 ---
 import type { PersonStats } from '../data/types';
 import Icon from './Icon.astro';
-import { resolveAvatar } from '../utils/avatar';
 
 interface Props {
   persons: PersonStats[];
 }
 
 const { persons } = Astro.props;
-
-// 预解析头像与卷宗数据，供客户端脚本直接渲染
-const personsView = persons.map((p) => {
-  const avatar = resolveAvatar(p.avatar, p.name);
-  return {
-    id: p.id,
-    name: p.name,
-    rank: p.rank ?? 0,
-    totalCount: p.totalCount,
-    avatarSrc: avatar.src,
-    avatarFallback: avatar.fallback,
-    incidents: p.incidents.map((inc) => ({
-      date: inc.date,
-      title: inc.title,
-      description: inc.description,
-    })),
-  };
-});
 ---
 
-<dialog id="person-detail-dialog" class="modal">
-  <div class="modal-box max-w-2xl flex max-h-[85vh] flex-col overflow-hidden">
-    <!-- 头部 -->
-    <div class="flex shrink-0 items-start justify-between gap-4 border-b border-base-300 pb-4">
+<dialog
+  id="person-detail-dialog"
+  class="bg-transparent p-4 w-full max-w-2xl rounded-md-2xl text-md-on-surface outline-none m-auto"
+>
+  <div class="bg-md-surface-container-high border border-md-outline-variant/30 rounded-md-2xl p-6 sm:p-8 shadow-md-3 relative max-h-[85vh] flex flex-col">
+    <!-- MD3 Header with Person Info -->
+    <div class="flex items-start justify-between pb-4 border-b border-md-outline-variant/20 shrink-0">
       <div class="flex items-center gap-4">
-        <div class="avatar placeholder shrink-0">
-          <div
-            id="modal-person-avatar"
-            class="w-16 rounded-xl bg-neutral text-neutral-content text-2xl font-black"
-          >
-            <span>?</span>
+        <div id="modal-person-avatar" class="w-16 h-16 rounded-md-xl bg-md-surface-container-highest border border-md-outline-variant/30 flex items-center justify-center text-2xl font-black text-md-on-surface shadow-inner overflow-hidden">
+          张
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h2 id="modal-person-name" class="text-xl sm:text-2xl font-bold text-md-on-surface">
+              猪猪姓名
+            </h2>
+            <span id="modal-person-rank" class="text-xs px-2.5 py-0.5 rounded-md-full bg-md-secondary-container text-md-on-secondary-container font-bold">
+              #1
+            </span>
           </div>
         </div>
-        <div class="flex items-center gap-2">
-          <h2 id="modal-person-name" class="text-xl font-bold sm:text-2xl">猪猪姓名</h2>
-          <span id="modal-person-rank" class="badge badge-secondary font-bold">#1</span>
-        </div>
       </div>
-
-      <form method="dialog">
-        <button class="btn btn-sm btn-circle btn-ghost" aria-label="关闭">
-          <Icon name="close" class="w-4 h-4" />
-        </button>
-      </form>
+      <button
+        id="close-person-modal"
+        class="w-9 h-9 rounded-md-full bg-md-surface-container hover:bg-md-surface-container-highest text-md-on-surface-variant hover:text-md-on-surface flex items-center justify-center transition-colors text-base shrink-0"
+      >
+        <Icon name="close" class="w-4 h-4" />
+      </button>
     </div>
 
-    <!-- 统计条 -->
-    <div class="my-4 flex shrink-0 items-center justify-between rounded-box border border-base-300 bg-base-200 px-6 py-3.5">
+    <!-- Stats Summary Tonal Bar -->
+    <div class="flex items-center justify-between my-4 p-3.5 px-6 rounded-md-xl bg-md-surface-container border border-md-outline-variant/20 shrink-0">
       <div>
-        <div class="text-xs font-medium">累计</div>
-        <div class="mt-0.5 text-[11px] text-base-content/60">档案卷宗经大伙核实登记</div>
+        <div class="text-xs text-md-on-surface font-medium">累计</div>
+        <div class="text-[11px] text-md-on-surface-variant mt-0.5">档案卷宗经大伙核实登记</div>
       </div>
-      <div id="modal-person-count" class="text-2xl font-black text-primary">0 次</div>
+      <div id="modal-person-count" class="text-2xl font-black text-md-primary">0 次</div>
     </div>
 
-    <!-- 卷宗列表 -->
-    <div class="flex-1 overflow-y-auto pr-1">
-      <div class="mb-2 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-base-content/60">
+    <!-- Scrollable Incidents List -->
+    <div class="overflow-y-auto space-y-3 pr-1 flex-1">
+      <div class="text-xs font-bold text-md-on-surface-variant uppercase tracking-wider flex items-center gap-1.5 mb-2">
         <Icon name="file-text" class="w-3.5 h-3.5" />
         <span>完整作案卷宗列表</span>
       </div>
 
-      <div id="modal-incidents-container" class="space-y-3"></div>
+      <div id="modal-incidents-container" class="space-y-3">
+        <!-- Injected via client JS -->
+      </div>
     </div>
   </div>
-
-  <form method="dialog" class="modal-backdrop">
-    <button>关闭</button>
-  </form>
 </dialog>
 
-<script define:vars={{ personsData: personsView }}>
+<script define:vars={{ personsData: persons }}>
   const personModal = document.getElementById('person-detail-dialog');
+  const closeBtn = document.getElementById('close-person-modal');
   const avatarEl = document.getElementById('modal-person-avatar');
   const nameEl = document.getElementById('modal-person-name');
   const rankEl = document.getElementById('modal-person-rank');
   const countEl = document.getElementById('modal-person-count');
   const incidentsContainer = document.getElementById('modal-incidents-container');
 
-  // 全局监听「查看卷宗」按钮
+  closeBtn?.addEventListener('click', () => {
+    personModal?.close();
+  });
+
+  personModal?.addEventListener('click', (e) => {
+    if (e.target === personModal) {
+      personModal.close();
+    }
+  });
+
+  // Global listener for "view-person-btn"
   document.addEventListener('click', (e) => {
     const target = e.target.closest('.view-person-btn');
     if (!target) return;
@@ -96,40 +90,64 @@ const personsView = persons.map((p) => {
     const person = personsData.find((p) => p.id === personId);
     if (!person || !personModal) return;
 
-    // 头部信息
+    // Fill Header
     if (avatarEl) {
-      avatarEl.innerHTML = person.avatarSrc
-        ? `<img src="${person.avatarSrc}" alt="${person.name}" class="h-full w-full object-cover" onerror="this.parentElement.textContent='${person.avatarFallback}'" />`
-        : `<span>${person.avatarFallback}</span>`;
+      const isImg = person.avatar && (
+        person.avatar.startsWith('http://') ||
+        person.avatar.startsWith('https://') ||
+        person.avatar.startsWith('data:image/') ||
+        person.avatar.startsWith('/') ||
+        person.avatar.endsWith('.png') ||
+        person.avatar.endsWith('.jpg') ||
+        person.avatar.endsWith('.jpeg') ||
+        person.avatar.endsWith('.webp')
+      );
+      if (isImg) {
+        let src = person.avatar;
+        const baseUrl = window.location.pathname.startsWith('/CSA48') ? '/CSA48/' : '/';
+        if (src.startsWith('/')) {
+          src = baseUrl.replace(/\/$/, '') + src;
+        }
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = person.name || '头像';
+        img.className = 'w-full h-full object-cover';
+        img.onerror = function () {
+          avatarEl.textContent = person.name ? person.name[0] : '?';
+        };
+        avatarEl.innerHTML = '';
+        avatarEl.appendChild(img);
+      } else {
+        avatarEl.textContent = person.avatar || (person.name ? person.name[0] : '?');
+      }
     }
     if (nameEl) nameEl.textContent = person.name;
     if (rankEl) rankEl.textContent = `#${person.rank || 'N/A'}`;
     if (countEl) countEl.textContent = `${person.totalCount} 次`;
 
-    // 卷宗列表
+    // Fill Incidents
     if (incidentsContainer) {
+      incidentsContainer.innerHTML = '';
       if (!person.incidents || person.incidents.length === 0) {
-        incidentsContainer.innerHTML =
-          '<div class="py-8 text-center text-xs text-base-content/60">暂无翻车案底</div>';
+        incidentsContainer.innerHTML = '<div class="text-md-on-surface-variant text-xs py-8 text-center">暂无翻车案底</div>';
       } else {
-        incidentsContainer.innerHTML = person.incidents
-          .map(
-            (inc) => `
-          <div class="card card-bordered bg-base-200">
-            <div class="card-body gap-2 p-4">
-              <span class="badge badge-ghost gap-1.5 font-mono">
+        person.incidents.forEach((inc) => {
+          const itemEl = document.createElement('div');
+          itemEl.className = 'p-4 rounded-md-xl bg-md-surface-container-low border border-md-outline-variant/30 space-y-2';
+          itemEl.innerHTML = `
+            <div class="flex items-center justify-between text-xs gap-2">
+              <span class="font-mono text-md-on-surface-variant inline-flex items-center gap-1.5 bg-md-surface-container-high px-2.5 py-1 rounded-md-full border border-md-outline-variant/20">
                 <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2" /><line x1="16" x2="16" y1="2" y2="6" /><line x1="8" x2="8" y1="2" y2="6" /><line x1="3" x2="21" y1="10" y2="10" /></svg>
-                <span>${inc.date}</span>
+                ${inc.date}
               </span>
-              <h4 class="text-sm font-bold">${inc.title}</h4>
-              <p class="rounded-box border border-base-300 bg-base-100 p-2.5 text-xs leading-relaxed">
-                ${inc.description}
-              </p>
             </div>
-          </div>
-        `
-          )
-          .join('');
+            <h4 class="font-bold text-sm text-md-on-surface">${inc.title}</h4>
+            <p class="text-xs text-md-on-surface/90 leading-relaxed bg-md-surface-container-lowest/60 p-2.5 rounded-md-lg border border-md-outline-variant/20">
+              ${inc.description}
+            </p>
+          `;
+          incidentsContainer.appendChild(itemEl);
+        });
       }
     }
 

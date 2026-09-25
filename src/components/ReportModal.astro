@@ -9,116 +9,138 @@ interface Props {
 const { persons } = Astro.props;
 ---
 
-<dialog id="report-dialog" class="modal">
-  <div class="modal-box max-w-xl">
-    <!-- 头部 -->
-    <div class="mb-6 flex items-center justify-between border-b border-base-300 pb-4">
+<dialog
+  id="report-dialog"
+  class="bg-transparent p-4 w-full max-w-xl rounded-md-2xl text-md-on-surface outline-none m-auto"
+>
+  <div class="bg-md-surface-container-high border border-md-outline-variant/30 rounded-md-2xl p-6 sm:p-8 shadow-md-3 relative overflow-hidden">
+    <!-- MD3 Dialog Header -->
+    <div class="flex items-center justify-between pb-4 border-b border-md-outline-variant/20 mb-6">
       <div class="flex items-center gap-3">
-        <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-primary-content">
-          <Icon name="alert" class="w-5 h-5" />
+        <div class="w-10 h-10 rounded-md-lg bg-md-primary-container text-md-on-primary-container flex items-center justify-center text-xl">
+          <Icon name="alert" class="w-5 h-5 text-md-on-primary-container" />
         </div>
         <div>
-          <h2 class="text-xl font-bold">翻车立案登记</h2>
-          <p class="mt-0.5 text-xs text-base-content/60">
+          <h2 class="text-xl font-bold text-md-on-surface">
+            翻车立案登记
+          </h2>
+          <p class="text-xs text-md-on-surface-variant mt-0.5">
             不管是检举揭发还是自首坦白，请如实记录精彩瞬间
           </p>
         </div>
       </div>
-
-      <form method="dialog">
-        <button class="btn btn-sm btn-circle btn-ghost" aria-label="关闭">
-          <Icon name="close" class="w-4 h-4" />
-        </button>
-      </form>
+      <button
+        id="close-report-btn"
+        class="w-9 h-9 rounded-md-full bg-md-surface-container hover:bg-md-surface-container-highest text-md-on-surface-variant hover:text-md-on-surface flex items-center justify-center transition-colors text-base"
+      >
+        <Icon name="close" class="w-4 h-4" />
+      </button>
     </div>
 
+    <!-- MD3 Form (Streamlined: Person, Date, Title, Description only) -->
     <form id="report-form" class="space-y-4">
-      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <label class="form-control w-full">
-          <div class="label">
-            <span class="label-text flex items-center gap-1">
+      <!-- Offender & Date -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-xs font-medium text-md-on-surface-variant mb-1.5">
+            <span class="inline-flex items-center gap-1">
               <Icon name="person" class="w-3.5 h-3.5" />
               <span>犯罪嫌疑人</span>
-              <span class="text-error">*</span>
+              <span class="text-md-error">*</span>
             </span>
-          </div>
-          <select id="form-person" required class="select select-bordered">
+          </label>
+          <select
+            id="form-person"
+            required
+            class="w-full bg-md-surface-container border border-md-outline-variant/60 rounded-md-md px-3.5 py-2.5 text-sm text-md-on-surface focus:outline-none focus:border-md-primary transition-all"
+          >
             <option value="">-- 请选择猪猪 --</option>
             {persons.map((p) => (
               <option value={p.id}>{p.name} ({p.nickname})</option>
             ))}
           </select>
-        </label>
+        </div>
 
-        <label class="form-control w-full">
-          <div class="label">
-            <span class="label-text flex items-center gap-1">
+        <div>
+          <label class="block text-xs font-medium text-md-on-surface-variant mb-1.5">
+            <span class="inline-flex items-center gap-1">
               <Icon name="calendar" class="w-3.5 h-3.5" />
               <span>案发日期</span>
-              <span class="text-error">*</span>
+              <span class="text-md-error">*</span>
             </span>
-          </div>
-          <input type="date" id="form-date" required class="input input-bordered" />
-        </label>
+          </label>
+          <input
+            type="date"
+            id="form-date"
+            required
+            class="w-full bg-md-surface-container border border-md-outline-variant/60 rounded-md-md px-3.5 py-2.5 text-sm text-md-on-surface focus:outline-none focus:border-md-primary transition-all"
+          />
+        </div>
       </div>
 
-      <label class="form-control w-full">
-        <div class="label">
-          <span class="label-text flex items-center gap-1">
+      <!-- Title -->
+      <div>
+        <label class="block text-xs font-medium text-md-on-surface-variant mb-1.5">
+          <span class="inline-flex items-center gap-1">
             <Icon name="file-text" class="w-3.5 h-3.5" />
             <span>翻车事件标题</span>
-            <span class="text-error">*</span>
+            <span class="text-md-error">*</span>
           </span>
-        </div>
+        </label>
         <input
           type="text"
           id="form-title"
           required
           placeholder="如：生产数据库 Update 忘记加 WHERE 条件"
-          class="input input-bordered"
+          class="w-full bg-md-surface-container border border-md-outline-variant/60 rounded-md-md px-3.5 py-2.5 text-sm text-md-on-surface placeholder-md-on-surface-variant/60 focus:outline-none focus:border-md-primary transition-all"
         />
-      </label>
+      </div>
 
-      <label class="form-control w-full">
-        <div class="label">
-          <span class="label-text flex items-center gap-1">
-            <span>案发详情与经过</span>
-            <span class="text-error">*</span>
-          </span>
-        </div>
+      <!-- Description -->
+      <div>
+        <label class="block text-xs font-medium text-md-on-surface-variant mb-1.5">
+          <span>案发详情与经过</span>
+          <span class="text-md-error">*</span>
+        </label>
         <textarea
           id="form-description"
           rows="4"
           required
           placeholder="详细描述当时的惨烈过程，时间、地点、目击者反应等..."
-          class="textarea textarea-bordered leading-relaxed"
+          class="w-full bg-md-surface-container border border-md-outline-variant/60 rounded-md-md px-3.5 py-2 text-sm text-md-on-surface placeholder-md-on-surface-variant/60 focus:outline-none focus:border-md-primary transition-all"
         ></textarea>
-      </label>
+      </div>
 
-      <div class="modal-action">
-        <button type="button" id="btn-copy-json" class="btn btn-ghost gap-1.5">
+      <!-- Action Buttons (MD3 Dialog Actions) -->
+      <div class="flex items-center justify-end gap-3 pt-4 border-t border-md-outline-variant/20">
+        <button
+          type="button"
+          id="btn-copy-json"
+          class="md-state-layer px-4 py-2.5 rounded-md-full bg-md-surface-container-highest hover:bg-md-surface-bright text-md-on-surface text-xs font-semibold transition-all flex items-center gap-1.5"
+        >
           <Icon name="clipboard" class="w-3.5 h-3.5" />
           <span>复制 PR 数据</span>
         </button>
-        <button type="submit" id="btn-submit-local" class="btn btn-primary gap-1.5">
+        <button
+          type="submit"
+          id="btn-submit-local"
+          class="md-state-layer px-6 py-2.5 rounded-md-full bg-md-primary hover:opacity-90 text-md-on-primary text-xs font-bold shadow-md-1 hover:shadow-md-2 transition-all active:scale-95 flex items-center gap-1.5"
+        >
           <Icon name="plus" class="w-3.5 h-3.5" />
           <span>本地即刻上榜</span>
         </button>
       </div>
     </form>
 
-    <!-- 复制成功提示 -->
-    <div id="copy-toast" class="toast toast-center hidden">
-      <div class="alert alert-success">
-        <Icon name="check" class="w-4 h-4" />
-        <span>JSON 数据已复制到剪贴板！可直接粘贴至 GitHub PR 或 Issue</span>
-      </div>
+    <!-- Copy Success Toast (MD3 Snackbar) -->
+    <div
+      id="copy-toast"
+      class="hidden absolute bottom-6 left-1/2 -translate-x-1/2 px-5 py-2.5 bg-md-surface-container-highest text-md-on-surface text-xs font-semibold rounded-md-full shadow-md-3 flex items-center gap-2 border border-md-outline-variant"
+    >
+      <Icon name="check" class="w-4 h-4 text-emerald-400" />
+      <span>JSON 数据已复制到剪贴板！可直接粘贴至 GitHub PR 或 Issue</span>
     </div>
   </div>
-
-  <form method="dialog" class="modal-backdrop">
-    <button>关闭</button>
-  </form>
 </dialog>
 
 <script>
@@ -126,18 +148,31 @@ const { persons } = Astro.props;
 
   const dialog = document.getElementById('report-dialog') as HTMLDialogElement | null;
   const openBtn = document.getElementById('open-report-btn');
+  const closeBtn = document.getElementById('close-report-btn');
   const form = document.getElementById('report-form') as HTMLFormElement | null;
   const copyBtn = document.getElementById('btn-copy-json');
   const copyToast = document.getElementById('copy-toast');
   const dateInput = document.getElementById('form-date') as HTMLInputElement | null;
 
-  // 默认日期为今天
+  // Set default date to today
   if (dateInput) {
-    dateInput.value = new Date().toISOString().split('T')[0];
+    const today = new Date().toISOString().split('T')[0];
+    dateInput.value = today;
   }
 
+  // Open & Close
   openBtn?.addEventListener('click', () => {
     dialog?.showModal();
+  });
+
+  closeBtn?.addEventListener('click', () => {
+    dialog?.close();
+  });
+
+  dialog?.addEventListener('click', (e) => {
+    if (e.target === dialog) {
+      dialog.close();
+    }
   });
 
   function getFormData() {
@@ -159,7 +194,7 @@ const { persons } = Astro.props;
     };
   }
 
-  // 复制 JSON（用于提 PR）
+  // Copy JSON for PR
   copyBtn?.addEventListener('click', () => {
     const data = getFormData();
     const jsonStr = JSON.stringify(data, null, 2);
@@ -173,16 +208,18 @@ const { persons } = Astro.props;
     });
   });
 
-  // 本地提交并撒花
+  // Local Submit & Confetti
   form?.addEventListener('submit', (e) => {
     e.preventDefault();
     const incident = getFormData();
 
+    // Store in LocalStorage
     const localIncidentsStr = localStorage.getItem('custom_incidents') || '[]';
     const localIncidents = JSON.parse(localIncidentsStr);
     localIncidents.push(incident);
     localStorage.setItem('custom_incidents', JSON.stringify(localIncidents));
 
+    // Confetti
     confetti({
       particleCount: 100,
       spread: 70,
@@ -191,6 +228,7 @@ const { persons } = Astro.props;
 
     dialog?.close();
 
+    // Reload page to reflect changes
     setTimeout(() => {
       window.location.reload();
     }, 600);
