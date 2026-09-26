@@ -28,7 +28,7 @@ const palettes = [
   <!-- Palette Dropdown Popover -->
   <div
     id="palette-menu"
-    class="absolute right-0 top-12 hidden w-48 rounded-md-2xl border border-md-outline-variant/30 bg-md-surface-container-high p-2 shadow-md-3 z-50 animate-in fade-in zoom-in-95 duration-150"
+    class="absolute right-0 top-12 hidden w-48 rounded-md-2xl border border-md-outline-variant/30 dark:border-transparent bg-md-surface-container-high p-2 shadow-md-3 z-50 animate-in fade-in zoom-in-95 duration-150"
   >
     <div class="px-2.5 py-1.5 text-[11px] font-bold uppercase tracking-wider text-md-on-surface-variant/80">
       Material You 色盘
@@ -40,7 +40,7 @@ const palettes = [
           class="palette-option flex items-center gap-2.5 rounded-md-xl px-2.5 py-1.5 text-xs font-medium text-md-on-surface hover:bg-md-on-surface/8 transition-colors"
           data-palette-value={p.value}
         >
-          <span class="h-4 w-4 rounded-full border border-white/20" style={`background-color: ${p.color}`}></span>
+          <span class="h-4 w-4 rounded-full border border-black/10 dark:border-white/10" style={`background-color: ${p.color}`}></span>
           <span>{p.name}</span>
         </button>
       ))}

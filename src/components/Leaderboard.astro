@@ -13,7 +13,7 @@ const { rankedPersons } = Astro.props;
 
 <div class="space-y-4">
   <!-- M3 Search & Sort Bar -->
-  <div class="rounded-md-2xl sm:rounded-md-full border border-md-outline-variant/30 bg-md-surface-container-low p-2.5 sm:p-2 shadow-sm">
+  <div class="rounded-md-2xl sm:rounded-md-full border border-md-outline-variant/30 dark:border-transparent bg-md-surface-container-low p-2.5 sm:p-2 shadow-sm">
     <div class="flex flex-col gap-2.5 sm:flex-row sm:items-center sm:justify-between">
       <!-- Search Input -->
       <SearchInput id="leaderboard-search" placeholder="搜索猪猪姓名、外号、事迹..." />
@@ -23,7 +23,7 @@ const { rankedPersons } = Astro.props;
         <span class="hidden text-xs text-md-on-surface-variant sm:inline">排序：</span>
         <select
           id="leaderboard-sort"
-          class="h-10 rounded-md-full border border-md-outline-variant/30 bg-md-surface-container-high px-3.5 text-xs font-medium text-md-on-surface outline-none transition-all focus:ring-2 focus:ring-md-primary"
+          class="h-10 rounded-md-full border border-md-outline-variant/30 dark:border-transparent bg-md-surface-container-high px-3.5 text-xs font-medium text-md-on-surface outline-none transition-all focus:ring-2 focus:ring-md-primary"
         >
           <option value="count-desc" selected>犯蠢次数 (由多到少)</option>
           <option value="recent-desc">作案时间 (由近到远)</option>

@@ -14,15 +14,15 @@ const { person, rank } = Astro.props;
 const config = {
   1: {
     containerClass:
-      'order-1 md:order-2 rounded-md-3xl bg-md-surface-container-high border-2 border-amber-400/80 dark:border-amber-500/70 shadow-md-2 hover:shadow-md-3 p-6 sm:p-7 relative md:-mt-3 flex flex-col justify-between group transition-all',
+      'order-1 md:order-2 rounded-md-3xl bg-md-surface-container-high border-2 border-amber-400/80 dark:border-amber-500/50 shadow-md-2 hover:shadow-md-3 p-6 sm:p-7 relative md:-mt-3 flex flex-col justify-between group transition-all',
     tagClass:
-      'bg-amber-500/20 text-amber-800 dark:text-amber-200 text-xs font-black border border-amber-500/30 shadow-sm px-3.5 py-1.5',
+      'bg-amber-500/20 text-amber-800 dark:text-amber-200 text-xs font-black border border-amber-500/30 dark:border-amber-500/20 shadow-sm px-3.5 py-1.5',
     tagLabel: '!?猪猪霸主?!',
     pigSizeClass: 'w-48 h-48 sm:w-52 sm:h-52 opacity-35 dark:opacity-40',
     avatarClass:
-      'border-2 border-amber-400 bg-amber-100 dark:bg-amber-950/80 text-3xl font-black text-amber-950 dark:text-amber-200 shadow-md-1 h-24 w-24 mx-auto mb-3',
+      'border-2 border-amber-400 dark:border-amber-500/50 bg-amber-100 dark:bg-amber-950/80 text-3xl font-black text-amber-950 dark:text-amber-200 shadow-md-1 h-24 w-24 mx-auto mb-3',
     nameClass: 'text-xl font-black text-md-on-surface',
-    metricBoxClass: 'rounded-md-2xl bg-amber-500/10 border border-amber-500/25 p-3.5 mb-5',
+    metricBoxClass: 'rounded-md-2xl bg-amber-500/10 border border-amber-500/25 dark:border-transparent p-3.5 mb-5',
     metricLabelClass: 'text-xs font-medium text-amber-800 dark:text-amber-200',
     metricCountClass: 'text-2xl font-black text-amber-600 dark:text-amber-400',
     btnClass:
@@ -32,15 +32,15 @@ const config = {
   },
   2: {
     containerClass:
-      'order-2 md:order-1 rounded-md-3xl bg-md-surface-container border border-md-outline-variant/30 shadow-md-1 hover:shadow-md-2 p-5 sm:p-6 flex flex-col justify-between transition-all group',
+      'order-2 md:order-1 rounded-md-3xl bg-md-surface-container border border-md-outline-variant/30 dark:border-transparent shadow-md-1 hover:shadow-md-2 p-5 sm:p-6 flex flex-col justify-between transition-all group',
     tagClass:
       'bg-slate-200 dark:bg-slate-700/80 text-slate-800 dark:text-slate-200 text-xs font-bold shadow-sm px-3 py-1',
     tagLabel: '大猪',
     pigSizeClass: 'w-44 h-44 sm:w-48 sm:h-48 opacity-30 dark:opacity-35',
     avatarClass:
-      'border-2 border-slate-300 dark:border-slate-600 bg-slate-100 dark:bg-slate-800 text-2xl font-bold text-slate-800 dark:text-slate-200 shadow-inner h-20 w-20 mx-auto mb-3',
+      'border-2 border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-2xl font-bold text-slate-800 dark:text-slate-200 shadow-inner h-20 w-20 mx-auto mb-3',
     nameClass: 'text-lg font-bold text-md-on-surface',
-    metricBoxClass: 'rounded-md-2xl bg-md-surface-container-high border border-md-outline-variant/20 p-3 mb-5',
+    metricBoxClass: 'rounded-md-2xl bg-md-surface-container-high border border-md-outline-variant/20 dark:border-transparent p-3 mb-5',
     metricLabelClass: 'text-xs text-md-on-surface-variant',
     metricCountClass: 'text-xl font-bold text-md-on-surface',
     btnClass:
@@ -50,15 +50,15 @@ const config = {
   },
   3: {
     containerClass:
-      'order-3 md:order-3 rounded-md-3xl bg-md-surface-container border border-md-outline-variant/30 shadow-md-1 hover:shadow-md-2 p-5 sm:p-6 flex flex-col justify-between transition-all group',
+      'order-3 md:order-3 rounded-md-3xl bg-md-surface-container border border-md-outline-variant/30 dark:border-transparent shadow-md-1 hover:shadow-md-2 p-5 sm:p-6 flex flex-col justify-between transition-all group',
     tagClass:
-      'bg-amber-900/15 dark:bg-amber-900/60 text-amber-900 dark:text-amber-200 text-xs font-bold border border-amber-700/30 shadow-sm px-3 py-1',
+      'bg-amber-900/15 dark:bg-amber-900/60 text-amber-900 dark:text-amber-200 text-xs font-bold border border-amber-700/30 dark:border-transparent shadow-sm px-3 py-1',
     tagLabel: '小猪',
     pigSizeClass: 'w-44 h-44 sm:w-48 sm:h-48 opacity-30 dark:opacity-35',
     avatarClass:
-      'border-2 border-amber-600/40 bg-amber-50 dark:bg-amber-950/40 text-2xl font-bold text-amber-900 dark:text-amber-200 shadow-inner h-20 w-20 mx-auto mb-3',
+      'border-2 border-amber-600/40 dark:border-amber-800/40 bg-amber-50 dark:bg-amber-950/40 text-2xl font-bold text-amber-900 dark:text-amber-200 shadow-inner h-20 w-20 mx-auto mb-3',
     nameClass: 'text-lg font-bold text-md-on-surface',
-    metricBoxClass: 'rounded-md-2xl bg-md-surface-container-high border border-md-outline-variant/20 p-3 mb-5',
+    metricBoxClass: 'rounded-md-2xl bg-md-surface-container-high border border-md-outline-variant/20 dark:border-transparent p-3 mb-5',
     metricLabelClass: 'text-xs text-md-on-surface-variant',
     metricCountClass: 'text-xl font-bold text-md-on-surface',
     btnClass:
