@@ -1,20 +1,14 @@
 ---
 import type { PersonStats } from '../data/types';
-import Icon from './Icon.astro';
-import { resolveAvatar } from '../utils/avatar';
+import SearchInput from './ui/SearchInput.astro';
+import EmptyState from './ui/EmptyState.astro';
+import PersonCard from './leaderboard/PersonCard.astro';
 
 interface Props {
   rankedPersons: PersonStats[];
 }
 
 const { rankedPersons } = Astro.props;
-
-function rankBadgeClass(rank?: number): string {
-  if (rank === 1) return 'bg-amber-400 text-amber-950 font-black shadow-sm';
-  if (rank === 2) return 'bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold';
-  if (rank === 3) return 'bg-amber-900/15 dark:bg-amber-900/60 text-amber-900 dark:text-amber-200 font-bold';
-  return 'bg-md-surface-container-highest text-md-on-surface-variant font-medium';
-}
 ---
 
 <div class="space-y-4">
@@ -22,15 +16,7 @@ function rankBadgeClass(rank?: number): string {
   <div class="rounded-md-2xl sm:rounded-md-full border border-md-outline-variant/30 bg-md-surface-container-low p-2.5 sm:p-2 shadow-sm">
     <div class="flex flex-col gap-2.5 sm:flex-row sm:items-center sm:justify-between">
       <!-- Search Input -->
-      <label class="flex h-11 flex-1 items-center gap-2.5 rounded-md-full bg-md-surface-container-high px-4 text-sm text-md-on-surface transition-all focus-within:ring-2 focus-within:ring-md-primary">
-        <Icon name="search" class="h-4 w-4 shrink-0 text-md-on-surface-variant/70" />
-        <input
-          id="leaderboard-search"
-          type="text"
-          class="w-full bg-transparent text-sm text-md-on-surface outline-none placeholder:text-md-on-surface-variant/60"
-          placeholder="搜索猪猪姓名、外号、事迹..."
-        />
-      </label>
+      <SearchInput id="leaderboard-search" placeholder="搜索猪猪姓名、外号、事迹..." />
 
       <!-- Sort Selection -->
       <div class="flex items-center justify-end gap-2 px-1 sm:px-2">
@@ -49,94 +35,13 @@ function rankBadgeClass(rank?: number): string {
   <!-- Leaderboard List -->
   <div id="leaderboard-items" class="space-y-3">
     {rankedPersons.length === 0 ? (
-      <div class="rounded-md-3xl border border-md-outline-variant/30 bg-md-surface-container-low p-10 text-center shadow-sm">
-        <div class="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-md-surface-container-highest text-md-on-surface-variant/50">
-          <Icon name="medal" class="h-7 w-7" />
-        </div>
-        <p class="text-sm font-bold text-md-on-surface">暂无猪猪记录</p>
-        <p class="mt-1 text-xs text-md-on-surface-variant">请前往管理后台录入人员与翻车事件</p>
-      </div>
+      <EmptyState
+        icon="medal"
+        title="暂无猪猪记录"
+        description="请前往管理后台录入人员与翻车事件"
+      />
     ) : (
-      rankedPersons.map((person) => {
-        const avatar = resolveAvatar(person.avatar, person.name);
-        const isFirst = person.rank === 1;
-
-        return (
-          <div
-            class={`person-card md-state-layer rounded-md-2xl border transition-all p-4 sm:p-5 shadow-sm hover:shadow-md-1 ${
-              isFirst
-                ? 'border-amber-400/60 dark:border-amber-500/50 bg-md-surface-container-high'
-                : 'border-md-outline-variant/30 bg-md-surface-container-low hover:bg-md-surface-container'
-            }`}
-            data-name={person.name}
-            data-nickname={person.nickname}
-            data-count={person.totalCount}
-            data-recent={person.recentDate}
-            data-id={person.id}
-          >
-            <div class="flex flex-col gap-3">
-              <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                <!-- Rank / Avatar / Name -->
-                <div class="flex items-center gap-3.5 min-w-0">
-                  <span class={`flex h-8 min-w-[2rem] items-center justify-center rounded-md-full px-2.5 text-xs font-mono shrink-0 ${rankBadgeClass(person.rank)}`}>
-                    #{person.rank}
-                  </span>
-
-                  <div class="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full bg-md-primary-container text-md-on-primary-container text-base font-bold shadow-sm">
-                    {avatar.src ? (
-                      <img
-                        src={avatar.src}
-                        alt={person.name}
-                        class="h-full w-full object-cover"
-                        onerror={`this.parentElement.textContent='${avatar.fallback}'`}
-                      />
-                    ) : (
-                      <span>{avatar.fallback}</span>
-                    )}
-                  </div>
-
-                  <div class="min-w-0">
-                    <h3 class="text-base font-bold text-md-on-surface truncate">{person.name}</h3>
-                    {person.nickname && (
-                      <p class="text-xs text-md-on-surface-variant truncate">@{person.nickname}</p>
-                    )}
-                  </div>
-                </div>
-
-                <!-- Count & Action Button -->
-                <div class="flex items-center justify-between sm:justify-end w-full sm:w-auto gap-3 sm:gap-4 border-t sm:border-t-0 border-md-outline-variant/20 pt-3 sm:pt-0 shrink-0">
-                  <div class="flex items-center gap-1.5 rounded-md-full border border-md-primary/20 bg-md-primary-container/40 px-3 py-1 text-xs font-medium text-md-on-surface">
-                    <span class="text-md-on-surface-variant">累计</span>
-                    <span class="font-bold text-md-primary">{person.totalCount} 次</span>
-                  </div>
-
-                  <button
-                    class="view-person-btn md-state-layer flex items-center gap-1.5 rounded-md-full border border-md-outline px-3.5 py-1.5 text-xs font-semibold text-md-primary hover:bg-md-primary/8 transition-colors"
-                    data-person-id={person.id}
-                  >
-                    <Icon name="file-text" class="h-3.5 w-3.5" />
-                    <span>案底卷宗</span>
-                  </button>
-                </div>
-              </div>
-
-              <!-- Latest Incident -->
-              {person.incidents[0] && (
-                <div class="flex items-center justify-between gap-2 rounded-md-xl border border-md-outline-variant/20 bg-md-surface-container/60 p-2.5 text-xs text-md-on-surface-variant">
-                  <div class="flex items-center gap-2 truncate pr-2">
-                    <span class="font-medium text-md-primary shrink-0">最新案情:</span>
-                    <span class="truncate font-medium text-md-on-surface">{person.incidents[0].title}</span>
-                  </div>
-                  <span class="flex items-center gap-1 text-[11px] shrink-0 font-mono text-md-on-surface-variant/80">
-                    <Icon name="calendar" class="h-3 w-3" />
-                    <span>{person.incidents[0].date}</span>
-                  </span>
-                </div>
-              )}
-            </div>
-          </div>
-        );
-      })
+      rankedPersons.map((person) => <PersonCard person={person} />)
     )}
   </div>
 </div>

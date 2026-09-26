@@ -1,0 +1,33 @@
+---
+import Icon from '../Icon.astro';
+
+interface Props {
+  icon?: 'medal' | 'timeline' | 'pig' | 'crown';
+  title: string;
+  description?: string;
+  class?: string;
+}
+
+const {
+  icon = 'pig',
+  title,
+  description,
+  class: className = '',
+} = Astro.props;
+---
+
+<div
+  class:list={[
+    'rounded-md-3xl border border-md-outline-variant/30 bg-md-surface-container-low p-10 text-center shadow-sm',
+    className,
+  ]}
+>
+  <div
+    class="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-md-surface-container-highest text-md-on-surface-variant/50"
+  >
+    <Icon name={icon as any} class="h-7 w-7" />
+  </div>
+  <p class="text-sm font-bold text-md-on-surface">{title}</p>
+  {description && <p class="mt-1 text-xs text-md-on-surface-variant">{description}</p>}
+  <slot />
+</div>

@@ -5,7 +5,7 @@ import Podium from '../components/Podium.astro';
 import Leaderboard from '../components/Leaderboard.astro';
 import Timeline from '../components/Timeline.astro';
 import PersonDetailModal from '../components/PersonDetailModal.astro';
-import Icon from '../components/Icon.astro';
+import SectionHeader from '../components/layout/SectionHeader.astro';
 
 import { getInitialData, computePersonStats } from '../utils/dataHelper';
 
@@ -25,33 +25,21 @@ const top3 = rankedPersons.slice(0, 3);
     <div class="relative pt-2">
       <!-- View 1: Leaderboard (猪排行) -->
       <section id="view-leaderboard" class="transition-opacity duration-200">
-        <div class="mb-4 flex items-center justify-between">
-          <div class="flex items-center gap-2">
-            <div class="flex h-8 w-8 items-center justify-center rounded-full bg-md-secondary-container text-md-on-secondary-container">
-              <Icon name="trophy" class="h-4 w-4" />
-            </div>
-            <h2 class="text-lg font-bold tracking-tight text-md-on-surface sm:text-xl">猪排行</h2>
-            <span class="rounded-md-full border border-md-outline-variant/30 bg-md-surface-container-high px-2.5 py-0.5 text-xs font-medium text-md-on-surface-variant">
-              共 {rankedPersons.length} 只猪猪
-            </span>
-          </div>
-        </div>
+        <SectionHeader
+          icon="trophy"
+          title="猪排行"
+          countLabel={`共 ${rankedPersons.length} 只猪猪`}
+        />
         <Leaderboard rankedPersons={rankedPersons} />
       </section>
 
       <!-- View 2: Timeline (猪记录) -->
       <section id="view-timeline" class="hidden transition-opacity duration-200">
-        <div class="mb-4 flex items-center justify-between">
-          <div class="flex items-center gap-2">
-            <div class="flex h-8 w-8 items-center justify-center rounded-full bg-md-secondary-container text-md-on-secondary-container">
-              <Icon name="timeline" class="h-4 w-4" />
-            </div>
-            <h2 class="text-lg font-bold tracking-tight text-md-on-surface sm:text-xl">猪记录</h2>
-            <span class="rounded-md-full border border-md-outline-variant/30 bg-md-surface-container-high px-2.5 py-0.5 text-xs font-medium text-md-on-surface-variant">
-              共 {totalIncidents} 起案件
-            </span>
-          </div>
-        </div>
+        <SectionHeader
+          icon="timeline"
+          title="猪记录"
+          countLabel={`共 ${totalIncidents} 起案件`}
+        />
         <Timeline incidents={incidents} persons={persons} />
       </section>
     </div>

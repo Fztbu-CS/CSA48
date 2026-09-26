@@ -1,0 +1,63 @@
+---
+import type { ShameIncident, Person } from '../../data/types';
+import Icon from '../Icon.astro';
+import Avatar from '../ui/Avatar.astro';
+
+interface Props {
+  incident: ShameIncident;
+  person?: Person;
+}
+
+const { incident, person } = Astro.props;
+---
+
+<div
+  class="timeline-card group relative"
+  data-title={incident.title}
+  data-description={incident.description}
+  data-person={person?.name || ''}
+>
+  <!-- Timeline Node Indicator -->
+  <div
+    class="absolute -left-6 sm:-left-8 top-3 flex h-6 w-6 sm:h-8 sm:w-8 -translate-x-1/2 items-center justify-center rounded-full border-2 border-md-surface bg-md-primary-container text-md-on-primary-container shadow-sm"
+  >
+    <Icon name="timeline" class="h-3.5 w-3.5" />
+  </div>
+
+  <!-- Timeline Content Card -->
+  <div
+    class="md-state-layer rounded-md-2xl border border-md-outline-variant/30 bg-md-surface-container-low p-4 sm:p-5 shadow-sm hover:shadow-md-1 hover:bg-md-surface-container transition-all"
+  >
+    <div class="mb-3 flex flex-wrap items-center justify-between gap-2.5">
+      <!-- Person Tag -->
+      {
+        person && (
+          <div class="flex items-center gap-2">
+            <Avatar avatar={person.avatar} name={person.name} size="sm" />
+            <span class="text-sm font-bold text-md-on-surface">{person.name}</span>
+          </div>
+        )
+      }
+
+      <!-- Date Badge -->
+      <span
+        class="inline-flex items-center gap-1.5 rounded-md-full border border-md-outline-variant/20 bg-md-surface-container-high px-3 py-1 font-mono text-xs text-md-on-surface-variant"
+      >
+        <Icon name="calendar" class="h-3 w-3" />
+        <span>{incident.date}</span>
+      </span>
+    </div>
+
+    <!-- Title -->
+    <h3 class="mb-2 text-base font-bold text-md-on-surface sm:text-lg leading-snug">
+      {incident.title}
+    </h3>
+
+    <!-- Description -->
+    <p
+      class="rounded-md-xl border border-md-outline-variant/20 bg-md-surface-container/60 p-3.5 text-sm leading-relaxed text-md-on-surface-variant"
+    >
+      {incident.description}
+    </p>
+  </div>
+</div>

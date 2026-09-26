@@ -1,21 +1,15 @@
 ---
 import type { PersonStats } from '../data/types';
 import Icon from './Icon.astro';
-import CrownedPig from './CrownedPig.astro';
-import { resolveAvatar } from '../utils/avatar';
+import PodiumCard from './podium/PodiumCard.astro';
+import EmptyState from './ui/EmptyState.astro';
 
 interface Props {
   top3: PersonStats[];
 }
 
 const { top3 } = Astro.props;
-const first = top3[0];
-const second = top3[1];
-const third = top3[2];
-
-const firstAvatar = first ? resolveAvatar(first.avatar, first.name) : null;
-const secondAvatar = second ? resolveAvatar(second.avatar, second.name) : null;
-const thirdAvatar = third ? resolveAvatar(third.avatar, third.name) : null;
+const [first, second, third] = top3;
 ---
 
 <section class="py-6 sm:py-8 px-2 sm:px-4">
@@ -32,174 +26,16 @@ const thirdAvatar = third ? resolveAvatar(third.avatar, third.name) : null;
 
   {first ? (
     <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-5 items-stretch">
-      <!-- Rank 2: Silver (大猪) -->
-      {second && (
-        <div class="order-2 md:order-1 rounded-md-3xl bg-md-surface-container border border-md-outline-variant/30 shadow-md-1 hover:shadow-md-2 p-5 sm:p-6 flex flex-col justify-between transition-all group">
-          <div>
-            <div class="flex items-center justify-between mb-4">
-              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md-full bg-slate-200 dark:bg-slate-700/80 text-slate-800 dark:text-slate-200 text-xs font-bold shadow-sm">
-                <span>大猪</span>
-                <CrownedPig rank={2} class="w-4 h-4 shrink-0" />
-              </span>
-              <Icon name="medal" class="w-5 h-5 text-md-on-surface-variant/50" />
-            </div>
-
-            <div class="relative text-center mb-5">
-              <div class="absolute top-2 left-1/2 -translate-x-1/2 w-44 h-44 sm:w-48 sm:h-48 opacity-30 dark:opacity-35 pointer-events-none select-none transition-transform duration-300 group-hover:scale-105">
-                <CrownedPig rank={2} class="w-full h-full" />
-              </div>
-              <div class="relative z-10">
-                <div class="mx-auto mb-3 flex h-20 w-20 items-center justify-center overflow-hidden rounded-full border-2 border-slate-300 dark:border-slate-600 bg-slate-100 dark:bg-slate-800 text-2xl font-bold text-slate-800 dark:text-slate-200 shadow-inner">
-                  {secondAvatar?.src ? (
-                    <img
-                      src={secondAvatar.src}
-                      alt={second.name}
-                      class="h-full w-full object-cover"
-                      onerror={`this.parentElement.textContent='${secondAvatar.fallback}'`}
-                    />
-                  ) : (
-                    <span>{secondAvatar?.fallback}</span>
-                  )}
-                </div>
-                <h3 class="text-lg font-bold text-md-on-surface">{second.name}</h3>
-              </div>
-            </div>
-
-            <div class="rounded-md-2xl bg-md-surface-container-high border border-md-outline-variant/20 p-3 mb-5 flex items-center justify-between">
-              <span class="text-xs text-md-on-surface-variant">累计犯蠢</span>
-              <span class="text-xl font-bold text-md-on-surface">
-                {second.totalCount} <span class="text-xs font-normal text-md-on-surface-variant">次</span>
-              </span>
-            </div>
-          </div>
-
-          <button
-            class="view-person-btn md-state-layer w-full py-2.5 px-4 rounded-md-full bg-md-surface-container-highest hover:bg-md-surface-bright text-xs font-medium text-md-on-surface transition-colors flex items-center justify-center gap-1.5 relative z-10"
-            data-person-id={second.id}
-          >
-            <Icon name="file-text" class="w-3.5 h-3.5 text-md-on-surface-variant" />
-            <span>查看卷宗档案 ({second.totalCount})</span>
-          </button>
-        </div>
-      )}
-
-      <!-- Rank 1: Gold (至尊猪猪) -->
-      {first && (
-        <div class="order-1 md:order-2 rounded-md-3xl bg-md-surface-container-high border-2 border-amber-400/80 dark:border-amber-500/70 shadow-md-2 hover:shadow-md-3 p-6 sm:p-7 relative md:-mt-3 flex flex-col justify-between group transition-all">
-          <!-- Top Crown Pill -->
-          <span class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-md-full bg-amber-400 dark:bg-amber-500 text-amber-950 font-black text-xs shadow-md-1 flex items-center gap-1.5 z-20 whitespace-nowrap">
-            <Icon name="crown" class="w-3.5 h-3.5" />
-            <span>至尊猪猪</span>
-          </span>
-
-          <div>
-            <div class="flex items-center justify-between mb-4 mt-2">
-              <span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-md-full bg-amber-500/20 text-amber-800 dark:text-amber-200 text-xs font-black border border-amber-500/30 shadow-sm">
-                <span>!?猪猪霸主?!</span>
-                <CrownedPig rank={1} class="w-5 h-5 shrink-0" />
-              </span>
-              <Icon name="trophy" class="w-5 h-5 text-amber-500" />
-            </div>
-
-            <div class="relative text-center mb-5">
-              <div class="absolute top-2 left-1/2 -translate-x-1/2 w-48 h-48 sm:w-52 sm:h-52 opacity-35 dark:opacity-40 pointer-events-none select-none transition-transform duration-300 group-hover:scale-105">
-                <CrownedPig rank={1} class="w-full h-full" />
-              </div>
-              <div class="relative z-10">
-                <div class="mx-auto mb-3 flex h-24 w-24 items-center justify-center overflow-hidden rounded-full border-2 border-amber-400 bg-amber-100 dark:bg-amber-950/80 text-3xl font-black text-amber-950 dark:text-amber-200 shadow-md-1">
-                  {firstAvatar?.src ? (
-                    <img
-                      src={firstAvatar.src}
-                      alt={first.name}
-                      class="h-full w-full object-cover"
-                      onerror={`this.parentElement.textContent='${firstAvatar.fallback}'`}
-                    />
-                  ) : (
-                    <span>{firstAvatar?.fallback}</span>
-                  )}
-                </div>
-                <h3 class="text-xl font-black text-md-on-surface">{first.name}</h3>
-              </div>
-            </div>
-
-            <div class="rounded-md-2xl bg-amber-500/10 border border-amber-500/25 p-3.5 mb-5 flex items-center justify-between">
-              <span class="text-xs font-medium text-amber-800 dark:text-amber-200">累计犯蠢</span>
-              <span class="text-2xl font-black text-amber-600 dark:text-amber-400">
-                {first.totalCount} <span class="text-xs font-normal text-md-on-surface-variant">次</span>
-              </span>
-            </div>
-          </div>
-
-          <button
-            class="view-person-btn md-state-layer w-full py-3 px-4 rounded-md-full bg-amber-400 hover:bg-amber-500 dark:bg-amber-500 dark:hover:bg-amber-400 text-amber-950 text-xs font-black shadow-md-1 hover:shadow-md-2 transition-all flex items-center justify-center gap-1.5 active:scale-[0.98] relative z-10"
-            data-person-id={first.id}
-          >
-            <Icon name="trophy" class="w-4 h-4" />
-            <span>查看至尊案底 ({first.totalCount})</span>
-          </button>
-        </div>
-      )}
-
-      <!-- Rank 3: Bronze (小猪) -->
-      {third && (
-        <div class="order-3 md:order-3 rounded-md-3xl bg-md-surface-container border border-md-outline-variant/30 shadow-md-1 hover:shadow-md-2 p-5 sm:p-6 flex flex-col justify-between transition-all group">
-          <div>
-            <div class="flex items-center justify-between mb-4">
-              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md-full bg-amber-900/15 dark:bg-amber-900/60 text-amber-900 dark:text-amber-200 text-xs font-bold border border-amber-700/30 shadow-sm">
-                <span>小猪</span>
-                <CrownedPig rank={3} class="w-4 h-4 shrink-0" />
-              </span>
-              <Icon name="medal" class="w-5 h-5 text-md-on-surface-variant/50" />
-            </div>
-
-            <div class="relative text-center mb-5">
-              <div class="absolute top-2 left-1/2 -translate-x-1/2 w-44 h-44 sm:w-48 sm:h-48 opacity-30 dark:opacity-35 pointer-events-none select-none transition-transform duration-300 group-hover:scale-105">
-                <CrownedPig rank={3} class="w-full h-full" />
-              </div>
-              <div class="relative z-10">
-                <div class="mx-auto mb-3 flex h-20 w-20 items-center justify-center overflow-hidden rounded-full border-2 border-amber-600/40 bg-amber-50 dark:bg-amber-950/40 text-2xl font-bold text-amber-900 dark:text-amber-200 shadow-inner">
-                  {thirdAvatar?.src ? (
-                    <img
-                      src={thirdAvatar.src}
-                      alt={third.name}
-                      class="h-full w-full object-cover"
-                      onerror={`this.parentElement.textContent='${thirdAvatar.fallback}'`}
-                    />
-                  ) : (
-                    <span>{thirdAvatar?.fallback}</span>
-                  )}
-                </div>
-                <h3 class="text-lg font-bold text-md-on-surface">{third.name}</h3>
-              </div>
-            </div>
-
-            <div class="rounded-md-2xl bg-md-surface-container-high border border-md-outline-variant/20 p-3 mb-5 flex items-center justify-between">
-              <span class="text-xs text-md-on-surface-variant">累计犯蠢</span>
-              <span class="text-xl font-bold text-md-on-surface">
-                {third.totalCount} <span class="text-xs font-normal text-md-on-surface-variant">次</span>
-              </span>
-            </div>
-          </div>
-
-          <button
-            class="view-person-btn md-state-layer w-full py-2.5 px-4 rounded-md-full bg-md-surface-container-highest hover:bg-md-surface-bright text-xs font-medium text-md-on-surface transition-colors flex items-center justify-center gap-1.5 relative z-10"
-            data-person-id={third.id}
-          >
-            <Icon name="file-text" class="w-3.5 h-3.5 text-md-on-surface-variant" />
-            <span>查看卷宗档案 ({third.totalCount})</span>
-          </button>
-        </div>
-      )}
+      {second && <PodiumCard person={second} rank={2} />}
+      {first && <PodiumCard person={first} rank={1} />}
+      {third && <PodiumCard person={third} rank={3} />}
     </div>
   ) : (
-    <div class="max-w-md mx-auto text-center p-8 sm:p-10 rounded-md-3xl bg-md-surface-container-low border border-md-outline-variant/30 shadow-md-1">
-      <div class="w-16 h-16 mx-auto mb-3.5 rounded-full bg-md-surface-container-highest flex items-center justify-center text-md-on-surface-variant/50">
-        <Icon name="crown" class="w-8 h-8" />
-      </div>
-      <h3 class="text-base font-bold text-md-on-surface mb-1">暂无猪猪登榜</h3>
-      <p class="text-xs text-md-on-surface-variant leading-relaxed">
-        领奖台虚位以待，快去管理后台录入第一起翻车记录吧~
-      </p>
-    </div>
+    <EmptyState
+      icon="crown"
+      title="暂无猪猪登榜"
+      description="领奖台虚位以待，快去管理后台录入第一起翻车记录吧~"
+      class="max-w-md mx-auto p-8 sm:p-10"
+    />
   )}
 </section>

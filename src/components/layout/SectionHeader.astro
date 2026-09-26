@@ -1,0 +1,27 @@
+---
+import Icon from '../Icon.astro';
+
+interface Props {
+  icon: 'trophy' | 'timeline' | 'medal' | 'crown';
+  title: string;
+  countLabel: string;
+}
+
+const { icon, title, countLabel } = Astro.props;
+---
+
+<div class="mb-4 flex items-center justify-between">
+  <div class="flex items-center gap-2">
+    <div
+      class="flex h-8 w-8 items-center justify-center rounded-full bg-md-secondary-container text-md-on-secondary-container"
+    >
+      <Icon name={icon as any} class="h-4 w-4" />
+    </div>
+    <h2 class="text-lg font-bold tracking-tight text-md-on-surface sm:text-xl">{title}</h2>
+    <span
+      class="rounded-md-full border border-md-outline-variant/30 bg-md-surface-container-high px-2.5 py-0.5 text-xs font-medium text-md-on-surface-variant"
+    >
+      {countLabel}
+    </span>
+  </div>
+</div>

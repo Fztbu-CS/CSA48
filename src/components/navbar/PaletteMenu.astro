@@ -1,0 +1,77 @@
+---
+const palettes = [
+  { value: 'rose', name: '小猪粉 (默认)', color: '#984061' },
+  { value: 'sakura', name: '樱花粉', color: '#8f4a5d' },
+  { value: 'green', name: '鼠尾草绿', color: '#3b6939' },
+  { value: 'blue', name: '海洋蓝', color: '#1e5fa0' },
+  { value: 'amber', name: '夕阳琥珀', color: '#815500' },
+];
+---
+
+<div class="relative">
+  <button
+    id="palette-toggle-btn"
+    type="button"
+    class="md-state-layer flex h-9 w-9 items-center justify-center rounded-md-full text-md-on-surface-variant transition-colors hover:bg-md-on-surface/8 hover:text-md-on-surface sm:h-10 sm:w-10"
+    title="Material You 色彩主题"
+    aria-label="切换色彩主题"
+  >
+    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/>
+      <circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/>
+      <circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/>
+      <circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/>
+      <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>
+    </svg>
+  </button>
+
+  <!-- Palette Dropdown Popover -->
+  <div
+    id="palette-menu"
+    class="absolute right-0 top-12 hidden w-48 rounded-md-2xl border border-md-outline-variant/30 bg-md-surface-container-high p-2 shadow-md-3 z-50 animate-in fade-in zoom-in-95 duration-150"
+  >
+    <div class="px-2.5 py-1.5 text-[11px] font-bold uppercase tracking-wider text-md-on-surface-variant/80">
+      Material You 色盘
+    </div>
+    <div class="flex flex-col gap-1">
+      {palettes.map((p) => (
+        <button
+          type="button"
+          class="palette-option flex items-center gap-2.5 rounded-md-xl px-2.5 py-1.5 text-xs font-medium text-md-on-surface hover:bg-md-on-surface/8 transition-colors"
+          data-palette-value={p.value}
+        >
+          <span class="h-4 w-4 rounded-full border border-white/20" style={`background-color: ${p.color}`}></span>
+          <span>{p.name}</span>
+        </button>
+      ))}
+    </div>
+  </div>
+</div>
+
+<script>
+  const paletteBtn = document.getElementById('palette-toggle-btn');
+  const paletteMenu = document.getElementById('palette-menu');
+  const paletteOptions = document.querySelectorAll<HTMLButtonElement>('.palette-option');
+
+  paletteBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    paletteMenu?.classList.toggle('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!paletteMenu?.contains(e.target as Node) && e.target !== paletteBtn) {
+      paletteMenu?.classList.add('hidden');
+    }
+  });
+
+  paletteOptions.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const palette = btn.getAttribute('data-palette-value');
+      if (palette) {
+        document.documentElement.setAttribute('data-palette', palette);
+        localStorage.setItem('palette', palette);
+        paletteMenu?.classList.add('hidden');
+      }
+    });
+  });
+</script>

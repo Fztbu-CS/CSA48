@@ -1,0 +1,30 @@
+---
+import Icon from '../Icon.astro';
+
+interface Props {
+  id: string;
+  placeholder?: string;
+  class?: string;
+}
+
+const {
+  id,
+  placeholder = '搜索...',
+  class: className = '',
+} = Astro.props;
+---
+
+<label
+  class:list={[
+    'flex h-11 flex-1 items-center gap-2.5 rounded-md-full bg-md-surface-container-high px-4 text-sm text-md-on-surface transition-all focus-within:ring-2 focus-within:ring-md-primary',
+    className,
+  ]}
+>
+  <Icon name="search" class="h-4 w-4 shrink-0 text-md-on-surface-variant/70" />
+  <input
+    id={id}
+    type="text"
+    class="w-full bg-transparent text-sm text-md-on-surface outline-none placeholder:text-md-on-surface-variant/60"
+    placeholder={placeholder}
+  />
+</label>

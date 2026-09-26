@@ -1,0 +1,41 @@
+---
+import Icon from '../Icon.astro';
+---
+
+<button
+  id="theme-toggle-btn"
+  type="button"
+  class="md-state-layer flex h-9 w-9 items-center justify-center rounded-md-full text-md-on-surface-variant transition-colors hover:bg-md-on-surface/8 hover:text-md-on-surface sm:h-10 sm:w-10"
+  title="切换明暗色彩模式"
+  aria-label="切换明暗色彩模式"
+>
+  <span id="theme-icon-dark" class="hidden"><Icon name="sun" class="h-5 w-5" /></span>
+  <span id="theme-icon-light"><Icon name="moon" class="h-5 w-5" /></span>
+</button>
+
+<script>
+  const themeToggle = document.getElementById('theme-toggle-btn');
+  const darkIcon = document.getElementById('theme-icon-dark');
+  const lightIcon = document.getElementById('theme-icon-light');
+
+  function syncThemeIcons(theme: string) {
+    darkIcon?.classList.toggle('hidden', theme !== 'dark');
+    lightIcon?.classList.toggle('hidden', theme === 'dark');
+  }
+
+  const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+  syncThemeIcons(currentTheme);
+
+  themeToggle?.addEventListener('click', () => {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const nextTheme = isDark ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', nextTheme);
+    if (nextTheme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    localStorage.setItem('theme', nextTheme);
+    syncThemeIcons(nextTheme);
+  });
+</script>

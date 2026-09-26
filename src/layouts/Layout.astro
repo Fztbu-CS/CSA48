@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import Footer from '../components/layout/Footer.astro';
 
 interface Props {
   title?: string;
@@ -70,24 +71,6 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
   <body class="flex min-h-screen flex-col bg-md-surface text-md-on-surface antialiased selection:bg-md-primary-container selection:text-md-on-primary-container">
     <slot />
 
-    <!-- Material 3 Footer -->
-    <footer class="mt-auto border-t border-md-outline-variant/30 bg-md-surface-container-low px-4 py-8 text-center text-md-on-surface-variant">
-      <div class="mx-auto flex max-w-7xl flex-col items-center justify-center gap-3 sm:flex-row sm:justify-between">
-        <div class="flex items-center gap-2 text-xs">
-          <img src={`${baseUrl}/pig.svg`} alt="Piglet" class="h-4 w-4 opacity-75" />
-          <span class="font-medium text-md-on-surface">!?猪猪?!</span>
-        </div>
-        <nav class="flex items-center gap-4 text-xs font-medium">
-          <a
-            href="https://github.com/Fztbu-CS/CSA48"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="rounded-md-full px-3 py-1.5 transition-colors hover:bg-md-on-surface/8 text-md-primary hover:text-md-primary font-semibold"
-          >
-            GitHub 仓库
-          </a>
-        </nav>
-      </div>
-    </footer>
+    <Footer />
   </body>
 </html>
