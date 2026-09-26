@@ -115,6 +115,17 @@
   ],
   "incidents": [
     {
+      "id": "inc-muhqk0y7",
+      "personId": "p_mua5km4r",
+      "title": "没看任务没看需求就动工",
+      "description": "我要的是练手任务做个任务发布接取人员管理你他吗给我端上来一个学院管理是hyw还他妈没用yudao，能不能看完需求再动",
+      "date": "2026-09-25",
+      "severity": 3,
+      "category": "code",
+      "witnesses": [],
+      "tags": []
+    },
+    {
       "id": "inc-mufn2kyc",
       "personId": "p_mua5km4r",
       "title": "50 多个 Controller，仅 3 个 DTO，服务层未做分层,真神了",
