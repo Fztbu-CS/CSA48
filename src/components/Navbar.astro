@@ -3,50 +3,50 @@ import Icon from './Icon.astro';
 ---
 
 <header class="sticky top-0 z-40 border-b border-md-outline-variant/30 bg-md-surface/90 backdrop-blur-md transition-colors duration-200">
-  <div class="mx-auto flex h-16 max-w-7xl items-center justify-between gap-3 px-3 sm:h-20 sm:px-6">
+  <div class="relative mx-auto flex h-16 max-w-7xl items-center justify-between gap-2 px-3 sm:h-20 sm:gap-3 sm:px-6">
     <!-- Brand (Start) -->
-    <div class="flex items-center gap-3">
-      <a href="." class="group flex items-center gap-2.5 rounded-md-full p-1.5 transition-colors hover:bg-md-on-surface/8">
-        <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-md-xl bg-md-primary-container text-md-on-primary-container shadow-md-1 transition-transform group-hover:scale-105">
-          <Icon name="pig" class="h-6 w-6" />
+    <div class="z-10 flex shrink-0 items-center">
+      <a href="." class="group flex items-center gap-2 rounded-md-full p-1 transition-colors hover:bg-md-on-surface/8 sm:gap-2.5 sm:p-1.5">
+        <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-md-xl bg-md-primary-container text-md-on-primary-container shadow-md-1 transition-transform group-hover:scale-105 sm:h-10 sm:w-10">
+          <Icon name="pig" class="h-5 w-5 sm:h-6 sm:w-6" />
         </div>
         <div class="flex flex-col leading-tight">
-          <span class="text-base font-bold tracking-tight text-md-on-surface sm:text-lg">!?猪猪?!</span>
+          <span class="text-sm font-bold tracking-tight text-md-on-surface sm:text-lg">!?猪猪?!</span>
           <span class="hidden text-[11px] font-medium text-md-on-surface-variant sm:block">!?者者?! · 排行榜</span>
         </div>
       </a>
     </div>
 
     <!-- M3 Segmented Buttons (Center) -->
-    <nav class="flex items-center">
-      <div id="view-tabs" class="flex items-center rounded-md-full border border-md-outline-variant/30 bg-md-surface-container-high p-1 shadow-sm">
+    <nav class="absolute left-1/2 -translate-x-1/2 flex items-center justify-center">
+      <div id="view-tabs" class="grid grid-cols-2 items-center rounded-md-full border border-md-outline-variant/30 bg-md-surface-container-high p-1 shadow-sm">
         <button
           type="button"
-          class="nav-tab tab-active flex items-center gap-1.5 rounded-md-full px-3.5 py-1.5 text-xs font-semibold text-md-on-secondary-container transition-all sm:px-4 sm:text-sm"
+          class="nav-tab tab-active flex items-center justify-center gap-1 rounded-md-full px-2.5 py-1 text-xs font-semibold text-md-on-secondary-container transition-all sm:gap-1.5 sm:px-4 sm:py-1.5 sm:text-sm whitespace-nowrap"
           data-target="view-leaderboard"
         >
-          <Icon name="trophy" class="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+          <Icon name="trophy" class="h-3.5 w-3.5 shrink-0 sm:h-4 sm:w-4" />
           <span>猪排行</span>
         </button>
         <button
           type="button"
-          class="nav-tab flex items-center gap-1.5 rounded-md-full px-3.5 py-1.5 text-xs font-medium text-md-on-surface-variant transition-all hover:bg-md-on-surface/5 hover:text-md-on-surface sm:px-4 sm:text-sm"
+          class="nav-tab flex items-center justify-center gap-1 rounded-md-full px-2.5 py-1 text-xs font-medium text-md-on-surface-variant transition-all hover:bg-md-on-surface/5 hover:text-md-on-surface sm:gap-1.5 sm:px-4 sm:py-1.5 sm:text-sm whitespace-nowrap"
           data-target="view-timeline"
         >
-          <Icon name="timeline" class="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+          <Icon name="timeline" class="h-3.5 w-3.5 shrink-0 sm:h-4 sm:w-4" />
           <span>猪记录</span>
         </button>
       </div>
     </nav>
 
     <!-- Controls (End) -->
-    <div class="flex items-center gap-1.5 sm:gap-2">
+    <div class="z-10 flex shrink-0 items-center gap-1 sm:gap-2">
       <!-- Material You Dynamic Palette Menu -->
       <div class="relative">
         <button
           id="palette-toggle-btn"
           type="button"
-          class="md-state-layer flex h-10 w-10 items-center justify-center rounded-md-full text-md-on-surface-variant transition-colors hover:bg-md-on-surface/8 hover:text-md-on-surface"
+          class="md-state-layer flex h-9 w-9 items-center justify-center rounded-md-full text-md-on-surface-variant transition-colors hover:bg-md-on-surface/8 hover:text-md-on-surface sm:h-10 sm:w-10"
           title="Material You 色彩主题"
           aria-label="切换色彩主题"
         >
@@ -116,7 +116,7 @@ import Icon from './Icon.astro';
       <button
         id="theme-toggle-btn"
         type="button"
-        class="md-state-layer flex h-10 w-10 items-center justify-center rounded-md-full text-md-on-surface-variant transition-colors hover:bg-md-on-surface/8 hover:text-md-on-surface"
+        class="md-state-layer flex h-9 w-9 items-center justify-center rounded-md-full text-md-on-surface-variant transition-colors hover:bg-md-on-surface/8 hover:text-md-on-surface sm:h-10 sm:w-10"
         title="切换明暗色彩模式"
         aria-label="切换明暗色彩模式"
       >
