@@ -386,12 +386,12 @@
         <div class="space-y-3 rounded-md-2xl border border-md-outline-variant/20 bg-md-surface-container p-4">
           <div class="flex items-center justify-between">
             <span class="text-xs font-semibold text-md-on-surface">头像设置</span>
-            <span class="text-[11px] text-md-on-surface-variant">支持本地图片上传 / URL / 汉字</span>
+            <span class="text-[11px] text-md-on-surface-variant">PigHub 猪猪 / 本地图片 / URL</span>
           </div>
 
           <div class="flex items-center gap-4">
             <div class="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-full bg-md-primary-container text-2xl font-black text-md-on-primary-container shadow-sm">
-              <div id="person-avatar-preview">
+              <div id="person-avatar-preview" class="h-full w-full flex items-center justify-center" aria-live="polite">
                 <span>张</span>
               </div>
             </div>
@@ -400,6 +400,7 @@
               <input type="hidden" id="person-form-avatar" value="" />
 
               <div class="flex flex-wrap items-center gap-2">
+                <button type="button" onclick="randomizePigAvatar()" class="rounded-md-full bg-md-primary-container px-3.5 py-1.5 text-xs font-semibold text-md-on-primary-container hover:shadow-sm transition-all">🐷 随机猪猪</button>
                 <label class="md-state-layer flex items-center gap-1.5 rounded-md-full bg-md-secondary-container px-3.5 py-1.5 text-xs font-semibold text-md-on-secondary-container hover:shadow-sm cursor-pointer transition-all">
                   <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
                   <span>选择本地头像</span>
@@ -410,7 +411,7 @@
                   onclick="clearAvatarToInitial()"
                   class="rounded-md-full border border-md-outline px-3 py-1.5 text-xs font-medium text-md-on-surface-variant hover:bg-md-on-surface/8 transition-colors"
                 >
-                  重置单字
+                  恢复默认猪猪
                 </button>
               </div>
 
@@ -556,14 +557,34 @@
       );
     }
 
+    const pigAvatars = ["/avatars/pig-1.webp","/avatars/pig-2.webp","/avatars/pig-3.webp","/avatars/pig-4.webp","/avatars/pig-5.webp","/avatars/pig-6.jpg","/avatars/pig-7.jpg","/avatars/pig-8.webp","/avatars/pig-9.jpg","/avatars/pig-10.webp","/avatars/pig-11.jpg","/avatars/pig-12.webp"];
+
+    function defaultPigAvatar(name) {
+      let hash = 2166136261;
+      for (const char of name || '?') hash = Math.imul(hash ^ char.codePointAt(0), 16777619) >>> 0;
+      return pigAvatars[hash % pigAvatars.length];
+    }
+
+    function randomizePigAvatar() {
+      const avatarInput = document.getElementById('person-form-avatar');
+      const name = document.getElementById('person-form-name').value;
+      const current = isImageSrc(avatarInput.value) ? avatarInput.value : defaultPigAvatar(name);
+      const choices = pigAvatars.filter(src => src !== current);
+      const url = choices[Math.floor(Math.random() * choices.length)];
+      avatarInput.value = url;
+      document.getElementById('person-form-avatar-url').value = url;
+      updateAvatarPreview();
+    }
+
     // Material 3 Avatar renderer
     function getAvatarHtml(avatar, name, sizeClass = 'h-12 w-12 text-base') {
+      avatar = isImageSrc(avatar) ? avatar : defaultPigAvatar(name);
       const isImg = isImageSrc(avatar);
       const fallback = (!isImg && avatar && avatar.length <= 4) ? avatar : (name ? name[0] : '?');
       return `
         <div class="flex ${sizeClass} shrink-0 items-center justify-center overflow-hidden rounded-full bg-md-primary-container text-md-on-primary-container font-bold shadow-xs">
           ${isImg
-            ? `<img src="${avatar}" alt="${name || ''}" class="h-full w-full object-cover" onerror="this.parentElement.textContent='${fallback}'" />`
+            ? `<img src="${avatar}" alt="${name || ''}" class="h-full w-full ${avatar.includes('/avatars/pig-') ? 'object-contain bg-white' : 'object-cover'}" onerror="this.parentElement.textContent='${fallback}'" />`
             : `<span>${fallback}</span>`}
         </div>
       `;
@@ -770,11 +791,13 @@
       const previewBox = document.getElementById('person-avatar-preview');
       if (!previewBox) return;
 
-      if (isImageSrc(avatarVal)) {
-        previewBox.innerHTML = `<img src="${avatarVal}" class="h-full w-full object-cover" onerror="this.parentElement.textContent='${name ? name[0] : '?'}'" />`;
-      } else {
-        previewBox.innerHTML = `<span>${avatarVal || (name ? name[0] : '?')}</span>`;
-      }
+      const src = isImageSrc(avatarVal) ? avatarVal : defaultPigAvatar(name);
+      const image = document.createElement('img');
+      image.src = src;
+      image.alt = `${name || '新猪猪'}的头像`;
+      image.className = `h-full w-full ${src.includes('/avatars/pig-') ? 'object-contain bg-white' : 'object-cover'}`;
+      image.onerror = () => { previewBox.textContent = name ? name[0] : '?'; };
+      previewBox.replaceChildren(image);
     }
 
     function handleAvatarUrlInput(url) {

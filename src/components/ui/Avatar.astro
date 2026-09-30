@@ -40,7 +40,7 @@ const sizeClasses = {
       <img
         src={src}
         alt={name}
-        class:list={['h-full w-full object-cover', imgClass]}
+        class:list={['h-full w-full', src.includes('/avatars/pig-') ? 'object-contain bg-white' : 'object-cover', imgClass]}
         onerror={`this.parentElement.textContent='${fallback}'`}
       />
     ) : (

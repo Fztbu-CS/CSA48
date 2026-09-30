@@ -120,7 +120,7 @@ const personsView = persons.map((p) => {
     // Header info
     if (avatarEl) {
       avatarEl.innerHTML = person.avatarSrc
-        ? `<img src="${person.avatarSrc}" alt="${person.name}" class="h-full w-full object-cover" onerror="this.parentElement.textContent='${person.avatarFallback}'" />`
+        ? `<img src="${person.avatarSrc}" alt="${person.name}" class="h-full w-full ${person.avatarSrc.includes('/avatars/pig-') ? 'object-contain bg-white' : 'object-cover'}" onerror="this.parentElement.textContent='${person.avatarFallback}'" />`
         : `<span>${person.avatarFallback}</span>`;
     }
     if (nameEl) nameEl.textContent = person.name;
