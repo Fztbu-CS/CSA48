@@ -115,6 +115,17 @@
   ],
   "incidents": [
     {
+      "id": "inc-mv9m56se",
+      "personId": "p_mua5qhio",
+      "title": "合并错误",
+      "description": "合并错误没有看清楚名字",
+      "date": "2026-10-15",
+      "severity": 3,
+      "category": "code",
+      "witnesses": [],
+      "tags": []
+    },
+    {
       "id": "inc-mufn2kyc",
       "personId": "p_mua5km4r",
       "title": "50 多个 Controller，仅 3 个 DTO，服务层未做分层,真神了",
