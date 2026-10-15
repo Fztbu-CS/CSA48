@@ -1,0 +1,50 @@
+---
+import { resolveAvatar } from '../../utils/avatar';
+
+interface Props {
+  avatar?: string | null;
+  name: string;
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  class?: string;
+  imgClass?: string;
+}
+
+const {
+  avatar,
+  name,
+  size = 'md',
+  class: className = '',
+  imgClass = '',
+} = Astro.props;
+
+const { src, fallback } = resolveAvatar(avatar, name);
+
+const sizeClasses = {
+  xs: 'h-6 w-6 text-[10px]',
+  sm: 'h-7 w-7 text-xs',
+  md: 'h-12 w-12 text-base',
+  lg: 'h-16 w-16 text-2xl',
+  xl: 'h-20 w-20 text-2xl',
+}[size];
+---
+
+<div
+  class:list={[
+    'flex shrink-0 items-center justify-center overflow-hidden rounded-full font-bold shadow-sm',
+    sizeClasses,
+    className || 'bg-md-primary-container text-md-on-primary-container',
+  ]}
+>
+  {
+    src ? (
+      <img
+        src={src}
+        alt={name}
+        class:list={['h-full w-full object-cover', imgClass]}
+        onerror={`this.parentElement.textContent='${fallback}'`}
+      />
+    ) : (
+      <span>{fallback}</span>
+    )
+  }
+</div>

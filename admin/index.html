@@ -1,10 +1,17 @@
 <!DOCTYPE html>
-<html lang="zh-CN" class="dark">
+<html lang="zh-CN" data-theme="dark" class="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>!?猪猪?! · 本地管理后台</title>
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <title>!?猪猪?! · 本地管理后台 (Material You)</title>
+  <link rel="icon" type="image/svg+xml" href="/pig.svg" />
+  
+  <!-- Google Fonts: Google Sans & Roboto -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN with M3 Configuration -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -14,310 +21,421 @@
           colors: {
             md: {
               surface: 'var(--md-surface)',
-              'on-surface': 'var(--md-on-surface)',
+              'surface-dim': 'var(--md-surface-dim)',
+              'surface-bright': 'var(--md-surface-bright)',
+              'surface-container-lowest': 'var(--md-surface-container-lowest)',
               'surface-container-low': 'var(--md-surface-container-low)',
               'surface-container': 'var(--md-surface-container)',
               'surface-container-high': 'var(--md-surface-container-high)',
               'surface-container-highest': 'var(--md-surface-container-highest)',
+              'on-surface': 'var(--md-on-surface)',
               'on-surface-variant': 'var(--md-on-surface-variant)',
               outline: 'var(--md-outline)',
               'outline-variant': 'var(--md-outline-variant)',
+
               primary: 'var(--md-primary)',
               'on-primary': 'var(--md-on-primary)',
               'primary-container': 'var(--md-primary-container)',
               'on-primary-container': 'var(--md-on-primary-container)',
+
               secondary: 'var(--md-secondary)',
               'on-secondary': 'var(--md-on-secondary)',
               'secondary-container': 'var(--md-secondary-container)',
               'on-secondary-container': 'var(--md-on-secondary-container)',
+
+              tertiary: 'var(--md-tertiary)',
+              'on-tertiary': 'var(--md-on-tertiary)',
+              'tertiary-container': 'var(--md-tertiary-container)',
+              'on-tertiary-container': 'var(--md-on-tertiary-container)',
+
               error: 'var(--md-error)',
-            }
+              'error-container': 'var(--md-error-container)',
+              'on-error': 'var(--md-on-error)',
+              'on-error-container': 'var(--md-on-error-container)',
+
+              'inverse-surface': 'var(--md-inverse-surface)',
+              'inverse-on-surface': 'var(--md-inverse-on-surface)',
+              'inverse-primary': 'var(--md-inverse-primary)',
+            },
           },
           borderRadius: {
             'md-xs': '4px',
             'md-sm': '8px',
             'md-md': '12px',
             'md-lg': '16px',
-            'md-xl': '20px',
+            'md-xl': '24px',
             'md-2xl': '28px',
+            'md-3xl': '32px',
             'md-full': '9999px',
-          }
-        }
-      }
+          },
+          boxShadow: {
+            'md-1': '0px 1px 3px 1px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.2)',
+            'md-2': '0px 2px 6px 2px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.2)',
+            'md-3': '0px 4px 8px 3px rgba(0, 0, 0, 0.15), 0px 1px 3px 0px rgba(0, 0, 0, 0.2)',
+          },
+          fontFamily: {
+            sans: ['"Google Sans"', 'Roboto', 'system-ui', '-apple-system', 'sans-serif'],
+          },
+        },
+      },
+    };
+
+    // Theme initialization
+    const savedTheme = localStorage.getItem('admin-theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    if (savedTheme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
     }
   </script>
+
   <style>
-    :root {
-      --md-surface: #fdfcff;
-      --md-on-surface: #1a1c1e;
-      --md-surface-container-low: #f7f3f8;
-      --md-surface-container: #f1edf2;
-      --md-surface-container-high: #ebe7ec;
-      --md-surface-container-highest: #e5e1e6;
-      --md-on-surface-variant: #45474c;
-      --md-outline: #75777c;
-      --md-outline-variant: #c5c6cc;
-      --md-primary: #00639b;
+    :root, [data-theme='light'] {
+      color-scheme: light;
+      --md-surface: #fff8f8;
+      --md-surface-dim: #ded8e1;
+      --md-surface-bright: #fff8f8;
+      --md-surface-container-lowest: #ffffff;
+      --md-surface-container-low: #fdf1f3;
+      --md-surface-container: #f7ebed;
+      --md-surface-container-high: #f2e5e7;
+      --md-surface-container-highest: #ecdfe1;
+      --md-on-surface: #22191b;
+      --md-on-surface-variant: #514347;
+      --md-outline: #847377;
+      --md-outline-variant: #d5c2c6;
+
+      --md-primary: #984061;
       --md-on-primary: #ffffff;
-      --md-primary-container: #cee5ff;
-      --md-on-primary-container: #001d33;
-      --md-secondary: #a63914;
+      --md-primary-container: #ffd9e2;
+      --md-on-primary-container: #3e001d;
+
+      --md-secondary: #74565f;
       --md-on-secondary: #ffffff;
-      --md-secondary-container: #ffdbd1;
-      --md-on-secondary-container: #3b0900;
+      --md-secondary-container: #ffd9e2;
+      --md-on-secondary-container: #2b151c;
+
+      --md-tertiary: #7c5635;
+      --md-on-tertiary: #ffffff;
+      --md-tertiary-container: #ffdcbe;
+      --md-on-tertiary-container: #2c1600;
+
       --md-error: #ba1a1a;
+      --md-error-container: #ffdad6;
+      --md-on-error: #ffffff;
+      --md-on-error-container: #410002;
+
+      --md-inverse-surface: #382e30;
+      --md-inverse-on-surface: #feedee;
+      --md-inverse-primary: #ffb0c8;
     }
-    .dark {
-      --md-surface: #121316;
-      --md-on-surface: #e2e2e6;
-      --md-surface-container-low: #1a1c1e;
-      --md-surface-container: #1e2023;
-      --md-surface-container-high: #292a2d;
-      --md-surface-container-highest: #333538;
-      --md-on-surface-variant: #c4c6cf;
-      --md-outline: #8e9099;
-      --md-outline-variant: #44474e;
-      --md-primary: #96ccff;
-      --md-on-primary: #003353;
-      --md-primary-container: #004b76;
-      --md-on-primary-container: #cee5ff;
-      --md-secondary: #ffb5a0;
-      --md-on-secondary: #5f1600;
-      --md-secondary-container: #822709;
-      --md-on-secondary-container: #ffdbd1;
+
+    .dark, [data-theme='dark'] {
+      color-scheme: dark;
+      --md-surface: #191113;
+      --md-surface-dim: #191113;
+      --md-surface-bright: #413739;
+      --md-surface-container-lowest: #130c0e;
+      --md-surface-container-low: #22191c;
+      --md-surface-container: #261d20;
+      --md-surface-container-high: #31282a;
+      --md-surface-container-highest: #3c3235;
+      --md-on-surface: #efdfdf;
+      --md-on-surface-variant: #d5c2c6;
+      --md-outline: #9e8c90;
+      --md-outline-variant: #514347;
+
+      --md-primary: #ffb0c8;
+      --md-on-primary: #5e1132;
+      --md-primary-container: #7b2949;
+      --md-on-primary-container: #ffd9e2;
+
+      --md-secondary: #e2bdc6;
+      --md-on-secondary: #422931;
+      --md-secondary-container: #5a3f48;
+      --md-on-secondary-container: #ffd9e2;
+
+      --md-tertiary: #efbd94;
+      --md-on-tertiary: #472a0b;
+      --md-tertiary-container: #623f1f;
+      --md-on-tertiary-container: #ffdcbe;
+
       --md-error: #ffb4ab;
+      --md-error-container: #93000a;
+      --md-on-error: #690005;
+      --md-on-error-container: #ffdad6;
+
+      --md-inverse-surface: #efdfdf;
+      --md-inverse-on-surface: #382e30;
+      --md-inverse-primary: #984061;
     }
+
     body {
       background-color: var(--md-surface);
       color: var(--md-on-surface);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: 'Google Sans', Roboto, system-ui, -apple-system, sans-serif;
+      transition: background-color 0.25s cubic-bezier(0.2, 0, 0, 1), color 0.25s cubic-bezier(0.2, 0, 0, 1);
+    }
+
+    .md-state-layer {
+      position: relative;
+      overflow: hidden;
+      transition: background-color 0.2s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.2s cubic-bezier(0.2, 0, 0, 1);
+    }
+    .md-state-layer::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-color: currentColor;
+      opacity: 0;
+      transition: opacity 0.2s cubic-bezier(0.2, 0, 0, 1);
+      pointer-events: none;
+      border-radius: inherit;
+    }
+    .md-state-layer:hover::after {
+      opacity: 0.08;
+    }
+    .md-state-layer:active::after {
+      opacity: 0.14;
+    }
+
+    dialog {
+      border: none;
+      background: transparent;
+      padding: 0;
+      margin: auto;
+    }
+    dialog::backdrop {
+      background-color: rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
     }
   </style>
 </head>
-<body class="min-h-screen flex flex-col antialiased">
-  <!-- Top App Bar -->
-  <header class="sticky top-0 z-40 w-full bg-md-surface/90 backdrop-blur-md border-b border-md-outline-variant/40">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
-      <!-- Title & Sync Pill -->
+<body class="flex min-h-screen flex-col bg-md-surface text-md-on-surface antialiased">
+  <!-- M3 Top App Bar -->
+  <header class="sticky top-0 z-40 border-b border-md-outline-variant/30 bg-md-surface/90 backdrop-blur-md">
+    <div class="mx-auto flex h-16 sm:h-20 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+      <!-- Start: Logo & Title -->
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 flex items-center justify-center shrink-0">
-          <img src="/pig.svg" class="w-9 h-9" alt="Logo" />
+        <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-md-xl bg-md-primary-container text-md-on-primary-container shadow-sm">
+          <img src="/pig.svg" class="h-6 w-6" alt="Logo" />
         </div>
-        <div>
+        <div class="min-w-0">
           <div class="flex items-center gap-2">
-            <h1 class="text-base sm:text-lg font-bold text-md-on-surface">!?猪猪?! · 本地管理后台</h1>
-            <span class="text-[11px] px-2 py-0.5 rounded-md-full bg-emerald-500/10 text-emerald-500 font-medium border border-emerald-500/20 flex items-center gap-1">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            <h1 class="text-base font-bold text-md-on-surface sm:text-lg">!?猪猪?! · 本地管理后台</h1>
+            <span class="inline-flex items-center gap-1.5 rounded-md-full bg-emerald-500/10 dark:bg-emerald-500/20 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">
+              <span class="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
               <span>数据直连</span>
             </span>
           </div>
-          <p class="text-[11px] text-md-on-surface-variant hidden sm:block">直接读写本地 src/data/shameData.json 与 public/avatars/</p>
+          <p class="hidden text-[11px] text-md-on-surface-variant sm:block">直接读写本地 src/data/shameData.json 与 public/avatars/</p>
         </div>
       </div>
 
-      <!-- Navigation & Actions -->
-      <div class="flex items-center gap-3">
-        <!-- View Frontend Link -->
+      <!-- End: Actions -->
+      <div class="flex items-center gap-2 sm:gap-3">
         <a
           href="http://localhost:4321"
           target="_blank"
-          class="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-md-full bg-md-surface-container hover:bg-md-surface-container-high border border-md-outline-variant/30 text-xs font-medium text-md-on-surface transition-all"
+          class="md-state-layer hidden items-center gap-1.5 rounded-md-full border border-md-outline px-4 py-2 text-xs font-semibold text-md-primary hover:bg-md-primary/8 transition-colors sm:inline-flex"
         >
           <span>查看前台排行榜</span>
-          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
           </svg>
         </a>
 
-        <!-- Theme Toggle -->
         <button
           id="theme-toggle"
-          class="w-10 h-10 rounded-md-full bg-md-surface-container hover:bg-md-surface-container-high border border-md-outline-variant/30 flex items-center justify-center text-md-on-surface transition-colors"
+          type="button"
+          class="md-state-layer flex h-10 w-10 items-center justify-center rounded-md-full text-md-on-surface-variant hover:bg-md-on-surface/8 hover:text-md-on-surface transition-colors"
           title="切换明暗色彩模式"
+          aria-label="切换明暗色彩模式"
         >
-          <svg class="w-4 h-4 hidden dark:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-          <svg class="w-4 h-4 block dark:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <span id="admin-theme-icon-dark" class="hidden">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          </span>
+          <span id="admin-theme-icon-light">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          </span>
         </button>
       </div>
     </div>
   </header>
 
-  <!-- Main Container -->
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 w-full space-y-6">
-    <!-- MD3 Segmented Buttons Tabs -->
-    <div class="flex items-center justify-between flex-wrap gap-4 border-b border-md-outline-variant/30 pb-4">
-      <div class="flex items-center p-1 rounded-md-full bg-md-surface-container border border-md-outline-variant/40 text-xs sm:text-sm font-medium">
+  <!-- Main Content -->
+  <main class="mx-auto max-w-7xl w-full flex-1 space-y-6 px-4 py-6 sm:px-6 lg:px-8">
+    <!-- Controls Bar -->
+    <div class="flex flex-wrap items-center justify-between gap-4 border-b border-md-outline-variant/30 pb-4">
+      <!-- M3 Segmented Buttons -->
+      <div class="flex items-center rounded-md-full border border-md-outline-variant/30 bg-md-surface-container-high p-1 shadow-sm">
         <button
+          type="button"
           id="tab-btn-persons"
-          class="tab-btn px-4 py-1.5 rounded-md-full transition-all text-md-on-secondary-container bg-md-secondary-container font-semibold flex items-center gap-2 shadow-sm"
+          class="flex items-center gap-2 rounded-md-full bg-md-secondary-container px-4 py-1.5 text-xs sm:text-sm font-semibold text-md-on-secondary-container shadow-sm transition-all"
           onclick="switchTab('persons')"
         >
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           <span>人员档案管理</span>
-          <span id="badge-persons-count" class="text-[11px] px-1.5 py-0.2 bg-black/10 rounded-full">0</span>
+          <span id="badge-persons-count" class="rounded-md-full bg-md-surface-container-highest px-2 py-0.5 text-[11px] font-bold">0</span>
         </button>
         <button
+          type="button"
           id="tab-btn-incidents"
-          class="tab-btn px-4 py-1.5 rounded-md-full transition-all text-md-on-surface-variant hover:text-md-on-surface flex items-center gap-2"
+          class="flex items-center gap-2 rounded-md-full px-4 py-1.5 text-xs sm:text-sm font-medium text-md-on-surface-variant hover:text-md-on-surface hover:bg-md-on-surface/5 transition-all"
           onclick="switchTab('incidents')"
         >
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
           <span>翻车事迹管理</span>
-          <span id="badge-incidents-count" class="text-[11px] px-1.5 py-0.2 bg-black/10 rounded-full">0</span>
+          <span id="badge-incidents-count" class="rounded-md-full bg-md-surface-container-highest px-2 py-0.5 text-[11px] font-bold">0</span>
         </button>
       </div>
 
-      <div id="tab-actions">
-        <button
-          id="add-btn"
-          onclick="openAddModal()"
-          class="inline-flex items-center gap-2 px-5 py-2 rounded-md-full bg-md-primary text-md-on-primary text-xs sm:text-sm font-semibold shadow-md-1 hover:shadow-md-2 transition-all active:scale-95"
-        >
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          <span id="add-btn-label">添加新猪猪</span>
-        </button>
-      </div>
+      <!-- Add Button -->
+      <button
+        id="add-btn"
+        onclick="openAddModal()"
+        class="md-state-layer flex items-center gap-2 rounded-md-full bg-md-primary px-5 py-2.5 text-xs sm:text-sm font-semibold text-md-on-primary shadow-md-1 hover:shadow-md-2 active:scale-[0.98] transition-all"
+      >
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        <span id="add-btn-label">添加新猪猪</span>
+      </button>
     </div>
 
-    <!-- Section 1: Persons Management View -->
+    <!-- View 1: Persons -->
     <section id="view-persons" class="space-y-4">
-      <!-- Search Filter -->
-      <div class="flex items-center gap-3">
-        <div class="relative flex-1 max-w-md">
-          <input
-            type="text"
-            id="search-persons"
-            placeholder="搜索猪猪姓名、简介..."
-            oninput="renderPersons()"
-            class="w-full h-11 bg-md-surface-container-high border border-transparent rounded-md-full px-4 pl-10 text-xs sm:text-sm text-md-on-surface placeholder-md-on-surface-variant/70 focus:outline-none focus:border-md-primary/60"
-          />
-          <div class="absolute left-3.5 top-1/2 -translate-y-1/2 text-md-on-surface-variant">
-            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          </div>
-        </div>
-      </div>
+      <label class="flex h-11 w-full max-w-md items-center gap-2.5 rounded-md-full border border-md-outline-variant/30 bg-md-surface-container-high px-4 text-sm text-md-on-surface shadow-sm focus-within:ring-2 focus-within:ring-md-primary transition-all">
+        <svg class="h-4 w-4 shrink-0 text-md-on-surface-variant/70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input
+          type="text"
+          id="search-persons"
+          class="w-full bg-transparent outline-none placeholder:text-md-on-surface-variant/60"
+          placeholder="搜索猪猪姓名、简介..."
+          oninput="renderPersons()"
+        />
+      </label>
 
-      <!-- Persons Grid -->
-      <div id="persons-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        <!-- Rendered via JS -->
+      <div id="persons-grid" class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <!-- JS rendered -->
       </div>
     </section>
 
-    <!-- Section 2: Incidents Management View -->
-    <section id="view-incidents" class="space-y-4 hidden">
-      <!-- Search & Person Filter -->
-      <div class="flex flex-col sm:flex-row items-center gap-3">
-        <div class="relative w-full sm:flex-1 sm:max-w-md">
+    <!-- View 2: Incidents -->
+    <section id="view-incidents" class="hidden space-y-4">
+      <div class="flex flex-col items-center gap-3 sm:flex-row">
+        <label class="flex h-11 w-full items-center gap-2.5 rounded-md-full border border-md-outline-variant/30 bg-md-surface-container-high px-4 text-sm text-md-on-surface shadow-sm focus-within:ring-2 focus-within:ring-md-primary transition-all sm:max-w-md sm:flex-1">
+          <svg class="h-4 w-4 shrink-0 text-md-on-surface-variant/70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
           <input
             type="text"
             id="search-incidents"
+            class="w-full bg-transparent outline-none placeholder:text-md-on-surface-variant/60"
             placeholder="搜索事迹标题、案发内容..."
             oninput="renderIncidents()"
-            class="w-full h-11 bg-md-surface-container-high border border-transparent rounded-md-full px-4 pl-10 text-xs sm:text-sm text-md-on-surface placeholder-md-on-surface-variant/70 focus:outline-none focus:border-md-primary/60"
           />
-          <div class="absolute left-3.5 top-1/2 -translate-y-1/2 text-md-on-surface-variant">
-            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          </div>
-        </div>
+        </label>
 
         <select
           id="filter-incident-person"
           onchange="renderIncidents()"
-          class="w-full sm:w-56 h-11 bg-md-surface-container-high border border-transparent rounded-md-full px-4 text-xs font-medium text-md-on-surface focus:outline-none focus:border-md-primary/60"
+          class="h-11 w-full rounded-md-full border border-md-outline-variant/30 bg-md-surface-container-high px-4 text-xs font-medium text-md-on-surface outline-none transition-all focus:ring-2 focus:ring-md-primary sm:w-56 shadow-sm"
         >
           <option value="all">全部猪猪</option>
         </select>
       </div>
 
-      <!-- Incidents List -->
       <div id="incidents-list" class="space-y-3">
-        <!-- Rendered via JS -->
+        <!-- JS rendered -->
       </div>
     </section>
   </main>
 
-  <!-- ================= Person Edit / Add Modal ================= -->
-  <dialog id="modal-person" class="bg-transparent p-4 w-full max-w-lg rounded-md-2xl text-md-on-surface outline-none m-auto">
-    <div class="bg-md-surface-container-high border border-md-outline-variant/30 rounded-md-2xl p-6 shadow-md-3">
-      <div class="flex items-center justify-between pb-4 border-b border-md-outline-variant/20 mb-4">
+  <!-- Person Modal (M3 Dialog) -->
+  <dialog id="modal-person" class="backdrop:bg-black/45 backdrop:backdrop-blur-sm p-4">
+    <div class="mx-auto w-full max-w-lg rounded-md-3xl border border-md-outline-variant/30 bg-md-surface-container-high p-6 shadow-md-3 sm:p-8 text-md-on-surface">
+      <div class="mb-5 flex items-center justify-between border-b border-md-outline-variant/20 pb-4">
         <h3 id="modal-person-title" class="text-lg font-bold text-md-on-surface">添加新猪猪</h3>
-        <button onclick="closePersonModal()" class="w-8 h-8 rounded-full flex items-center justify-center text-md-on-surface-variant hover:bg-md-surface-container">✕</button>
+        <button
+          type="button"
+          onclick="closePersonModal()"
+          class="md-state-layer flex h-9 w-9 items-center justify-center rounded-full text-md-on-surface-variant hover:bg-md-on-surface/8 hover:text-md-on-surface transition-colors"
+        >
+          ✕
+        </button>
       </div>
 
       <form id="form-person" onsubmit="handleSavePerson(event)" class="space-y-4">
         <input type="hidden" id="person-form-id" value="" />
 
-        <!-- Name -->
         <div>
-          <label class="block text-xs font-semibold text-md-on-surface mb-1">猪猪真实姓名 / 称呼 *</label>
+          <label class="mb-1.5 block text-xs font-semibold text-md-on-surface">
+            猪猪真实姓名 / 称呼 *
+          </label>
           <input
             type="text"
             id="person-form-name"
             required
             placeholder="例如：张三"
             oninput="updateAvatarPreview()"
-            class="w-full h-10 px-3.5 rounded-md-md bg-md-surface-container border border-md-outline-variant/40 text-xs sm:text-sm text-md-on-surface focus:outline-none focus:border-md-primary"
+            class="w-full rounded-md-xl border border-md-outline-variant bg-md-surface-container-lowest px-3.5 py-2.5 text-sm text-md-on-surface outline-none transition-all focus:border-md-primary focus:ring-1 focus:ring-md-primary placeholder:text-md-on-surface-variant/50"
           />
         </div>
 
-        <!-- Avatar Configuration Section -->
-        <div class="p-4 rounded-md-xl bg-md-surface-container border border-md-outline-variant/30 space-y-3">
+        <!-- Avatar Config -->
+        <div class="space-y-3 rounded-md-2xl border border-md-outline-variant/20 bg-md-surface-container p-4">
           <div class="flex items-center justify-between">
-            <span class="text-xs font-semibold text-md-on-surface">人员头像设置</span>
+            <span class="text-xs font-semibold text-md-on-surface">头像设置</span>
             <span class="text-[11px] text-md-on-surface-variant">支持本地图片上传 / URL / 汉字</span>
           </div>
 
-          <!-- Preview & Controls -->
           <div class="flex items-center gap-4">
-            <!-- Preview Box -->
-            <div id="person-avatar-preview" class="w-16 h-16 rounded-md-xl overflow-hidden bg-md-surface-container-highest border-2 border-md-outline-variant/40 flex items-center justify-center text-2xl font-black text-md-on-surface shrink-0 shadow-inner">
-              张
+            <div class="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-full bg-md-primary-container text-2xl font-black text-md-on-primary-container shadow-sm">
+              <div id="person-avatar-preview">
+                <span>张</span>
+              </div>
             </div>
 
-            <!-- Avatar Source Inputs -->
             <div class="flex-1 space-y-2">
               <input type="hidden" id="person-form-avatar" value="" />
 
-              <!-- Upload Button -->
-              <div class="flex items-center gap-2">
-                <label class="cursor-pointer inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md-md bg-md-secondary-container text-md-on-secondary-container text-xs font-semibold hover:opacity-90 transition-all">
-                  <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-                  <span>选择本地头像图片</span>
+              <div class="flex flex-wrap items-center gap-2">
+                <label class="md-state-layer flex items-center gap-1.5 rounded-md-full bg-md-secondary-container px-3.5 py-1.5 text-xs font-semibold text-md-on-secondary-container hover:shadow-sm cursor-pointer transition-all">
+                  <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                  <span>选择本地头像</span>
                   <input type="file" id="person-file-input" accept="image/*" class="hidden" onchange="handleFileUpload(event)" />
                 </label>
                 <button
                   type="button"
                   onclick="clearAvatarToInitial()"
-                  class="px-2.5 py-1.5 rounded-md-md bg-md-surface-container-highest text-md-on-surface-variant text-xs hover:text-md-on-surface"
+                  class="rounded-md-full border border-md-outline px-3 py-1.5 text-xs font-medium text-md-on-surface-variant hover:bg-md-on-surface/8 transition-colors"
                 >
-                  重置为单字
+                  重置单字
                 </button>
               </div>
 
-              <!-- Or External URL -->
               <input
                 type="text"
                 id="person-form-avatar-url"
                 placeholder="或输入外部图片 URL (https://...)"
                 oninput="handleAvatarUrlInput(this.value)"
-                class="w-full h-8 px-2.5 rounded-md-sm bg-md-surface-container-high border border-md-outline-variant/30 text-xs text-md-on-surface focus:outline-none focus:border-md-primary"
+                class="w-full rounded-md-xl border border-md-outline-variant bg-md-surface-container-lowest px-3 py-1.5 text-xs text-md-on-surface outline-none transition-all focus:border-md-primary focus:ring-1 focus:ring-md-primary placeholder:text-md-on-surface-variant/50"
               />
             </div>
           </div>
         </div>
 
-        <!-- Submit & Cancel -->
-        <div class="flex items-center justify-end gap-2 pt-3 border-t border-md-outline-variant/20">
+        <div class="flex justify-end gap-2.5 pt-3 border-t border-md-outline-variant/20">
           <button
             type="button"
             onclick="closePersonModal()"
-            class="px-4 py-2 rounded-md-full text-xs font-medium text-md-on-surface-variant hover:bg-md-surface-container"
+            class="rounded-md-full px-5 py-2 text-xs font-medium text-md-on-surface-variant hover:bg-md-on-surface/8 transition-colors"
           >
             取消
           </button>
           <button
             type="submit"
-            class="px-5 py-2 rounded-md-full bg-md-primary text-md-on-primary text-xs font-semibold shadow-md-1 hover:shadow-md-2"
+            class="md-state-layer rounded-md-full bg-md-primary px-6 py-2 text-xs font-semibold text-md-on-primary shadow-md-1 hover:shadow-md-2 active:scale-[0.98] transition-all"
           >
             保存人员档案
           </button>
@@ -326,76 +444,77 @@
     </div>
   </dialog>
 
-  <!-- ================= Incident Edit / Add Modal ================= -->
-  <dialog id="modal-incident" class="bg-transparent p-4 w-full max-w-lg rounded-md-2xl text-md-on-surface outline-none m-auto">
-    <div class="bg-md-surface-container-high border border-md-outline-variant/30 rounded-md-2xl p-6 shadow-md-3">
-      <div class="flex items-center justify-between pb-4 border-b border-md-outline-variant/20 mb-4">
+  <!-- Incident Modal (M3 Dialog) -->
+  <dialog id="modal-incident" class="backdrop:bg-black/45 backdrop:backdrop-blur-sm p-4">
+    <div class="mx-auto w-full max-w-lg rounded-md-3xl border border-md-outline-variant/30 bg-md-surface-container-high p-6 shadow-md-3 sm:p-8 text-md-on-surface">
+      <div class="mb-5 flex items-center justify-between border-b border-md-outline-variant/20 pb-4">
         <h3 id="modal-incident-title" class="text-lg font-bold text-md-on-surface">登记新翻车事迹</h3>
-        <button onclick="closeIncidentModal()" class="w-8 h-8 rounded-full flex items-center justify-center text-md-on-surface-variant hover:bg-md-surface-container">✕</button>
+        <button
+          type="button"
+          onclick="closeIncidentModal()"
+          class="md-state-layer flex h-9 w-9 items-center justify-center rounded-full text-md-on-surface-variant hover:bg-md-on-surface/8 hover:text-md-on-surface transition-colors"
+        >
+          ✕
+        </button>
       </div>
 
       <form id="form-incident" onsubmit="handleSaveIncident(event)" class="space-y-4">
         <input type="hidden" id="incident-form-id" value="" />
 
-        <!-- Person Dropdown -->
         <div>
-          <label class="block text-xs font-semibold text-md-on-surface mb-1">猪猪 *</label>
+          <label class="mb-1.5 block text-xs font-semibold text-md-on-surface">猪猪 *</label>
           <select
             id="incident-form-person"
             required
-            class="w-full h-10 px-3.5 rounded-md-md bg-md-surface-container border border-md-outline-variant/40 text-xs sm:text-sm text-md-on-surface focus:outline-none focus:border-md-primary"
+            class="w-full rounded-md-xl border border-md-outline-variant bg-md-surface-container-lowest px-3.5 py-2.5 text-sm text-md-on-surface outline-none transition-all focus:border-md-primary focus:ring-1 focus:ring-md-primary"
           >
-            <!-- Options via JS -->
+            <!-- Rendered by JS -->
           </select>
         </div>
 
-        <!-- Date -->
         <div>
-          <label class="block text-xs font-semibold text-md-on-surface mb-1">案发日期 *</label>
+          <label class="mb-1.5 block text-xs font-semibold text-md-on-surface">案发日期 *</label>
           <input
             type="date"
             id="incident-form-date"
             required
-            class="w-full h-10 px-3.5 rounded-md-md bg-md-surface-container border border-md-outline-variant/40 text-xs sm:text-sm text-md-on-surface focus:outline-none focus:border-md-primary"
+            class="w-full rounded-md-xl border border-md-outline-variant bg-md-surface-container-lowest px-3.5 py-2.5 text-sm text-md-on-surface outline-none transition-all focus:border-md-primary focus:ring-1 focus:ring-md-primary"
           />
         </div>
 
-        <!-- Title -->
         <div>
-          <label class="block text-xs font-semibold text-md-on-surface mb-1">翻车事迹标题 *</label>
+          <label class="mb-1.5 block text-xs font-semibold text-md-on-surface">翻车事迹标题 *</label>
           <input
             type="text"
             id="incident-form-title"
             required
             placeholder="简明扼要，如：生产数据库 Update 忘记带 WHERE 条件"
-            class="w-full h-10 px-3.5 rounded-md-md bg-md-surface-container border border-md-outline-variant/40 text-xs sm:text-sm text-md-on-surface focus:outline-none focus:border-md-primary"
+            class="w-full rounded-md-xl border border-md-outline-variant bg-md-surface-container-lowest px-3.5 py-2.5 text-sm text-md-on-surface outline-none transition-all focus:border-md-primary focus:ring-1 focus:ring-md-primary placeholder:text-md-on-surface-variant/50"
           />
         </div>
 
-        <!-- Description -->
         <div>
-          <label class="block text-xs font-semibold text-md-on-surface mb-1">案发详细经过描述 *</label>
+          <label class="mb-1.5 block text-xs font-semibold text-md-on-surface">案发详细经过描述 *</label>
           <textarea
             id="incident-form-desc"
             required
             rows="4"
             placeholder="详细经过、造成的乌龙影响或戏剧性场面..."
-            class="w-full p-3 rounded-md-md bg-md-surface-container border border-md-outline-variant/40 text-xs sm:text-sm text-md-on-surface focus:outline-none focus:border-md-primary leading-relaxed"
+            class="w-full rounded-md-xl border border-md-outline-variant bg-md-surface-container-lowest p-3.5 text-sm leading-relaxed text-md-on-surface outline-none transition-all focus:border-md-primary focus:ring-1 focus:ring-md-primary placeholder:text-md-on-surface-variant/50"
           ></textarea>
         </div>
 
-        <!-- Submit & Cancel -->
-        <div class="flex items-center justify-end gap-2 pt-3 border-t border-md-outline-variant/20">
+        <div class="flex justify-end gap-2.5 pt-3 border-t border-md-outline-variant/20">
           <button
             type="button"
             onclick="closeIncidentModal()"
-            class="px-4 py-2 rounded-md-full text-xs font-medium text-md-on-surface-variant hover:bg-md-surface-container"
+            class="rounded-md-full px-5 py-2 text-xs font-medium text-md-on-surface-variant hover:bg-md-on-surface/8 transition-colors"
           >
             取消
           </button>
           <button
             type="submit"
-            class="px-5 py-2 rounded-md-full bg-md-primary text-md-on-primary text-xs font-semibold shadow-md-1 hover:shadow-md-2"
+            class="md-state-layer rounded-md-full bg-md-primary px-6 py-2 text-xs font-semibold text-md-on-primary shadow-md-1 hover:shadow-md-2 active:scale-[0.98] transition-all"
           >
             保存事迹
           </button>
@@ -404,12 +523,13 @@
     </div>
   </dialog>
 
-  <!-- Toast Notification -->
-  <div id="toast" class="fixed bottom-6 right-6 z-50 transform transition-all duration-300 translate-y-20 opacity-0 pointer-events-none">
-    <div class="px-4 py-2.5 rounded-md-full bg-md-surface-container-highest border border-md-outline-variant/40 text-xs font-semibold text-md-on-surface shadow-md-2 flex items-center gap-2">
-      <span id="toast-icon">✓</span>
-      <span id="toast-msg">操作成功</span>
-    </div>
+  <!-- M3 Toast / Snackbar -->
+  <div
+    id="toast"
+    class="fixed bottom-6 right-6 hidden z-50 rounded-md-xl border border-md-outline-variant/20 bg-md-inverse-surface text-md-inverse-on-surface px-5 py-3 shadow-md-3 items-center gap-2.5 text-xs font-medium transition-all animate-in fade-in slide-in-from-bottom-2 duration-200"
+  >
+    <span id="toast-icon" class="text-sm font-bold">✓</span>
+    <span id="toast-msg">操作成功</span>
   </div>
 
   <script>
@@ -419,7 +539,6 @@
       activeTab: 'persons',
     };
 
-    // Helper: Is image
     function isImageSrc(src) {
       if (!src) return false;
       const s = src.trim().toLowerCase();
@@ -437,25 +556,20 @@
       );
     }
 
-    // Helper: Render avatar HTML
-    function getAvatarHtml(avatar, name, sizeClass = 'w-12 h-12 text-base') {
+    // Material 3 Avatar renderer
+    function getAvatarHtml(avatar, name, sizeClass = 'h-12 w-12 text-base') {
       const isImg = isImageSrc(avatar);
       const fallback = (!isImg && avatar && avatar.length <= 4) ? avatar : (name ? name[0] : '?');
-      if (isImg) {
-        return `
-          <div class="relative rounded-md-xl overflow-hidden shrink-0 flex items-center justify-center font-bold bg-md-surface-container-highest border border-md-outline-variant/30 text-md-on-surface ${sizeClass}">
-            <img src="${avatar}" alt="${name || ''}" class="w-full h-full object-cover" onerror="this.outerHTML='<span>${fallback}</span>'" />
-          </div>
-        `;
-      }
       return `
-        <div class="relative rounded-md-xl overflow-hidden shrink-0 flex items-center justify-center font-bold bg-md-surface-container-highest border border-md-outline-variant/30 text-md-on-surface ${sizeClass}">
-          <span>${fallback}</span>
+        <div class="flex ${sizeClass} shrink-0 items-center justify-center overflow-hidden rounded-full bg-md-primary-container text-md-on-primary-container font-bold shadow-xs">
+          ${isImg
+            ? `<img src="${avatar}" alt="${name || ''}" class="h-full w-full object-cover" onerror="this.parentElement.textContent='${fallback}'" />`
+            : `<span>${fallback}</span>`}
         </div>
       `;
     }
 
-    // Show Toast
+    // Material 3 Snackbar Toast
     function showToast(msg, isError = false) {
       const el = document.getElementById('toast');
       const msgEl = document.getElementById('toast-msg');
@@ -464,13 +578,16 @@
 
       msgEl.textContent = msg;
       iconEl.textContent = isError ? '✕' : '✓';
-      el.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+      iconEl.className = isError ? 'text-red-400 font-bold' : 'text-emerald-400 font-bold';
+      el.classList.remove('hidden');
+      el.classList.add('flex');
       setTimeout(() => {
-        el.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+        el.classList.add('hidden');
+        el.classList.remove('flex');
       }, 2500);
     }
 
-    // Fetch initial data
+    // Read local data
     async function loadData() {
       try {
         const res = await fetch('/api/data');
@@ -493,7 +610,7 @@
       document.getElementById('badge-incidents-count').textContent = state.incidents.length;
     }
 
-    // Tab switcher
+    // Tab switching
     function switchTab(tab) {
       state.activeTab = tab;
       const btnPersons = document.getElementById('tab-btn-persons');
@@ -502,15 +619,22 @@
       const viewIncidents = document.getElementById('view-incidents');
       const addBtnLabel = document.getElementById('add-btn-label');
 
+      const activeClasses = ['bg-md-secondary-container', 'text-md-on-secondary-container', 'font-semibold', 'shadow-sm'];
+      const idleClasses = ['text-md-on-surface-variant', 'font-medium'];
+
       if (tab === 'persons') {
-        btnPersons.className = 'tab-btn px-4 py-1.5 rounded-md-full transition-all text-md-on-secondary-container bg-md-secondary-container font-semibold flex items-center gap-2 shadow-sm';
-        btnIncidents.className = 'tab-btn px-4 py-1.5 rounded-md-full transition-all text-md-on-surface-variant hover:text-md-on-surface flex items-center gap-2';
+        btnPersons.classList.add(...activeClasses);
+        btnPersons.classList.remove(...idleClasses);
+        btnIncidents.classList.remove(...activeClasses);
+        btnIncidents.classList.add(...idleClasses);
         viewPersons.classList.remove('hidden');
         viewIncidents.classList.add('hidden');
         addBtnLabel.textContent = '添加新猪猪';
       } else {
-        btnIncidents.className = 'tab-btn px-4 py-1.5 rounded-md-full transition-all text-md-on-secondary-container bg-md-secondary-container font-semibold flex items-center gap-2 shadow-sm';
-        btnPersons.className = 'tab-btn px-4 py-1.5 rounded-md-full transition-all text-md-on-surface-variant hover:text-md-on-surface flex items-center gap-2';
+        btnIncidents.classList.add(...activeClasses);
+        btnIncidents.classList.remove(...idleClasses);
+        btnPersons.classList.remove(...activeClasses);
+        btnPersons.classList.add(...idleClasses);
         viewPersons.classList.add('hidden');
         viewIncidents.classList.remove('hidden');
         addBtnLabel.textContent = '登记翻车事迹';
@@ -538,39 +662,40 @@
         const emptyMsg = state.persons.length === 0
           ? '暂无猪猪档案，点击右上角“+ 添加新猪猪”开始录入吧~'
           : '未找到符合条件的猪猪';
-        container.innerHTML = `<div class="col-span-full py-12 text-center text-xs text-md-on-surface-variant">${emptyMsg}</div>`;
+        container.innerHTML = `<div class="col-span-full rounded-md-3xl border border-md-outline-variant/30 bg-md-surface-container-low p-10 text-center text-xs text-md-on-surface-variant">${emptyMsg}</div>`;
         return;
       }
 
       container.innerHTML = filtered.map(p => {
         const count = state.incidents.filter(i => i.personId === p.id).length;
         return `
-          <div class="p-5 rounded-md-2xl bg-md-surface-container-low border border-md-outline-variant/30 flex flex-col justify-between gap-4 shadow-sm hover:shadow-md transition-all">
+          <div class="rounded-md-2xl border border-md-outline-variant/30 bg-md-surface-container-low p-5 shadow-sm hover:shadow-md-1 hover:bg-md-surface-container transition-all flex flex-col justify-between gap-4">
             <div class="flex items-start justify-between gap-3">
-              <div class="flex items-center gap-3 min-w-0">
-                ${getAvatarHtml(p.avatar, p.name, 'w-14 h-14 text-xl')}
+              <div class="flex min-w-0 items-center gap-3">
+                ${getAvatarHtml(p.avatar, p.name, 'h-14 w-14 text-xl')}
                 <div class="min-w-0">
-                  <h4 class="font-bold text-base text-md-on-surface truncate">${p.name}</h4>
+                  <h4 class="truncate text-base font-bold text-md-on-surface">${p.name}</h4>
+                  <p class="text-xs text-md-on-surface-variant">档案编号 #${p.id}</p>
                 </div>
               </div>
-              <span class="px-2.5 py-1 rounded-md-full bg-md-secondary-container text-md-on-secondary-container text-xs font-bold shrink-0">
+              <span class="rounded-md-full bg-md-secondary-container px-3 py-0.5 text-xs font-bold text-md-on-secondary-container shrink-0">
                 ${count} 次
               </span>
             </div>
 
-            <div class="flex items-center justify-end gap-2 pt-3 border-t border-md-outline-variant/20">
+            <div class="flex items-center justify-end gap-2 border-t border-md-outline-variant/20 pt-3">
               <button
                 onclick="editPerson('${p.id}')"
-                class="px-3 py-1.5 rounded-md-full text-xs font-semibold bg-md-surface-container-high hover:bg-md-surface-container-highest text-md-on-surface transition-colors flex items-center gap-1"
+                class="md-state-layer flex items-center gap-1 rounded-md-full border border-md-outline px-3.5 py-1 text-xs font-semibold text-md-primary hover:bg-md-primary/8 transition-colors"
               >
-                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
                 <span>编辑</span>
               </button>
               <button
                 onclick="deletePerson('${p.id}', '${p.name}', ${count})"
-                class="px-3 py-1.5 rounded-md-full text-xs font-semibold text-md-error hover:bg-red-500/10 transition-colors flex items-center gap-1"
+                class="md-state-layer flex items-center gap-1 rounded-md-full border border-red-500/40 px-3.5 py-1 text-xs font-semibold text-red-500 hover:bg-red-500/10 transition-colors"
               >
-                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
                 <span>删除</span>
               </button>
             </div>
@@ -625,7 +750,7 @@
         const res = await fetch('/api/person', {
           method: 'DELETE',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ id })
+          body: JSON.stringify({ id }),
         });
         const result = await res.json();
         if (result.success) {
@@ -646,7 +771,7 @@
       if (!previewBox) return;
 
       if (isImageSrc(avatarVal)) {
-        previewBox.innerHTML = `<img src="${avatarVal}" class="w-full h-full object-cover" onerror="this.outerHTML='<span>${name ? name[0] : '?'}</span>'" />`;
+        previewBox.innerHTML = `<img src="${avatarVal}" class="h-full w-full object-cover" onerror="this.parentElement.textContent='${name ? name[0] : '?'}'" />`;
       } else {
         previewBox.innerHTML = `<span>${avatarVal || (name ? name[0] : '?')}</span>`;
       }
@@ -680,7 +805,7 @@
           const res = await fetch('/api/upload-avatar', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ filename: file.name, dataUrl })
+            body: JSON.stringify({ filename: file.name, dataUrl }),
           });
           const result = await res.json();
           if (result.success) {
@@ -708,7 +833,7 @@
         const res = await fetch('/api/person', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ id, name, avatar })
+          body: JSON.stringify({ id, name, avatar }),
         });
         const result = await res.json();
         if (result.success) {
@@ -738,7 +863,6 @@
       const q = (document.getElementById('search-incidents')?.value || '').toLowerCase().trim();
       const personFilter = document.getElementById('filter-incident-person')?.value || 'all';
 
-      // Sort descending by date
       const sorted = [...state.incidents].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
       const filtered = sorted.filter(inc => {
@@ -751,7 +875,7 @@
         const emptyMsg = state.incidents.length === 0
           ? '暂无翻车事迹记录，点击右上角“+ 登记翻车事迹”开始录入吧~'
           : '未找到符合条件的翻车事迹';
-        container.innerHTML = `<div class="py-12 text-center text-xs text-md-on-surface-variant">${emptyMsg}</div>`;
+        container.innerHTML = `<div class="rounded-md-3xl border border-md-outline-variant/30 bg-md-surface-container-low p-10 text-center text-xs text-md-on-surface-variant">${emptyMsg}</div>`;
         return;
       }
 
@@ -760,35 +884,35 @@
       container.innerHTML = filtered.map(inc => {
         const person = personMap.get(inc.personId);
         return `
-          <div class="p-5 rounded-md-2xl bg-md-surface-container-low border border-md-outline-variant/30 space-y-3 shadow-sm hover:shadow-md transition-all">
-            <div class="flex items-center justify-between gap-3 flex-wrap">
+          <div class="rounded-md-2xl border border-md-outline-variant/30 bg-md-surface-container-low p-5 shadow-sm hover:shadow-md-1 hover:bg-md-surface-container transition-all space-y-3">
+            <div class="flex flex-wrap items-center justify-between gap-3">
               <div class="flex items-center gap-2.5">
-                ${person ? getAvatarHtml(person.avatar, person.name, 'w-8 h-8 text-xs') : ''}
-                <span class="font-bold text-sm text-md-on-surface">${person ? person.name : '未知猪猪'}</span>
+                ${person ? getAvatarHtml(person.avatar, person.name, 'h-8 w-8 text-xs') : ''}
+                <span class="text-sm font-bold text-md-on-surface">${person ? person.name : '未知猪猪'}</span>
               </div>
-              <span class="text-xs font-mono text-md-on-surface-variant bg-md-surface-container px-2.5 py-1 rounded-md-full border border-md-outline-variant/20">
+              <span class="rounded-md-full border border-md-outline-variant/20 bg-md-surface-container-high px-3 py-1 font-mono text-xs text-md-on-surface-variant">
                 ${inc.date}
               </span>
             </div>
 
-            <h4 class="font-bold text-base text-md-on-surface">${inc.title}</h4>
-            <p class="text-xs text-md-on-surface/90 leading-relaxed bg-md-surface-container/60 p-3 rounded-md-xl border border-md-outline-variant/20">
+            <h4 class="text-base font-bold text-md-on-surface">${inc.title}</h4>
+            <p class="rounded-md-xl border border-md-outline-variant/20 bg-md-surface-container/60 p-3 text-xs leading-relaxed text-md-on-surface-variant">
               ${inc.description}
             </p>
 
-            <div class="flex items-center justify-end gap-2 pt-2 border-t border-md-outline-variant/20">
+            <div class="flex items-center justify-end gap-2 border-t border-md-outline-variant/20 pt-2">
               <button
                 onclick="editIncident('${inc.id}')"
-                class="px-3 py-1.5 rounded-md-full text-xs font-semibold bg-md-surface-container-high hover:bg-md-surface-container-highest text-md-on-surface transition-colors flex items-center gap-1"
+                class="md-state-layer flex items-center gap-1 rounded-md-full border border-md-outline px-3.5 py-1 text-xs font-semibold text-md-primary hover:bg-md-primary/8 transition-colors"
               >
-                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
                 <span>编辑</span>
               </button>
               <button
                 onclick="deleteIncident('${inc.id}', '${inc.title}')"
-                class="px-3 py-1.5 rounded-md-full text-xs font-semibold text-md-error hover:bg-red-500/10 transition-colors flex items-center gap-1"
+                class="md-state-layer flex items-center gap-1 rounded-md-full border border-red-500/40 px-3.5 py-1 text-xs font-semibold text-red-500 hover:bg-red-500/10 transition-colors"
               >
-                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
                 <span>删除</span>
               </button>
             </div>
@@ -806,7 +930,6 @@
       const titleInput = document.getElementById('incident-form-title');
       const descInput = document.getElementById('incident-form-desc');
 
-      // Populate person selector
       personSelect.innerHTML = state.persons.map(p => `<option value="${p.id}">${p.name}</option>`).join('');
 
       if (incident) {
@@ -844,7 +967,7 @@
         const res = await fetch('/api/incident', {
           method: 'DELETE',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ id })
+          body: JSON.stringify({ id }),
         });
         const result = await res.json();
         if (result.success) {
@@ -870,7 +993,7 @@
         const res = await fetch('/api/incident', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ id, personId, date, title, description })
+          body: JSON.stringify({ id, personId, date, title, description }),
         });
         const result = await res.json();
         if (result.success) {
@@ -886,22 +1009,31 @@
     }
 
     // Theme toggle
-    document.getElementById('theme-toggle')?.addEventListener('click', () => {
-      const isDark = document.documentElement.classList.contains('dark');
-      if (isDark) {
-        document.documentElement.classList.remove('dark');
-        localStorage.setItem('admin-theme', 'light');
-      } else {
-        document.documentElement.classList.add('dark');
-        localStorage.setItem('admin-theme', 'dark');
-      }
-    });
+    const themeToggle = document.getElementById('theme-toggle');
+    const darkIcon = document.getElementById('admin-theme-icon-dark');
+    const lightIcon = document.getElementById('admin-theme-icon-light');
 
-    if (localStorage.getItem('admin-theme') === 'light') {
-      document.documentElement.classList.remove('dark');
+    function syncThemeIcons(theme) {
+      darkIcon.classList.toggle('hidden', theme !== 'dark');
+      lightIcon.classList.toggle('hidden', theme === 'dark');
     }
 
-    // Init
+    syncThemeIcons(document.documentElement.getAttribute('data-theme') || 'dark');
+
+    themeToggle.addEventListener('click', () => {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      const theme = isDark ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', theme);
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+      localStorage.setItem('admin-theme', theme);
+      syncThemeIcons(theme);
+    });
+
+    // Initialize
     loadData();
   </script>
 </body>
